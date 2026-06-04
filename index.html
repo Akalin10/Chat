@@ -3,88 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- ==================== iPhone 主屏幕图标 & Web App 配置 ==================== -->
-    <!-- 启用全屏模式（添加到主屏幕后隐藏浏览器工具栏） -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- 状态栏样式：黑色半透明，与深色背景完美融合 -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- 主屏幕应用名称（短名称） -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="相识时光">
-    
-    <!-- 
-      🔔 自定义主屏幕图标 
-      当前使用内联 SVG（180x180 紫色渐变圆角方形 + 💫 表情）
-      您可以通过以下方式更换：
-      1. 替换整个 href 为一张 180x180 的 PNG 图片 URL，例如：href="icon-180.png"
-      2. 替换 <text> 中的 💫 为其他 Emoji（如 ❤️ / ✨ / 🌟）
-      3. 完全替换 data:image/svg+xml 部分，使用自己的 SVG 代码
+
+    <!--
+      🔔 自定义主屏幕图标 (180x180)
+      将 href 替换为你的 GitHub Raw 链接即可，例如：
+      href="https://raw.githubusercontent.com/你的用户名/仓库名/main/icon.png"
     -->
-    <link rel="apple-touch-icon" sizes="180x180" 
-          href="data:image/svg+xml,
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'>
-            <defs>
-              <linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'>
-                <stop offset='0%25' style='stop-color:%23ff7b89'/>
-                <stop offset='100%25' style='stop-color:%23e8657a'/>
-              </linearGradient>
-            </defs>
-            <rect width='180' height='180' rx='40' fill='url(%23g)'/>
-            <text x='90' y='115' font-size='100' text-anchor='middle' fill='white' font-family='sans-serif'>💫</text>
-          </svg>"
+    <link rel="apple-touch-icon" sizes="180x180"
+    href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'>
+    <rect width='180' height='180' rx='42' fill='%23ffffff'/>
+    <text x='90' y='118' font-size='105' text-anchor='middle' fill='%23000000' font-family='sans-serif'>💫</text>
+    </svg>"
     >
-    
+
     <title>相识时光 - 网友时长记录</title>
     <style>
         /* ============================================
-           CSS 变量定义 & 设计令牌
+           iOS 18 风格 · CSS 变量（浅色 / 深色）
            ============================================ */
         :root {
-            --bg-gradient-start: #0b0a1a;
-            --bg-gradient-mid: #151330;
-            --bg-gradient-end: #1a1535;
+            /* 浅色模式（默认） */
+            --bg-primary: #f2f1f6;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f5f5f7;
+            --bg-input: #e8e8ed;
 
-            --glass-bg: rgba(255, 255, 255, 0.06);
-            --glass-bg-hover: rgba(255, 255, 255, 0.10);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-border-hover: rgba(255, 255, 255, 0.22);
-            --glass-blur: 20px;
-            --glass-saturate: 1.8;
+            --text-primary: #1c1c1e;
+            --text-secondary: #636366;
+            --text-tertiary: #aeaeb2;
+            --text-on-accent: #ffffff;
 
-            --modal-glass-bg: rgba(22, 18, 48, 0.85);
-            --modal-glass-border: rgba(255, 255, 255, 0.18);
+            --accent: #ff6b7f;
+            --accent-light: #fff0f3;
+            --accent-soft: rgba(255, 107, 127, 0.10);
+            --accent-blue: #007aff;
+            --accent-blue-light: #e8f2ff;
 
-            --accent: #ff7b89;
-            --accent-soft: rgba(255, 123, 137, 0.3);
-            --accent-glow: rgba(255, 123, 137, 0.5);
-            --accent-secondary: #f0c27a;
+            --border: #e5e5ea;
+            --border-light: #f0f0f5;
+            --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.09);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
 
-            --text-primary: #f0edf6;
-            --text-secondary: #c4bfd6;
-            --text-muted: #8a84a3;
-            --text-on-accent: #1a1535;
+            --tag-game-bg: #e8f5fb;
+            --tag-game-color: #3a8fb7;
+            --tag-penpal-bg: #fef8ec;
+            --tag-penpal-color: #c7903a;
+            --tag-love-bg: #fff0f3;
+            --tag-love-color: #e8556d;
+            --tag-treehole-bg: #f3eefb;
+            --tag-treehole-color: #7c5cbf;
+            --tag-study-bg: #edf7ee;
+            --tag-study-color: #4a9e5c;
+            --tag-default-bg: #f5f5f7;
+            --tag-default-color: #8e8e93;
 
-            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.35);
-            --shadow-card-hover: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
-            --shadow-fab: 0 8px 28px rgba(255, 123, 137, 0.4);
-            --shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.6);
+            --milestone-bg: #fff9eb;
+            --milestone-border: #f5c842;
+            --milestone-text: #b8860b;
 
-            --radius-sm: 10px;
-            --radius-md: 16px;
+            --radius-sm: 12px;
+            --radius-md: 18px;
             --radius-lg: 22px;
             --radius-xl: 28px;
             --radius-full: 50%;
 
-            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --duration-fast: 0.2s;
-            --duration-normal: 0.35s;
-            --duration-slow: 0.5s;
+            --font-display: -apple-system, 'SF Pro Display', 'PingFang SC', 'Noto Sans SC', 'Helvetica Neue', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
 
-            --font-display: 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', system-ui, sans-serif;
-            --font-mono: 'SF Mono', 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+            --ease-ios: cubic-bezier(0.25, 0.1, 0.25, 1);
+            --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+            --duration-fast: 0.18s;
+            --duration-normal: 0.28s;
+            --duration-slow: 0.4s;
         }
 
+        /* 深色模式 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1c1c1e;
+                --bg-secondary: #2c2c2e;
+                --bg-tertiary: #3a3a3c;
+                --bg-input: #3a3a3c;
+
+                --text-primary: #f5f5f7;
+                --text-secondary: #aeaeb2;
+                --text-tertiary: #636366;
+                --text-on-accent: #ffffff;
+
+                --accent: #ff7b89;
+                --accent-light: #3d2025;
+                --accent-soft: rgba(255, 123, 137, 0.12);
+                --accent-blue: #0a84ff;
+                --accent-blue-light: #1a2d40;
+
+                --border: #48484a;
+                --border-light: #3a3a3c;
+                --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.25);
+                --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.30);
+                --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+                --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.40);
+                --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.50);
+
+                --tag-game-bg: #1e2f38;
+                --tag-game-color: #6dc5e8;
+                --tag-penpal-bg: #2f2818;
+                --tag-penpal-color: #e8b85a;
+                --tag-love-bg: #3d2025;
+                --tag-love-color: #ff8a98;
+                --tag-treehole-bg: #2a2238;
+                --tag-treehole-color: #b39ddb;
+                --tag-study-bg: #1e2f22;
+                --tag-study-color: #6ecb7a;
+                --tag-default-bg: #3a3a3c;
+                --tag-default-color: #aeaeb2;
+
+                --milestone-bg: #2f2818;
+                --milestone-border: #b8860b;
+                --milestone-text: #f5c842;
+            }
+        }
+
+        /* ============================================
+           全局重置
+           ============================================ */
         *,
         *::before,
         *::after {
@@ -92,544 +142,895 @@
             margin: 0;
             padding: 0;
         }
-
         html {
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
-
         body {
             font-family: var(--font-display);
-            background: linear-gradient(160deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 40%, var(--bg-gradient-end) 100%);
+            background: var(--bg-primary);
             min-height: 100vh;
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.5;
             overflow-x: hidden;
-            position: relative;
-            background-attachment: fixed;
+            transition: background var(--duration-normal) var(--ease-ios),
+                color var(--duration-normal) var(--ease-ios);
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: -30%;
-            left: -20%;
-            width: 80vw;
-            height: 80vw;
-            max-width: 900px;
-            max-height: 900px;
-            background: radial-gradient(circle, rgba(255, 123, 137, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            animation: floatGlow1 18s ease-in-out infinite;
-        }
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -25%;
-            right: -15%;
-            width: 70vw;
-            height: 70vw;
-            max-width: 750px;
-            max-height: 750px;
-            background: radial-gradient(circle, rgba(178, 155, 220, 0.07) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            animation: floatGlow2 22s ease-in-out infinite;
-        }
-        @keyframes floatGlow1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(6%, -4%) scale(1.08); }
-            66% { transform: translate(-3%, 3%) scale(0.94); }
-        }
-        @keyframes floatGlow2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            40% { transform: translate(-5%, -3%) scale(1.1); }
-            80% { transform: translate(4%, 5%) scale(0.92); }
-        }
-
+        /* 主容器 */
         .app-container {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 20px 24px 100px;
+            padding: 24px 20px 110px;
         }
 
+        /* ============================================
+           头部
+           ============================================ */
         .app-header {
             text-align: center;
-            padding: 32px 0 20px;
+            padding: 20px 0 10px;
         }
         .app-header__icon {
-            font-size: 3rem;
+            font-size: 2.8rem;
             display: block;
-            margin-bottom: 8px;
-            animation: gentleBounce 3s ease-in-out infinite;
-            filter: drop-shadow(0 4px 12px rgba(255, 123, 137, 0.3));
+            margin-bottom: 6px;
+            animation: gentleBounce 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
         }
         @keyframes gentleBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-7px);
+            }
         }
         .app-header__title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
-            letter-spacing: 0.04em;
-            background: linear-gradient(135deg, #f0edf6 0%, #ffb8c0 50%, #e8d5f5 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
             margin-bottom: 4px;
         }
         .app-header__subtitle {
-            font-size: 0.9rem;
-            color: var(--text-muted);
+            font-size: 0.95rem;
+            color: var(--text-tertiary);
             font-weight: 400;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.01em;
         }
 
+        /* ============================================
+           工具栏
+           ============================================ */
         .toolbar {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
-            padding: 16px 20px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border: 1px solid var(--glass-border);
+            margin-bottom: 22px;
+            padding: 14px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
             position: sticky;
-            top: 16px;
+            top: 14px;
             z-index: 10;
-            transition: all var(--duration-normal) var(--ease-out-expo);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--duration-normal) var(--ease-ios);
         }
         .toolbar:focus-within {
-            border-color: var(--accent-soft);
-            box-shadow: 0 0 0 4px rgba(255, 123, 137, 0.08);
+            box-shadow: var(--shadow-md), 0 0 0 4px var(--accent-soft);
+            border-color: var(--accent);
         }
         .toolbar__search-wrap {
-            flex: 1 1 220px;
-            min-width: 180px;
+            flex: 1 1 200px;
+            min-width: 160px;
             position: relative;
         }
         .toolbar__search-icon {
             position: absolute;
-            left: 14px;
+            left: 13px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 1rem;
-            color: var(--text-muted);
+            font-size: 0.95rem;
+            color: var(--text-tertiary);
             pointer-events: none;
             transition: color var(--duration-fast);
         }
         .toolbar__search {
             width: 100%;
-            padding: 11px 14px 11px 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 14px 10px 36px;
+            background: var(--bg-input);
+            border: 1.5px solid transparent;
             border-radius: var(--radius-md);
             color: var(--text-primary);
             font-size: 0.95rem;
             font-family: inherit;
             outline: none;
             transition: all var(--duration-fast);
+            -webkit-appearance: none;
         }
-        .toolbar__search::placeholder { color: var(--text-muted); }
+        .toolbar__search::placeholder {
+            color: var(--text-tertiary);
+        }
         .toolbar__search:focus {
-            border-color: var(--accent-soft);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 3px rgba(255, 123, 137, 0.06);
+            border-color: var(--accent-blue);
+            background: var(--bg-secondary);
+            box-shadow: 0 0 0 4px var(--accent-blue-light);
         }
-        .toolbar__search-wrap:focus-within .toolbar__search-icon { color: var(--accent); }
+        .toolbar__search-wrap:focus-within .toolbar__search-icon {
+            color: var(--accent-blue);
+        }
 
-        .toolbar__sort-group { display: flex; gap: 6px; flex-wrap: wrap; }
-        .toolbar__sort-btn {
-            padding: 9px 15px;
+        .toolbar__sort-group {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            background: var(--bg-input);
             border-radius: var(--radius-sm);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(255, 255, 255, 0.04);
+            padding: 4px;
+        }
+        .toolbar__sort-btn {
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
+            font-weight: 500;
             cursor: pointer;
             font-family: inherit;
             white-space: nowrap;
-            transition: all var(--duration-fast);
+            transition: all var(--duration-fast) var(--ease-ios);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
         .toolbar__sort-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
             color: var(--text-primary);
+            background: rgba(0, 0, 0, 0.04);
         }
-        .toolbar__sort-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        @media (prefers-color-scheme: dark) {
+            .toolbar__sort-btn:hover {
+                background: rgba(255, 255, 255, 0.06);
+            }
+        }
+        .toolbar__sort-btn:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: -2px;
+            border-radius: 10px;
+        }
         .toolbar__sort-btn--active {
-            background: var(--accent-soft);
-            border-color: var(--accent);
-            color: #fff;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             font-weight: 600;
-            box-shadow: 0 0 16px rgba(255, 123, 137, 0.2);
+            box-shadow: var(--shadow-xs);
         }
         .toolbar__count {
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: var(--text-tertiary);
             white-space: nowrap;
-            padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.03);
+            padding: 6px 12px;
+            background: var(--bg-input);
             border-radius: 20px;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.02em;
+            font-weight: 500;
         }
 
+        /* ============================================
+           卡片网格
+           ============================================ */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 18px;
         }
 
+        /* ============================================
+           卡片 · iOS 18 风格
+           ============================================ */
         .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-            border: 1px solid var(--glass-border);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
-            padding: 22px 24px 20px;
+            padding: 20px 22px 18px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            transition: all var(--duration-normal) var(--ease-out-expo);
-            box-shadow: var(--shadow-card);
-            animation: cardAppear 0.5s var(--ease-out-back) both;
+            transition: all var(--duration-normal) var(--ease-ios);
+            box-shadow: var(--shadow-xs);
+            animation: cardAppear 0.45s var(--ease-spring) both;
             will-change: transform, box-shadow;
+            -webkit-tap-highlight-color: transparent;
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: var(--glass-border-hover);
-            background: var(--glass-bg-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border);
         }
-        .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+        .card:active {
+            transform: scale(0.985);
+            transition: transform 0.12s var(--ease-ios);
+        }
+        .card:focus-visible {
+            outline: 3px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
         @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(24px) scale(0.94); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 20px; right: 20px; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-            opacity: 0;
-            transition: opacity var(--duration-normal);
-            pointer-events: none;
-        }
-        .card:hover::before { opacity: 1; }
 
+        /* 纪念日标记 */
         .card--milestone {
-            border-color: rgba(240, 194, 122, 0.45) !important;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 40px rgba(240, 194, 122, 0.15) !important;
+            border-color: var(--milestone-border) !important;
+            background: var(--milestone-bg) !important;
+            box-shadow: var(--shadow-sm), 0 0 0 1px var(--milestone-border) !important;
         }
         .card--milestone::after {
             content: '🎉 纪念日';
             position: absolute;
-            top: 12px; right: 16px;
+            top: 12px;
+            right: 14px;
             font-size: 0.7rem;
-            background: linear-gradient(135deg, #f0c27a, #e8a850);
-            color: #1a1535;
+            background: var(--milestone-border);
+            color: #fff;
             padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
             pointer-events: none;
-            animation: milestonePulse 2s ease-in-out infinite;
             z-index: 2;
+            animation: milestonePulse 2.5s ease-in-out infinite;
         }
         @keyframes milestonePulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(240, 194, 122, 0.5); }
-            50% { box-shadow: 0 0 0 12px rgba(240, 194, 122, 0); }
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.06);
+                opacity: 0.85;
+            }
         }
 
-        .card__header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; position: relative; z-index: 1; }
+        /* 卡片头部 */
+        .card__header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
         .card__avatar {
-            width: 50px; height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: var(--radius-full);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-            transition: transform var(--duration-fast);
+            box-shadow: var(--shadow-xs);
+            transition: transform var(--duration-fast) var(--ease-spring);
+            background: var(--bg-tertiary);
         }
-        .card:hover .card__avatar { transform: scale(1.06); }
+        .card:hover .card__avatar {
+            transform: scale(1.05);
+        }
         .card__avatar-inner {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             border-radius: var(--radius-full);
-            display: flex; align-items: center; justify-content: center;
-            background: var(--avatar-bg, rgba(255, 255, 255, 0.12));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--avatar-bg, var(--bg-tertiary));
         }
-        .card__info { flex: 1; min-width: 0; }
+        .card__info {
+            flex: 1;
+            min-width: 0;
+        }
         .card__nickname {
-            font-size: 1.15rem; font-weight: 700;
-            color: var(--text-primary); letter-spacing: 0.03em;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .card__meta-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 3px; }
-        .card__tag {
-            font-size: 0.72rem; padding: 3px 10px;
-            border-radius: 14px; font-weight: 500; letter-spacing: 0.03em;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
             white-space: nowrap;
-            background: var(--tag-bg, rgba(255, 255, 255, 0.1));
-            color: var(--tag-color, #ccc);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card__meta-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+        .card__tag {
+            font-size: 0.7rem;
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            background: var(--tag-bg, var(--tag-default-bg));
+            color: var(--tag-color, var(--tag-default-color));
         }
         .card__channel {
-            font-size: 0.75rem; color: var(--text-muted);
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;
+            font-size: 0.73rem;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 110px;
         }
 
+        /* 计时器区域 */
         .card__timer {
-            background: rgba(0, 0, 0, 0.2);
+            background: var(--bg-tertiary);
             border-radius: var(--radius-md);
-            padding: 14px 16px; margin-bottom: 10px;
-            position: relative; z-index: 1; text-align: center;
+            padding: 13px 16px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            text-align: center;
             transition: background var(--duration-fast);
         }
-        .card:hover .card__timer { background: rgba(0, 0, 0, 0.28); }
+        .card:hover .card__timer {
+            background: var(--bg-input);
+        }
         .card__timer-display {
             font-family: var(--font-mono);
-            font-size: 1.05rem; font-weight: 600;
-            color: #fff; letter-spacing: 0.05em;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 0.03em;
             word-break: break-all;
         }
-        .card__timer-display .highlight { color: var(--accent); }
+        .card__timer-display .highlight {
+            color: var(--accent);
+        }
         .card__timer-mode {
-            font-size: 0.7rem; color: var(--text-muted);
-            margin-top: 2px; letter-spacing: 0.04em;
+            font-size: 0.68rem;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+            letter-spacing: 0.03em;
         }
         .card__timer-toggle {
-            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-muted);
-            width: 28px; height: 28px; border-radius: var(--radius-full);
-            cursor: pointer; font-size: 0.75rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: all var(--duration-fast); z-index: 2;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            width: 30px;
+            height: 30px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--duration-fast);
+            z-index: 2;
             -webkit-tap-highlight-color: transparent;
+            box-shadow: var(--shadow-xs);
         }
         .card__timer-toggle:hover {
-            background: rgba(255, 255, 255, 0.14);
-            color: #fff; border-color: rgba(255, 255, 255, 0.3);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            border-color: var(--border);
         }
-        .card__timer-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .card__timer-toggle:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
 
+        /* 备注预览 */
         .card__note-preview {
-            font-size: 0.8rem; color: var(--text-muted); font-style: italic;
-            position: relative; z-index: 1;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            position: relative;
+            z-index: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             padding: 0 2px;
         }
 
-        .card__actions { display: flex; gap: 8px; position: relative; z-index: 1; margin-top: 12px; justify-content: flex-end; }
+        /* 卡片操作按钮 */
+        .card__actions {
+            display: flex;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+            justify-content: flex-end;
+        }
         .card__action-btn {
-            padding: 7px 13px; border-radius: var(--radius-sm);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-secondary); font-size: 0.78rem;
-            cursor: pointer; font-family: inherit;
+            padding: 7px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
             transition: all var(--duration-fast);
-            -webkit-tap-highlight-color: transparent; white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
         }
         .card__action-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff; border-color: rgba(255, 255, 255, 0.25);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border);
         }
-        .card__action-btn--edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-        .card__action-btn--delete { color: #e88; border-color: rgba(255, 100, 100, 0.2); }
+        .card__action-btn--edit:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+        .card__action-btn--delete {
+            color: #d44;
+            border-color: #fdd;
+        }
+        @media (prefers-color-scheme: dark) {
+            .card__action-btn--delete {
+                color: #ff6961;
+                border-color: #4a2020;
+            }
+        }
         .card__action-btn--delete:hover {
-            background: rgba(255, 80, 80, 0.2);
-            border-color: rgba(255, 100, 100, 0.5); color: #ff6b6b;
+            background: #fff0f0;
+            border-color: #fcc;
+            color: #c33;
+        }
+        @media (prefers-color-scheme: dark) {
+            .card__action-btn--delete:hover {
+                background: #3d2020;
+                border-color: #5a2828;
+                color: #ff8a80;
+            }
         }
 
-        .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted); }
-        .empty-state__icon { font-size: 4rem; display: block; margin-bottom: 16px; opacity: 0.6; }
-        .empty-state__text { font-size: 1rem; letter-spacing: 0.03em; }
+        /* ============================================
+           空状态
+           ============================================ */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-tertiary);
+        }
+        .empty-state__icon {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 14px;
+            opacity: 0.7;
+        }
+        .empty-state__text {
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+        }
 
+        /* ============================================
+           FAB 添加按钮
+           ============================================ */
         .fab {
-            position: fixed; bottom: 32px; right: 32px;
-            width: 58px; height: 58px; border-radius: var(--radius-full);
-            background: linear-gradient(135deg, #ff7b89, #e8657a);
-            border: none; color: #fff; font-size: 1.8rem;
-            cursor: pointer; box-shadow: var(--shadow-fab);
-            z-index: 20; display: flex; align-items: center; justify-content: center;
-            transition: all var(--duration-normal) var(--ease-out-back);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-full);
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: 400;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--duration-normal) var(--ease-spring);
             -webkit-tap-highlight-color: transparent;
         }
-        .fab:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(255, 123, 137, 0.55); }
-        .fab:active { transform: scale(0.94); transition: transform 0.1s; }
-        .fab:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
-
-        .modal-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            z-index: 100; display: flex; align-items: center; justify-content: center;
-            padding: 20px; animation: overlayIn var(--duration-fast) ease-out;
+        .fab:hover {
+            transform: scale(1.07);
+            box-shadow: var(--shadow-xl);
         }
-        @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+        .fab:active {
+            transform: scale(0.94);
+            transition: transform 0.1s;
+        }
+        .fab:focus-visible {
+            outline: 4px solid var(--accent-soft);
+            outline-offset: 4px;
+        }
+
+        /* ============================================
+           弹窗 / 模态框
+           ============================================ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: overlayIn var(--duration-fast) ease-out;
+        }
+        @media (prefers-color-scheme: dark) {
+            .modal-overlay {
+                background: rgba(0, 0, 0, 0.6);
+            }
+        }
+        @keyframes overlayIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
         .modal {
-            background: var(--modal-glass-bg);
-            backdrop-filter: blur(28px) saturate(2);
-            -webkit-backdrop-filter: blur(28px) saturate(2);
-            border: 1px solid var(--modal-glass-border);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
-            padding: 28px 26px 24px;
-            width: 100%; max-width: 500px; max-height: 85vh;
-            overflow-y: auto; box-shadow: var(--shadow-modal);
-            animation: modalIn var(--duration-slow) var(--ease-out-back);
+            padding: 26px 24px 22px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 84vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            animation: modalIn var(--duration-slow) var(--ease-spring);
             position: relative;
         }
         @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.88) translateY(30px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(28px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
-        .modal__title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; text-align: center; letter-spacing: 0.03em; color: #fff; }
+        .modal__title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            text-align: center;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
         .modal__close {
-            position: absolute; top: 14px; right: 18px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff; width: 34px; height: 34px; border-radius: var(--radius-full);
-            cursor: pointer; font-size: 1.1rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: all var(--duration-fast); z-index: 5;
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: var(--bg-tertiary);
+            border: none;
+            color: var(--text-secondary);
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--duration-fast);
+            z-index: 5;
             -webkit-tap-highlight-color: transparent;
         }
-        .modal__close:hover { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.3); }
-        .modal__close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+        .modal__close:hover {
+            background: var(--bg-input);
+            color: var(--text-primary);
+        }
+        .modal__close:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
 
-        .form-group { margin-bottom: 16px; }
-        .form-group__label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 5px; letter-spacing: 0.03em; }
+        /* 表单 */
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-group__label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            letter-spacing: 0.02em;
+        }
         .form-group__input,
         .form-group__select,
         .form-group__textarea {
-            width: 100%; padding: 11px 14px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--bg-input);
+            border: 1.5px solid transparent;
             border-radius: var(--radius-sm);
-            color: #fff; font-size: 0.95rem; font-family: inherit;
-            outline: none; transition: all var(--duration-fast);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: all var(--duration-fast);
+            -webkit-appearance: none;
         }
         .form-group__input:focus,
         .form-group__select:focus,
         .form-group__textarea:focus {
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.09);
-            box-shadow: 0 0 0 3px rgba(255, 123, 137, 0.08);
+            border-color: var(--accent-blue);
+            background: var(--bg-secondary);
+            box-shadow: 0 0 0 4px var(--accent-blue-light);
         }
-        .form-group__textarea { resize: vertical; min-height: 70px; }
+        .form-group__textarea {
+            resize: vertical;
+            min-height: 65px;
+        }
         .form-group__select {
-            cursor: pointer; appearance: none; -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%238a84a3'/%3E%3C/svg%3E");
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%238e8e93'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 14px center;
             padding-right: 36px;
         }
-        .form-group__select option { background: #1a1535; color: #fff; }
-        .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .form-row>.form-group { flex: 1; min-width: 140px; }
+        .form-group__select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .form-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .form-row>.form-group {
+            flex: 1;
+            min-width: 130px;
+        }
 
-        .emoji-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+        /* emoji 选择器 */
+        .emoji-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 2px;
+        }
         .emoji-picker__item {
-            width: 40px; height: 40px; border-radius: var(--radius-full);
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-full);
             border: 2px solid transparent;
-            background: rgba(255, 255, 255, 0.06);
-            cursor: pointer; font-size: 1.3rem;
-            display: flex; align-items: center; justify-content: center;
+            background: var(--bg-input);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all var(--duration-fast);
-            -webkit-tap-highlight-color: transparent; user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
-        .emoji-picker__item:hover { background: rgba(255, 255, 255, 0.16); transform: scale(1.1); }
+        .emoji-picker__item:hover {
+            background: var(--bg-tertiary);
+            transform: scale(1.08);
+        }
         .emoji-picker__item--selected {
-            border-color: var(--accent); background: var(--accent-soft);
-            box-shadow: 0 0 12px var(--accent-glow); transform: scale(1.08);
+            border-color: var(--accent);
+            background: var(--accent-light);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+            transform: scale(1.06);
         }
-        .emoji-picker__item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .emoji-picker__item:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
 
+        /* 提交按钮 */
         .btn-submit {
-            width: 100%; padding: 13px;
-            background: linear-gradient(135deg, #ff7b89, #e8657a);
-            border: none; border-radius: var(--radius-md);
-            color: #fff; font-size: 1rem; font-weight: 700;
-            cursor: pointer; font-family: inherit; letter-spacing: 0.04em;
-            transition: all var(--duration-normal) var(--ease-out-expo);
-            box-shadow: 0 6px 20px rgba(255, 123, 137, 0.3);
-            margin-top: 6px; -webkit-tap-highlight-color: transparent;
+            width: 100%;
+            padding: 13px;
+            background: var(--accent);
+            border: none;
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: 0.02em;
+            transition: all var(--duration-normal) var(--ease-ios);
+            box-shadow: var(--shadow-sm);
+            margin-top: 4px;
+            -webkit-tap-highlight-color: transparent;
         }
-        .btn-submit:hover { box-shadow: 0 10px 30px rgba(255, 123, 137, 0.45); transform: translateY(-1px); }
-        .btn-submit:active { transform: scale(0.97); transition: transform 0.1s; }
-        .btn-submit:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        .btn-submit:hover {
+            opacity: 0.9;
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+        .btn-submit:active {
+            transform: scale(0.97);
+            transition: transform 0.1s;
+        }
+        .btn-submit:focus-visible {
+            outline: 3px solid var(--accent-soft);
+            outline-offset: 3px;
+        }
 
-        .data-actions { display: flex; gap: 8px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+        /* 数据管理按钮 */
+        .data-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
         .data-actions__btn {
-            padding: 8px 16px; border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-secondary); font-size: 0.78rem;
-            cursor: pointer; font-family: inherit;
+            padding: 9px 17px;
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
             transition: all var(--duration-fast);
-            -webkit-tap-highlight-color: transparent; white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
         }
-        .data-actions__btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; border-color: rgba(255, 255, 255, 0.25); }
-        .data-actions__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .data-actions__btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border);
+        }
+        .data-actions__btn:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
 
+        /* Toast */
         .toast {
-            position: fixed; bottom: 40px; left: 50%;
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: rgba(30, 25, 55, 0.9);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff; padding: 12px 24px; border-radius: 28px;
-            font-size: 0.9rem; z-index: 200; pointer-events: none;
-            transition: transform var(--duration-normal) var(--ease-out-back);
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
-            letter-spacing: 0.03em;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 12px 22px;
+            border-radius: 24px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            z-index: 200;
+            pointer-events: none;
+            transition: transform var(--duration-normal) var(--ease-spring);
+            box-shadow: var(--shadow-lg);
+            letter-spacing: 0.02em;
+            white-space: nowrap;
         }
-        .toast--visible { transform: translateX(-50%) translateY(0); }
+        .toast--visible {
+            transform: translateX(-50%) translateY(0);
+        }
 
+        /* ============================================
+           响应式
+           ============================================ */
         @media (max-width: 768px) {
-            .app-container { padding: 12px 12px 100px; }
-            .cards-grid { grid-template-columns: 1fr; gap: 14px; }
-            .app-header__title { font-size: 1.4rem; }
-            .app-header__icon { font-size: 2.4rem; }
-            .toolbar { padding: 12px 14px; gap: 8px; border-radius: var(--radius-md); top: 8px; }
-            .toolbar__sort-btn { padding: 7px 11px; font-size: 0.78rem; }
-            .card { padding: 16px 18px 16px; border-radius: var(--radius-lg); }
-            .card__timer-display { font-size: 0.9rem; }
-            .card__avatar { width: 42px; height: 42px; font-size: 1.3rem; }
-            .card__nickname { font-size: 1rem; }
-            .fab { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 1.5rem; }
-            .modal { padding: 22px 16px 18px; border-radius: var(--radius-lg); max-width: 95vw; }
-            .form-row { flex-direction: column; gap: 0; }
-            .card__timer-toggle { width: 24px; height: 24px; font-size: 0.65rem; right: 8px; }
+            .app-container {
+                padding: 14px 10px 100px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .app-header__title {
+                font-size: 1.5rem;
+            }
+            .app-header__icon {
+                font-size: 2.2rem;
+            }
+            .toolbar {
+                padding: 10px 12px;
+                gap: 7px;
+                border-radius: var(--radius-md);
+                top: 8px;
+            }
+            .toolbar__sort-btn {
+                padding: 7px 10px;
+                font-size: 0.76rem;
+            }
+            .card {
+                padding: 16px 16px 14px;
+                border-radius: var(--radius-lg);
+            }
+            .card__timer-display {
+                font-size: 0.88rem;
+            }
+            .card__avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 1.3rem;
+            }
+            .card__nickname {
+                font-size: 1rem;
+            }
+            .fab {
+                bottom: 18px;
+                right: 18px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+            }
+            .modal {
+                padding: 20px 14px 16px;
+                border-radius: var(--radius-lg);
+                max-width: 94vw;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .card__timer-toggle {
+                width: 26px;
+                height: 26px;
+                font-size: 0.65rem;
+                right: 7px;
+            }
         }
         @media (max-width: 400px) {
-            .cards-grid { gap: 10px; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .toolbar__sort-group { justify-content: center; }
-            .card { padding: 14px; }
-            .card__timer-display { font-size: 0.8rem; }
+            .cards-grid {
+                gap: 10px;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .toolbar__sort-group {
+                justify-content: center;
+            }
+            .card {
+                padding: 12px;
+            }
+            .card__timer-display {
+                font-size: 0.78rem;
+            }
         }
         @media (min-width: 1400px) {
-            .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 22px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+            *,
+            *::before,
+            *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
@@ -639,6 +1040,9 @@
 </head>
 <body>
 
+    <!-- ============================================
+    主应用容器
+    ============================================ -->
     <div class="app-container" id="appContainer">
         <header class="app-header" role="banner">
             <span class="app-header__icon" aria-hidden="true">💫</span>
@@ -736,15 +1140,12 @@
             'use strict';
 
             const $ = (sel) => document.querySelector(sel);
-            const $$ = (sel) => document.querySelectorAll(sel);
-
             const cardsGrid = $('#cardsGrid');
             const searchInput = $('#searchInput');
             const sortGroup = $('#sortGroup');
             const recordCount = $('#recordCount');
             const fabAdd = $('#fabAdd');
             const modalOverlay = $('#modalOverlay');
-            const modal = $('#modal');
             const modalClose = $('#modalClose');
             const modalTitle = $('#modalTitle');
             const recordForm = $('#recordForm');
@@ -766,17 +1167,19 @@
             const btnClearAll = $('#btnClearAll');
             const dataActions = $('#dataActions');
 
-            const STORAGE_KEY = 'acquaintance_records';
-            const EMOJI_OPTIONS = ['✨', '🌟', '💫', '🎮', '💌', '💕', '🌙', '📚', '☕', '🦊', '🐰', '🌸', '🎵', '🌻', '🦋', '🍀', '💎', '🔥', '🎯', '🧸'];
+            const STORAGE_KEY = 'acquaintance_records_ios18';
+            const EMOJI_OPTIONS = ['✨', '🌟', '💫', '🎮', '💌', '💕', '🌙', '📚', '☕', '🦊', '🐰', '🌸', '🎵', '🌻', '🦋', '🍀',
+                '💎', '🔥', '🎯', '🧸'
+            ];
             const TAG_COLOR_MAP = {
-                '游戏搭子': { bg: 'rgba(126,200,227,0.2)', color: '#7ec8e3' },
-                '笔友': { bg: 'rgba(240,194,122,0.2)', color: '#f0c27a' },
-                '网恋对象': { bg: 'rgba(255,123,137,0.25)', color: '#ff7b89' },
-                '树洞知己': { bg: 'rgba(179,157,219,0.25)', color: '#b39ddb' },
-                '学习伙伴': { bg: 'rgba(129,199,132,0.2)', color: '#81c784' },
-                '追星同好': { bg: 'rgba(255,183,77,0.2)', color: '#ffb74d' },
-                '闲聊好友': { bg: 'rgba(144,164,174,0.2)', color: '#cfd8dc' },
-                '其他': { bg: 'rgba(200,200,200,0.18)', color: '#bbb' },
+                '游戏搭子': { bg: 'var(--tag-game-bg)', color: 'var(--tag-game-color)' },
+                '笔友': { bg: 'var(--tag-penpal-bg)', color: 'var(--tag-penpal-color)' },
+                '网恋对象': { bg: 'var(--tag-love-bg)', color: 'var(--tag-love-color)' },
+                '树洞知己': { bg: 'var(--tag-treehole-bg)', color: 'var(--tag-treehole-color)' },
+                '学习伙伴': { bg: 'var(--tag-study-bg)', color: 'var(--tag-study-color)' },
+                '追星同好': { bg: 'var(--tag-default-bg)', color: 'var(--tag-default-color)' },
+                '闲聊好友': { bg: 'var(--tag-default-bg)', color: 'var(--tag-default-color)' },
+                '其他': { bg: 'var(--tag-default-bg)', color: 'var(--tag-default-color)' },
             };
             const TIMER_MODES = ['detailed', 'totalDays', 'totalHours'];
             let timerModeMap = {};
@@ -806,11 +1209,11 @@
                 records.forEach(r => { if (!(r.id in timerModeMap)) timerModeMap[r.id] = 0; });
             }
 
-            function saveRecords() {
-                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch (e) { showToast('⚠️ 存储空间不足'); }
-            }
+            function saveRecords() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(
+            records)); } catch (e) { showToast('⚠️ 存储空间不足'); } }
 
-            function generateId() { return 'rec_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8); }
+            function generateId() { return 'rec_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,
+            8); }
 
             function createSampleRecord() {
                 const twoYearsAgo = new Date();
@@ -836,7 +1239,8 @@
                 const start = new Date(meetDateISO);
                 const now = new Date();
                 const msDiff = now - start;
-                if (msDiff < 0) return { years:0, months:0, days:0, hours:0, minutes:0, seconds:0, totalDays:0, totalHours:0, isMilestone:false };
+                if (msDiff < 0) return { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, totalDays: 0,
+                    totalHours: 0, isMilestone: false };
                 const totalDays = Math.floor(msDiff / (1000 * 60 * 60 * 24));
                 const totalHours = Math.floor(msDiff / (1000 * 60 * 60));
                 let years = now.getFullYear() - start.getFullYear();
@@ -845,43 +1249,62 @@
                 let hours = now.getHours() - start.getHours();
                 let minutes = now.getMinutes() - start.getMinutes();
                 let seconds = now.getSeconds() - start.getSeconds();
-                if (seconds < 0) { seconds += 60; minutes--; }
-                if (minutes < 0) { minutes += 60; hours--; }
-                if (hours < 0) { hours += 24; days--; }
-                if (days < 0) { const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); months--; }
-                if (months < 0) { months += 12; years--; }
+                if (seconds < 0) { seconds += 60;
+                    minutes--; }
+                if (minutes < 0) { minutes += 60;
+                    hours--; }
+                if (hours < 0) { hours += 24;
+                    days--; }
+                if (days < 0) { const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                    days += prevMonth.getDate();
+                    months--; }
+                if (months < 0) { months += 12;
+                    years--; }
                 if (years < 0) years = 0;
-                const isMilestone = (totalDays > 0 && totalDays % 100 === 0) || (totalDays > 0 && totalDays % 365 === 0 && years >= 1 && months === 0 && days === 0);
+                const isMilestone = (totalDays > 0 && totalDays % 100 === 0) || (totalDays > 0 && totalDays % 365 === 0 &&
+                    years >= 1 && months === 0 && days === 0);
                 return { years, months, days, hours, minutes, seconds, totalDays, totalHours, isMilestone };
             }
 
             function formatDuration(diff, mode) {
                 switch (mode) {
-                    case 'totalDays': return `共 <span class="highlight">${diff.totalDays.toLocaleString()}</span> 天`;
-                    case 'totalHours': return `共 <span class="highlight">${diff.totalHours.toLocaleString()}</span> 小时`;
+                    case 'totalDays':
+                        return `共 <span class="highlight">${diff.totalDays.toLocaleString()}</span> 天`;
+                    case 'totalHours':
+                        return `共 <span class="highlight">${diff.totalHours.toLocaleString()}</span> 小时`;
                     default:
                         const parts = [];
                         if (diff.years > 0) parts.push(`<span class="highlight">${diff.years}</span>年`);
-                        if (diff.months > 0 || diff.years > 0) parts.push(`<span class="highlight">${diff.months}</span>月`);
-                        if (diff.days > 0 || parts.length > 0) parts.push(`<span class="highlight">${diff.days}</span>天`);
-                        parts.push(`<span class="highlight">${String(diff.hours).padStart(2,'0')}</span>时`);
-                        parts.push(`<span class="highlight">${String(diff.minutes).padStart(2,'0')}</span>分`);
-                        parts.push(`<span class="highlight">${String(diff.seconds).padStart(2,'0')}</span>秒`);
+                        if (diff.months > 0 || diff.years > 0) parts.push(
+                            `<span class="highlight">${diff.months}</span>月`);
+                        if (diff.days > 0 || parts.length > 0) parts.push(
+                        `<span class="highlight">${diff.days}</span>天`);
+                        parts.push(
+                            `<span class="highlight">${String(diff.hours).padStart(2,'0')}</span>时`);
+                        parts.push(
+                            `<span class="highlight">${String(diff.minutes).padStart(2,'0')}</span>分`);
+                        parts.push(
+                            `<span class="highlight">${String(diff.seconds).padStart(2,'0')}</span>秒`);
                         return parts.join(' ');
                 }
             }
 
-            function getTimerModeLabel(mode) {
-                switch (mode) { case 'totalDays': return '总天数'; case 'totalHours': return '总小时'; default: return '详细'; }
-            }
+            function getTimerModeLabel(mode) { switch (mode) { case 'totalDays': return '总天数';
+                    case 'totalHours': return '总小时';
+                    default: return '详细'; } }
 
             function getSortFn(sortKey) {
                 switch (sortKey) {
-                    case 'duration-desc': return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
-                    case 'duration-asc': return (a, b) => new Date(b.meetDate) - new Date(a.meetDate);
-                    case 'name-asc': return (a, b) => a.nickname.localeCompare(b.nickname, 'zh');
-                    case 'recent': return (a, b) => new Date(b.createdAt) - new Date(a.createdAt);
-                    default: return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
+                    case 'duration-desc':
+                        return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
+                    case 'duration-asc':
+                        return (a, b) => new Date(b.meetDate) - new Date(a.meetDate);
+                    case 'name-asc':
+                        return (a, b) => a.nickname.localeCompare(b.nickname, 'zh');
+                    case 'recent':
+                        return (a, b) => new Date(b.createdAt) - new Date(a.createdAt);
+                    default:
+                        return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
                 }
             }
 
@@ -907,7 +1330,8 @@
                 filtered = [...filtered].sort(sortFn);
                 recordCount.textContent = `${filtered.length} / ${records.length} 条记录`;
                 if (filtered.length === 0) {
-                    cardsGrid.innerHTML = `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">📭</span><p class="empty-state__text">${records.length === 0 ? '还没有记录，点击下方按钮添加第一位网友吧~' : '没有匹配的记录，试试调整搜索条件'}</p></div>`;
+                    cardsGrid.innerHTML =
+                        `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">📭</span><p class="empty-state__text">${records.length === 0 ? '还没有记录，点击下方按钮添加第一位网友吧~' : '没有匹配的记录，试试调整搜索条件'}</p></div>`;
                 } else {
                     cardsGrid.innerHTML = filtered.map(r => buildCardHTML(r)).join('');
                 }
@@ -923,7 +1347,7 @@
                 const milestoneClass = diff.isMilestone ? ' card--milestone' : '';
                 const notePreview = record.firstImpression || record.channel || '';
                 return `
-                <article class="card${milestoneClass}" role="listitem" data-record-id="${record.id}" tabindex="0" aria-label="${escapeHTML(record.nickname)}，${record.relationTag}，已认识${diff.years}年${diff.months}月${diff.days}天">
+                <article class="card${milestoneClass}" role="listitem" data-record-id="${record.id}" tabindex="0" aria-label="${escapeHTML(record.nickname)}，${record.relationTag}">
                   <div class="card__header">
                     <div class="card__avatar" aria-hidden="true"><div class="card__avatar-inner" style="--avatar-bg:${tagStyle.bg};">${escapeHTML(record.avatar)}</div></div>
                     <div class="card__info">
@@ -937,17 +1361,18 @@
                   <div class="card__timer">
                     <div class="card__timer-display">${timerHTML}</div>
                     <div class="card__timer-mode">显示模式：${modeLabel}</div>
-                    <button class="card__timer-toggle" data-action="toggle-timer" data-record-id="${record.id}" aria-label="切换时长显示模式" title="点击切换显示模式">🔄</button>
+                    <button class="card__timer-toggle" data-action="toggle-timer" data-record-id="${record.id}" aria-label="切换时长显示模式">🔄</button>
                   </div>
                   ${notePreview ? `<div class="card__note-preview" title="${escapeHTML(notePreview)}">💬 ${escapeHTML(notePreview)}</div>` : ''}
                   <div class="card__actions">
-                    <button class="card__action-btn card__action-btn--edit" data-action="edit" data-record-id="${record.id}" aria-label="编辑 ${escapeHTML(record.nickname)} 的记录">✏️ 编辑</button>
-                    <button class="card__action-btn card__action-btn--delete" data-action="delete" data-record-id="${record.id}" aria-label="删除 ${escapeHTML(record.nickname)} 的记录">🗑 删除</button>
+                    <button class="card__action-btn card__action-btn--edit" data-action="edit" data-record-id="${record.id}">✏️ 编辑</button>
+                    <button class="card__action-btn card__action-btn--delete" data-action="delete" data-record-id="${record.id}">🗑 删除</button>
                   </div>
                 </article>`;
             }
 
-            function escapeHTML(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
+            function escapeHTML(str) { const div = document.createElement('div');
+                div.textContent = str; return div.innerHTML; }
 
             function updateAllTimers() {
                 const cards = cardsGrid.querySelectorAll('.card');
@@ -961,7 +1386,8 @@
                     const modeLabel = card.querySelector('.card__timer-mode');
                     if (timerDisplay) timerDisplay.innerHTML = formatDuration(diff, mode);
                     if (modeLabel) modeLabel.textContent = '显示模式：' + getTimerModeLabel(mode);
-                    if (diff.isMilestone && !card.classList.contains('card--milestone')) card.classList.add('card--milestone');
+                    if (diff.isMilestone && !card.classList.contains('card--milestone')) card.classList.add(
+                        'card--milestone');
                 });
             }
 
@@ -1004,7 +1430,7 @@
             function renderEmojiPicker(selectedEmoji) {
                 emojiPicker.innerHTML = EMOJI_OPTIONS.map(emoji => {
                     const isSelected = emoji === selectedEmoji;
-                    return `<button type="button" class="emoji-picker__item${isSelected ? ' emoji-picker__item--selected' : ''}" data-emoji="${emoji}" role="radio" aria-checked="${isSelected}" aria-label="选择头像 ${emoji}" tabindex="0">${emoji}</button>`;
+                    return `<button type="button" class="emoji-picker__item${isSelected ? ' emoji-picker__item--selected' : ''}" data-emoji="${emoji}" role="radio" aria-checked="${isSelected}" aria-label="选择头像 ${emoji}">${emoji}</button>`;
                 }).join('');
                 emojiPicker.querySelectorAll('.emoji-picker__item').forEach(btn => {
                     btn.addEventListener('click', () => {
@@ -1030,8 +1456,10 @@
             }
 
             function validateForm(data) {
-                if (!data.nickname) { showToast('⚠️ 请输入昵称'); formNickname.focus(); return false; }
-                if (!formDate.value) { showToast('⚠️ 请选择认识日期'); formDate.focus(); return false; }
+                if (!data.nickname) { showToast('⚠️ 请输入昵称');
+                    formNickname.focus(); return false; }
+                if (!formDate.value) { showToast('⚠️ 请选择认识日期');
+                    formDate.focus(); return false; }
                 if (isNaN(new Date(data.meetDate).getTime())) { showToast('⚠️ 日期格式不正确'); return false; }
                 if (new Date(data.meetDate) > new Date()) { showToast('⚠️ 认识日期不能是未来时间'); return false; }
                 return true;
@@ -1044,7 +1472,8 @@
                     records[idx] = { ...records[idx], ...data, updatedAt: new Date().toISOString() };
                     showToast('✅ 记录已更新');
                 } else {
-                    const newRecord = { id: generateId(), ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+                    const newRecord = { id: generateId(), ...data, createdAt: new Date().toISOString(), updatedAt: new Date()
+                            .toISOString() };
                     records.push(newRecord);
                     timerModeMap[newRecord.id] = 0;
                     showToast('🎉 记录已添加');
@@ -1073,8 +1502,11 @@
                 const a = document.createElement('a');
                 a.href = url;
                 const now = new Date();
-                a.download = `相识时光_备份_${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}.json`;
-                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                a.download =
+                    `相识时光_备份_${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
                 URL.revokeObjectURL(url);
                 showToast('📥 备份已下载');
             }
@@ -1087,7 +1519,9 @@
                         if (!Array.isArray(imported)) throw new Error('格式错误');
                         const valid = imported.filter(r => r.nickname && r.meetDate);
                         if (valid.length === 0) { showToast('⚠️ 文件中没有有效记录'); return; }
-                        if (!confirm(`发现 ${valid.length} 条记录。\n\n选择"确定"将合并导入（保留现有记录），\n选择"取消"将放弃导入。`)) return;
+                        if (!confirm(
+                                `发现 ${valid.length} 条记录。\n\n选择"确定"将合并导入（保留现有记录），\n选择"取消"将放弃导入。`
+                                )) return;
                         const existingIds = new Set(records.map(r => r.id));
                         const newRecords = valid.filter(r => !existingIds.has(r.id));
                         records = [...records, ...newRecords];
@@ -1111,17 +1545,20 @@
             }
 
             let toastTimer = null;
+
             function showToast(message) {
                 if (toastTimer) clearTimeout(toastTimer);
                 toast.textContent = message;
                 toast.classList.add('toast--visible');
-                toastTimer = setTimeout(() => { toast.classList.remove('toast--visible'); toastTimer = null; }, 2200);
+                toastTimer = setTimeout(() => { toast.classList.remove('toast--visible');
+                    toastTimer = null; }, 2200);
             }
 
             fabAdd.addEventListener('click', () => openModal(null));
             modalClose.addEventListener('click', closeModal);
             modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.style.display === 'flex') closeModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.style.display ===
+                    'flex') closeModal(); });
             recordForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const data = collectFormData();
@@ -1133,7 +1570,9 @@
             sortGroup.addEventListener('click', (e) => {
                 const btn = e.target.closest('.toolbar__sort-btn');
                 if (!btn) return;
-                sortGroup.querySelectorAll('.toolbar__sort-btn').forEach(b => { b.classList.remove('toolbar__sort-btn--active'); b.setAttribute('aria-pressed', 'false'); });
+                sortGroup.querySelectorAll('.toolbar__sort-btn').forEach(b => { b.classList.remove(
+                        'toolbar__sort-btn--active');
+                    b.setAttribute('aria-pressed', 'false'); });
                 btn.classList.add('toolbar__sort-btn--active');
                 btn.setAttribute('aria-pressed', 'true');
                 renderCards();
@@ -1163,7 +1602,9 @@
             });
             btnExport.addEventListener('click', exportData);
             btnImport.addEventListener('click', () => importFileInput.click());
-            importFileInput.addEventListener('change', (e) => { if (e.target.files[0]) importData(e.target.files[0]); importFileInput.value = ''; });
+            importFileInput.addEventListener('change', (e) => { if (e.target.files[0]) importData(e.target.files[
+                    0]);
+                importFileInput.value = ''; });
             btnClearAll.addEventListener('click', clearAllData);
 
             function init() {
@@ -1172,7 +1613,7 @@
                 renderCards();
                 setInterval(updateAllTimers, 1000);
                 updateAllTimers();
-                console.log('💫 相识时光已启动 - 可添加到 iPhone 主屏幕');
+                console.log('💫 相识时光 · iOS 18 风格已就绪');
             }
             init();
         })();
