@@ -43,6 +43,8 @@
             --accent-soft: rgba(255, 107, 127, 0.10);
             --accent-blue: #007aff;
             --accent-blue-light: #e8f2ff;
+            --accent-missing: #8e8e93;
+            --accent-missing-bg: #f0f0f3;
 
             --border: #e5e5ea;
             --border-light: #f0f0f5;
@@ -101,6 +103,8 @@
                 --accent-soft: rgba(255, 123, 137, 0.12);
                 --accent-blue: #0a84ff;
                 --accent-blue-light: #1a2d40;
+                --accent-missing: #636366;
+                --accent-missing-bg: #2c2c2e;
 
                 --border: #48484a;
                 --border-light: #3a3a3c;
@@ -202,7 +206,7 @@
             gap: 6px;
             align-items: center;
             justify-content: center;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             padding: 8px 12px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
@@ -223,9 +227,9 @@
         }
 
         .toolbar__search-wrap {
-            flex: 0 1 200px;
-            min-width: 130px;
-            max-width: 220px;
+            flex: 0 1 180px;
+            min-width: 120px;
+            max-width: 200px;
             position: relative;
         }
         .toolbar__search-icon {
@@ -286,10 +290,7 @@
             -webkit-tap-highlight-color: transparent;
         }
         .toolbar__sort-btn:hover { color: var(--text-primary); }
-        .toolbar__sort-btn:focus-visible {
-            outline: 2px solid var(--accent-blue);
-            outline-offset: -2px;
-        }
+        .toolbar__sort-btn:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: -2px; }
         .toolbar__sort-btn--active {
             background: var(--bg-secondary);
             color: var(--text-primary);
@@ -304,6 +305,53 @@
             background: var(--bg-input);
             border-radius: 16px;
             font-weight: 500;
+        }
+
+        /* ============================================
+           失踪人员视图切换按钮
+           ============================================ */
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-input);
+            border-radius: 8px;
+            padding: 3px;
+        }
+        .view-toggle__btn {
+            padding: 6px 12px;
+            border-radius: 7px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            transition: all var(--duration-fast) var(--ease-ios);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .view-toggle__btn:hover { color: var(--text-primary); }
+        .view-toggle__btn--active {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: var(--shadow-xs);
+        }
+        .view-toggle__badge {
+            font-size: 0.65rem;
+            background: var(--accent-missing);
+            color: #fff;
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .view-toggle__btn--active .view-toggle__badge {
+            background: var(--accent);
         }
 
         /* ============================================
@@ -344,6 +392,36 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
+        /* 失踪状态卡片 */
+        .card--missing {
+            opacity: 0.55;
+            filter: grayscale(0.4);
+            border-color: var(--border-light) !important;
+        }
+        .card--missing:hover {
+            opacity: 0.75;
+            filter: grayscale(0.2);
+        }
+        .card--missing .card__nickname {
+            text-decoration: line-through;
+            text-decoration-color: var(--text-tertiary);
+        }
+        .card--missing::before {
+            content: '已失踪';
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 0.65rem;
+            background: var(--accent-missing-bg);
+            color: var(--accent-missing);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            pointer-events: none;
+            z-index: 2;
+            letter-spacing: 0.03em;
+        }
+
         .card--milestone {
             border-color: var(--milestone-border) !important;
             background: var(--milestone-bg) !important;
@@ -361,6 +439,10 @@
             font-weight: 600;
             pointer-events: none;
             z-index: 2;
+        }
+        /* 如果同时是纪念日和失踪，优先显示失踪 */
+        .card--missing.card--milestone::after {
+            content: none;
         }
 
         .card__header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; z-index: 1; }
@@ -386,6 +468,7 @@
             font-size: 1rem; font-weight: 600;
             color: var(--text-primary);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            transition: text-decoration var(--duration-fast);
         }
         .card__meta-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
         .card__tag {
@@ -413,6 +496,7 @@
             color: var(--text-primary);
         }
         .card__timer-display .highlight { color: var(--accent); }
+        .card--missing .card__timer-display .highlight { color: var(--accent-missing); }
         .card__timer-mode {
             font-size: 0.65rem; color: var(--text-tertiary);
             margin-top: 1px;
@@ -438,21 +522,43 @@
             z-index: 1; padding: 0 2px;
         }
 
-        .card__actions { display: flex; gap: 6px; margin-top: 8px; justify-content: flex-end; z-index: 1; }
+        .card__actions { display: flex; gap: 6px; margin-top: 8px; justify-content: flex-end; z-index: 1; flex-wrap: wrap; }
         .card__action-btn {
-            padding: 5px 12px; border-radius: 16px;
+            padding: 5px 10px; border-radius: 14px;
             border: 1px solid var(--border-light);
             background: var(--bg-secondary);
             color: var(--text-secondary);
-            font-size: 0.73rem; font-weight: 500;
+            font-size: 0.7rem; font-weight: 500;
             cursor: pointer; font-family: inherit;
             transition: all var(--duration-fast);
             white-space: nowrap;
         }
         .card__action-btn:hover { background: var(--bg-tertiary); color: var(--text-primary); }
         .card__action-btn--delete { color: #d44; border-color: #fdd; }
+        .card__action-btn--missing {
+            color: var(--accent-missing);
+            border-color: var(--border-light);
+        }
+        .card__action-btn--missing:hover {
+            background: var(--accent-missing-bg);
+            color: #666;
+            border-color: #ccc;
+        }
+        .card--missing .card__action-btn--missing {
+            color: var(--accent);
+            border-color: var(--accent-soft);
+            background: var(--accent-light);
+        }
+        .card--missing .card__action-btn--missing:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
         @media (prefers-color-scheme: dark) {
             .card__action-btn--delete { color: #ff6961; border-color: #4a2020; }
+            .card__action-btn--missing { color: #888; border-color: #444; }
+            .card__action-btn--missing:hover { background: #333; color: #aaa; }
+            .card--missing .card__action-btn--missing { color: #ff7b89; border-color: #4a2830; background: #3d2025; }
         }
         .card__action-btn--delete:hover { background: #fff0f0; border-color: #fcc; color: #c33; }
         @media (prefers-color-scheme: dark) {
@@ -567,6 +673,63 @@
         .form-row { display: flex; gap: 8px; flex-wrap: wrap; }
         .form-row>.form-group { flex: 1; min-width: 120px; }
 
+        /* 开关样式 */
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        .toggle-group__label {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+        .toggle-switch__input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+        .toggle-switch__slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-input);
+            border-radius: 28px;
+            transition: all var(--duration-fast) var(--ease-ios);
+            border: 1.5px solid var(--border-light);
+        }
+        .toggle-switch__slider::before {
+            content: '';
+            position: absolute;
+            height: 22px;
+            width: 22px;
+            left: 2px;
+            bottom: 2px;
+            background: #fff;
+            border-radius: 50%;
+            transition: all var(--duration-fast) var(--ease-ios);
+            box-shadow: var(--shadow-xs);
+        }
+        .toggle-switch__input:checked + .toggle-switch__slider {
+            background: var(--accent-missing);
+            border-color: var(--accent-missing);
+        }
+        .toggle-switch__input:checked + .toggle-switch__slider::before {
+            transform: translateX(20px);
+        }
+        .toggle-switch__input:focus-visible + .toggle-switch__slider {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
         .emoji-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
         .emoji-picker__item {
             width: 34px; height: 34px; border-radius: var(--radius-full);
@@ -637,9 +800,10 @@
             .app-header__title { font-size: 1.4rem; }
             .app-header__icon { font-size: 2rem; }
             .toolbar { padding: 6px 8px; gap: 4px; border-radius: var(--radius-md); }
-            .toolbar__search-wrap { max-width: 160px; }
+            .toolbar__search-wrap { max-width: 140px; }
             .toolbar__sort-btn { padding: 5px 8px; font-size: 0.7rem; }
             .toolbar__count { font-size: 0.68rem; padding: 4px 8px; }
+            .view-toggle__btn { padding: 5px 8px; font-size: 0.7rem; }
             .card { padding: 12px 14px 10px; border-radius: var(--radius-lg); }
             .card__timer-display { font-size: 0.82rem; }
             .card__avatar { width: 36px; height: 36px; font-size: 1.1rem; }
@@ -648,12 +812,14 @@
             .modal { padding: 18px 12px 14px; border-radius: var(--radius-lg); max-width: 94vw; }
             .form-row { flex-direction: column; gap: 0; }
             .card__timer-toggle { width: 22px; height: 22px; font-size: 0.6rem; right: 6px; }
+            .card__action-btn { padding: 4px 8px; font-size: 0.68rem; }
         }
         @media (max-width: 400px) {
             .cards-grid { gap: 8px; }
             .toolbar { flex-direction: column; align-items: stretch; }
             .toolbar__search-wrap { max-width: 100%; flex: 1 1 auto; }
             .toolbar__sort-group { justify-content: center; }
+            .view-toggle { justify-content: center; }
             .card { padding: 10px; }
             .card__timer-display { font-size: 0.75rem; }
         }
@@ -692,7 +858,15 @@
                 <button class="toolbar__sort-btn" data-sort="name-asc" aria-pressed="false">昵称排序</button>
                 <button class="toolbar__sort-btn" data-sort="recent" aria-pressed="false">最近添加</button>
             </div>
-            <span class="toolbar__count" id="recordCount" aria-live="polite">0 条记录</span>
+            <div class="view-toggle" id="viewToggle">
+                <button class="view-toggle__btn view-toggle__btn--active" data-view="all" aria-pressed="true">
+                    全部
+                </button>
+                <button class="view-toggle__btn" data-view="missing" aria-pressed="false">
+                    失踪 <span class="view-toggle__badge" id="missingBadge">0</span>
+                </button>
+            </div>
+            <span class="toolbar__count" id="recordCount" aria-live="polite">0 条</span>
         </nav>
 
         <main class="cards-grid" id="cardsGrid" role="list" aria-label="网友记录列表"></main>
@@ -759,6 +933,16 @@
                     <label class="form-group__label" for="formNote">初印象 / 备注</label>
                     <textarea class="form-group__textarea" id="formNote" placeholder="记录相识时的第一印象..." maxlength="200"></textarea>
                 </div>
+
+                <!-- 已失踪开关 -->
+                <div class="toggle-group">
+                    <span class="toggle-group__label">标记为"已失踪"</span>
+                    <label class="toggle-switch" for="formMissing">
+                        <input type="checkbox" class="toggle-switch__input" id="formMissing">
+                        <span class="toggle-switch__slider"></span>
+                    </label>
+                </div>
+
                 <button type="submit" class="btn-submit" id="btnSubmit">保存记录</button>
             </form>
         </div>
@@ -775,6 +959,8 @@
             const searchInput = $('#searchInput');
             const sortGroup = $('#sortGroup');
             const recordCount = $('#recordCount');
+            const viewToggle = $('#viewToggle');
+            const missingBadge = $('#missingBadge');
             const fabAdd = $('#fabAdd');
             const modalOverlay = $('#modalOverlay');
             const modalClose = $('#modalClose');
@@ -789,6 +975,7 @@
             const formTime = $('#formTime');
             const formChannel = $('#formChannel');
             const formNote = $('#formNote');
+            const formMissing = $('#formMissing');
             const btnSubmit = $('#btnSubmit');
             const emojiPicker = $('#emojiPicker');
             const toast = $('#toast');
@@ -798,7 +985,7 @@
             const btnClearAll = $('#btnClearAll');
             const dataActions = $('#dataActions');
 
-            const STORAGE_KEY = 'acquaintance_records_v3';
+            const STORAGE_KEY = 'acquaintance_records_v4';
             const EMOJI_OPTIONS = ['✨', '🌟', '💫', '🎮', '💌', '💕', '🌙', '📚', '☕', '🦊', '🐰', '🌸', '🎵', '🌻', '🦋', '🍀', '💎', '🔥', '🎯', '🧸'];
             const TAG_COLOR_MAP = {
                 '游戏搭子': { bg: 'var(--tag-game-bg)', color: 'var(--tag-game-color)' },
@@ -813,6 +1000,7 @@
             const TIMER_MODES = ['detailed', 'totalDays', 'totalHours'];
             let timerModeMap = {};
             let records = [];
+            let currentView = 'all'; // 'all' | 'missing'
 
             function loadRecords() {
                 try {
@@ -827,6 +1015,7 @@
                         meetDate: r.meetDate || new Date().toISOString(),
                         channel: r.channel || '',
                         firstImpression: r.firstImpression || '',
+                        isMissing: r.isMissing || false,
                         createdAt: r.createdAt || new Date().toISOString(),
                         updatedAt: r.updatedAt || new Date().toISOString(),
                     }));
@@ -856,6 +1045,7 @@
                     meetDate: twoYearsAgo.toISOString(),
                     channel: '某匿名树洞网站',
                     firstImpression: '很温柔的声音，像是认识了很久的老朋友。',
+                    isMissing: false,
                     createdAt: twoYearsAgo.toISOString(),
                     updatedAt: twoYearsAgo.toISOString(),
                 };
@@ -917,13 +1107,24 @@
                 return activeBtn ? activeBtn.dataset.sort : 'duration-desc';
             }
 
+            function getMissingCount() {
+                return records.filter(r => r.isMissing).length;
+            }
+
             function renderCards() {
                 const searchQuery = searchInput.value.trim().toLowerCase();
                 const sortKey = getActiveSortKey();
                 const sortFn = getSortFn(sortKey);
                 let filtered = records;
+
+                // 根据视图过滤
+                if (currentView === 'missing') {
+                    filtered = filtered.filter(r => r.isMissing);
+                }
+
+                // 搜索过滤
                 if (searchQuery) {
-                    filtered = records.filter(r =>
+                    filtered = filtered.filter(r =>
                         r.nickname.toLowerCase().includes(searchQuery) ||
                         (r.firstImpression && r.firstImpression.toLowerCase().includes(searchQuery)) ||
                         (r.channel && r.channel.toLowerCase().includes(searchQuery)) ||
@@ -931,10 +1132,22 @@
                         r.relationTag.toLowerCase().includes(searchQuery)
                     );
                 }
+
                 filtered = [...filtered].sort(sortFn);
-                recordCount.textContent = `${filtered.length} / ${records.length} 条`;
+
+                // 更新失踪徽章
+                missingBadge.textContent = getMissingCount();
+
+                // 更新计数
+                if (currentView === 'missing') {
+                    recordCount.textContent = `失踪 ${filtered.length} 人`;
+                } else {
+                    const activeCount = records.filter(r => !r.isMissing).length;
+                    recordCount.textContent = `${filtered.length} / ${records.length} 条`;
+                }
+
                 if (filtered.length === 0) {
-                    cardsGrid.innerHTML = `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">📭</span><p class="empty-state__text">${records.length === 0 ? '还没有记录，点击下方按钮添加第一位网友吧~' : '没有匹配的记录，试试调整搜索条件'}</p></div>`;
+                    cardsGrid.innerHTML = `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">${currentView === 'missing' ? '🕊️' : '📭'}</span><p class="empty-state__text">${currentView === 'missing' ? '没有失踪人员，大家都还在~' : (records.length === 0 ? '还没有记录，点击下方按钮添加第一位网友吧~' : '没有匹配的记录，试试调整搜索条件')}</p></div>`;
                 } else {
                     cardsGrid.innerHTML = filtered.map(r => buildCardHTML(r)).join('');
                 }
@@ -947,10 +1160,11 @@
                 const timerHTML = formatDuration(diff, mode);
                 const modeLabel = getTimerModeLabel(mode);
                 const tagStyle = TAG_COLOR_MAP[record.relationTag] || TAG_COLOR_MAP['其他'];
-                const milestoneClass = diff.isMilestone ? ' card--milestone' : '';
+                const missingClass = record.isMissing ? ' card--missing' : '';
+                const milestoneClass = !record.isMissing && diff.isMilestone ? ' card--milestone' : '';
                 const notePreview = record.firstImpression || record.channel || '';
                 return `
-                <article class="card${milestoneClass}" role="listitem" data-record-id="${record.id}" tabindex="0" aria-label="${escapeHTML(record.nickname)}，${record.relationTag}">
+                <article class="card${missingClass}${milestoneClass}" role="listitem" data-record-id="${record.id}" tabindex="0" aria-label="${escapeHTML(record.nickname)}，${record.relationTag}${record.isMissing ? '，已失踪' : ''}">
                   <div class="card__header">
                     <div class="card__avatar" aria-hidden="true"><div class="card__avatar-inner" style="--avatar-bg:${tagStyle.bg};">${escapeHTML(record.avatar)}</div></div>
                     <div class="card__info">
@@ -968,6 +1182,9 @@
                   </div>
                   ${notePreview ? `<div class="card__note-preview" title="${escapeHTML(notePreview)}">${escapeHTML(notePreview)}</div>` : ''}
                   <div class="card__actions">
+                    <button class="card__action-btn card__action-btn--missing" data-action="toggle-missing" data-record-id="${record.id}">
+                      ${record.isMissing ? '找回' : '失踪'}
+                    </button>
                     <button class="card__action-btn card__action-btn--edit" data-action="edit" data-record-id="${record.id}">编辑</button>
                     <button class="card__action-btn card__action-btn--delete" data-action="delete" data-record-id="${record.id}">删除</button>
                   </div>
@@ -988,7 +1205,9 @@
                     const modeLabel = card.querySelector('.card__timer-mode');
                     if (timerDisplay) timerDisplay.innerHTML = formatDuration(diff, mode);
                     if (modeLabel) modeLabel.textContent = getTimerModeLabel(mode);
-                    if (diff.isMilestone && !card.classList.contains('card--milestone')) card.classList.add('card--milestone');
+                    if (!record.isMissing && diff.isMilestone && !card.classList.contains('card--milestone')) {
+                        card.classList.add('card--milestone');
+                    }
                 });
             }
 
@@ -1003,6 +1222,7 @@
                 formGroup.value = record ? (record.group || '') : '';
                 formChannel.value = record ? (record.channel || '') : '';
                 formNote.value = record ? (record.firstImpression || '') : '';
+                formMissing.checked = record ? record.isMissing : false;
                 if (record && record.meetDate) {
                     const d = new Date(record.meetDate);
                     formDate.value = d.toISOString().slice(0, 10);
@@ -1053,6 +1273,7 @@
                     meetDate: meetDateISO,
                     channel: formChannel.value.trim(),
                     firstImpression: formNote.value.trim(),
+                    isMissing: formMissing.checked,
                 };
             }
 
@@ -1069,16 +1290,26 @@
                     const idx = records.findIndex(r => r.id === recordId);
                     if (idx === -1) return false;
                     records[idx] = { ...records[idx], ...data, updatedAt: new Date().toISOString() };
-                    showToast('记录已更新');
+                    showToast(data.isMissing ? '已标记为失踪' : '记录已更新');
                 } else {
                     const newRecord = { id: generateId(), ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
                     records.push(newRecord);
                     timerModeMap[newRecord.id] = 0;
-                    showToast('记录已添加');
+                    showToast(data.isMissing ? '已添加至失踪人员' : '记录已添加');
                 }
                 saveRecords();
                 renderCards();
                 return true;
+            }
+
+            function toggleMissing(recordId) {
+                const idx = records.findIndex(r => r.id === recordId);
+                if (idx === -1) return;
+                records[idx].isMissing = !records[idx].isMissing;
+                records[idx].updatedAt = new Date().toISOString();
+                saveRecords();
+                renderCards();
+                showToast(records[idx].isMissing ? '已标记为失踪' : '已从失踪人员中找回');
             }
 
             function deleteRecord(recordId) {
@@ -1145,10 +1376,12 @@
                 toastTimer = setTimeout(() => { toast.classList.remove('toast--visible'); toastTimer = null; }, 2000);
             }
 
+            // ==================== 事件绑定 ====================
             fabAdd.addEventListener('click', () => openModal(null));
             modalClose.addEventListener('click', closeModal);
             modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.style.display === 'flex') closeModal(); });
+
             recordForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const data = collectFormData();
@@ -1156,7 +1389,9 @@
                 const recordId = formRecordId.value || null;
                 if (saveRecord(data, recordId)) closeModal();
             });
+
             searchInput.addEventListener('input', renderCards);
+
             sortGroup.addEventListener('click', (e) => {
                 const btn = e.target.closest('.toolbar__sort-btn');
                 if (!btn) return;
@@ -1165,6 +1400,18 @@
                 btn.setAttribute('aria-pressed', 'true');
                 renderCards();
             });
+
+            // 视图切换
+            viewToggle.addEventListener('click', (e) => {
+                const btn = e.target.closest('.view-toggle__btn');
+                if (!btn) return;
+                currentView = btn.dataset.view;
+                viewToggle.querySelectorAll('.view-toggle__btn').forEach(b => { b.classList.remove('view-toggle__btn--active'); b.setAttribute('aria-pressed', 'false'); });
+                btn.classList.add('view-toggle__btn--active');
+                btn.setAttribute('aria-pressed', 'true');
+                renderCards();
+            });
+
             cardsGrid.addEventListener('click', (e) => {
                 const btn = e.target.closest('button');
                 if (!btn) return;
@@ -1179,8 +1426,11 @@
                     if (!(recordId in timerModeMap)) timerModeMap[recordId] = 0;
                     timerModeMap[recordId] = (timerModeMap[recordId] + 1) % TIMER_MODES.length;
                     updateAllTimers();
+                } else if (action === 'toggle-missing') {
+                    toggleMissing(recordId);
                 }
             });
+
             cardsGrid.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' && e.target.classList.contains('card')) {
                     const recordId = e.target.dataset.recordId;
@@ -1188,6 +1438,7 @@
                     if (record) openModal(record);
                 }
             });
+
             btnExport.addEventListener('click', exportData);
             btnImport.addEventListener('click', () => importFileInput.click());
             importFileInput.addEventListener('change', (e) => { if (e.target.files[0]) importData(e.target.files[0]); importFileInput.value = ''; });
