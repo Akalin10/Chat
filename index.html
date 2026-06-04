@@ -69,10 +69,10 @@
             --milestone-border: #f5c842;
             --milestone-text: #b8860b;
 
-            --radius-sm: 12px;
-            --radius-md: 18px;
-            --radius-lg: 22px;
-            --radius-xl: 28px;
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
             --radius-full: 50%;
 
             --font-display: -apple-system, 'SF Pro Display', 'PingFang SC', 'Noto Sans SC', 'Helvetica Neue', system-ui, sans-serif;
@@ -159,118 +159,124 @@
         .app-container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 24px 20px 110px;
+            padding: 20px 16px 100px;
         }
 
+        /* ============================================
+           头部
+           ============================================ */
         .app-header {
             text-align: center;
-            padding: 20px 0 10px;
+            padding: 16px 0 8px;
         }
         .app-header__icon {
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             animation: gentleBounce 3.5s ease-in-out infinite;
             filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
         }
         @keyframes gentleBounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-7px); }
+            50% { transform: translateY(-6px); }
         }
         .app-header__title {
-            font-size: 2rem;
+            font-size: 1.7rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         .app-header__subtitle {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--text-tertiary);
             font-weight: 400;
         }
 
         /* ============================================
-           工具栏 - 移动端不再 sticky，避免遮挡
+           工具栏 - 紧凑版，移动端不粘性
            ============================================ */
         .toolbar {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 6px;
             align-items: center;
             justify-content: center;
-            margin-bottom: 22px;
-            padding: 14px 18px;
+            margin-bottom: 18px;
+            padding: 8px 12px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-xs);
             transition: all var(--duration-normal) var(--ease-ios);
         }
-        /* 桌面端保持粘性 */
         @media (min-width: 769px) {
             .toolbar {
                 position: sticky;
-                top: 14px;
+                top: 12px;
                 z-index: 10;
             }
             .toolbar:focus-within {
-                box-shadow: var(--shadow-md), 0 0 0 4px var(--accent-soft);
+                box-shadow: var(--shadow-sm), 0 0 0 3px var(--accent-soft);
                 border-color: var(--accent);
             }
         }
 
         .toolbar__search-wrap {
-            flex: 1 1 200px;
-            min-width: 160px;
+            flex: 0 1 200px;
+            min-width: 130px;
+            max-width: 220px;
             position: relative;
         }
         .toolbar__search-icon {
             position: absolute;
-            left: 13px;
+            left: 9px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.95rem;
+            width: 14px;
+            height: 14px;
             color: var(--text-tertiary);
             pointer-events: none;
             transition: color var(--duration-fast);
+            display: flex;
+            align-items: center;
         }
         .toolbar__search {
             width: 100%;
-            padding: 10px 14px 10px 36px;
+            padding: 7px 10px 7px 28px;
             background: var(--bg-input);
             border: 1.5px solid transparent;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-sm);
             color: var(--text-primary);
-            font-size: 0.95rem;
+            font-size: 0.82rem;
             font-family: inherit;
             outline: none;
             transition: all var(--duration-fast);
             -webkit-appearance: none;
         }
-        .toolbar__search::placeholder { color: var(--text-tertiary); }
+        .toolbar__search::placeholder { color: var(--text-tertiary); font-size: 0.8rem; }
         .toolbar__search:focus {
             border-color: var(--accent-blue);
             background: var(--bg-secondary);
-            box-shadow: 0 0 0 4px var(--accent-blue-light);
+            box-shadow: 0 0 0 3px var(--accent-blue-light);
         }
         .toolbar__search-wrap:focus-within .toolbar__search-icon { color: var(--accent-blue); }
 
         .toolbar__sort-group {
             display: flex;
-            gap: 5px;
+            gap: 3px;
             flex-wrap: wrap;
             background: var(--bg-input);
-            border-radius: var(--radius-sm);
-            padding: 4px;
+            border-radius: 8px;
+            padding: 3px;
         }
         .toolbar__sort-btn {
-            padding: 8px 14px;
-            border-radius: 10px;
+            padding: 6px 10px;
+            border-radius: 7px;
             border: none;
             background: transparent;
             color: var(--text-secondary);
-            font-size: 0.82rem;
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
             font-family: inherit;
@@ -291,78 +297,84 @@
             box-shadow: var(--shadow-xs);
         }
         .toolbar__count {
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             color: var(--text-tertiary);
             white-space: nowrap;
-            padding: 6px 12px;
+            padding: 5px 10px;
             background: var(--bg-input);
-            border-radius: 20px;
+            border-radius: 16px;
             font-weight: 500;
         }
 
+        /* ============================================
+           卡片网格
+           ============================================ */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 14px;
         }
 
+        /* ============================================
+           卡片 · iOS 18 风格
+           ============================================ */
         .card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
-            padding: 20px 22px 18px;
+            padding: 16px 18px 14px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             transition: all var(--duration-normal) var(--ease-ios);
             box-shadow: var(--shadow-xs);
-            animation: cardAppear 0.45s var(--ease-spring) both;
+            animation: cardAppear 0.4s var(--ease-spring) both;
             will-change: transform;
             -webkit-tap-highlight-color: transparent;
         }
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
             border-color: var(--border);
         }
-        .card:active { transform: scale(0.985); transition: transform 0.12s var(--ease-ios); }
+        .card:active { transform: scale(0.985); transition: transform 0.1s var(--ease-ios); }
         .card:focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 2px; }
         @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            from { opacity: 0; transform: translateY(16px) scale(0.97); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .card--milestone {
             border-color: var(--milestone-border) !important;
             background: var(--milestone-bg) !important;
-            box-shadow: var(--shadow-sm), 0 0 0 1px var(--milestone-border) !important;
+            box-shadow: var(--shadow-xs), 0 0 0 1px var(--milestone-border) !important;
         }
         .card--milestone::after {
             content: '纪念日';
             position: absolute;
-            top: 12px; right: 14px;
-            font-size: 0.7rem;
+            top: 10px; right: 12px;
+            font-size: 0.65rem;
             background: var(--milestone-border);
             color: #fff;
-            padding: 4px 10px;
-            border-radius: 14px;
+            padding: 3px 8px;
+            border-radius: 12px;
             font-weight: 600;
             pointer-events: none;
             z-index: 2;
         }
 
-        .card__header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; z-index: 1; }
+        .card__header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; z-index: 1; }
         .card__avatar {
-            width: 48px; height: 48px;
+            width: 40px; height: 40px;
             border-radius: var(--radius-full);
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             flex-shrink: 0;
             background: var(--bg-tertiary);
             box-shadow: var(--shadow-xs);
             transition: transform var(--duration-fast) var(--ease-spring);
         }
-        .card:hover .card__avatar { transform: scale(1.05); }
+        .card:hover .card__avatar { transform: scale(1.04); }
         .card__avatar-inner {
             width: 100%; height: 100%;
             border-radius: var(--radius-full);
@@ -371,47 +383,47 @@
         }
         .card__info { flex: 1; min-width: 0; }
         .card__nickname {
-            font-size: 1.1rem; font-weight: 600;
+            font-size: 1rem; font-weight: 600;
             color: var(--text-primary);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .card__meta-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+        .card__meta-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
         .card__tag {
-            font-size: 0.7rem; padding: 3px 9px;
-            border-radius: 10px; font-weight: 500;
+            font-size: 0.68rem; padding: 2px 8px;
+            border-radius: 8px; font-weight: 500;
             white-space: nowrap;
             background: var(--tag-bg, var(--tag-default-bg));
             color: var(--tag-color, var(--tag-default-color));
         }
         .card__channel {
-            font-size: 0.73rem; color: var(--text-tertiary);
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px;
+            font-size: 0.7rem; color: var(--text-tertiary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;
         }
 
         .card__timer {
             background: var(--bg-tertiary);
             border-radius: var(--radius-md);
-            padding: 13px 16px; margin-bottom: 8px;
+            padding: 10px 14px; margin-bottom: 6px;
             text-align: center;
             position: relative; z-index: 1;
         }
         .card__timer-display {
             font-family: var(--font-mono);
-            font-size: 1rem; font-weight: 600;
+            font-size: 0.9rem; font-weight: 600;
             color: var(--text-primary);
         }
         .card__timer-display .highlight { color: var(--accent); }
         .card__timer-mode {
-            font-size: 0.68rem; color: var(--text-tertiary);
-            margin-top: 2px;
+            font-size: 0.65rem; color: var(--text-tertiary);
+            margin-top: 1px;
         }
         .card__timer-toggle {
-            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
             color: var(--text-secondary);
-            width: 30px; height: 30px; border-radius: var(--radius-full);
-            cursor: pointer; font-size: 0.75rem;
+            width: 26px; height: 26px; border-radius: var(--radius-full);
+            cursor: pointer; font-size: 0.7rem;
             display: flex; align-items: center; justify-content: center;
             transition: all var(--duration-fast);
             z-index: 2;
@@ -421,18 +433,18 @@
         .card__timer-toggle:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
 
         .card__note-preview {
-            font-size: 0.78rem; color: var(--text-tertiary);
+            font-size: 0.73rem; color: var(--text-tertiary);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             z-index: 1; padding: 0 2px;
         }
 
-        .card__actions { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; z-index: 1; }
+        .card__actions { display: flex; gap: 6px; margin-top: 8px; justify-content: flex-end; z-index: 1; }
         .card__action-btn {
-            padding: 7px 14px; border-radius: 20px;
+            padding: 5px 12px; border-radius: 16px;
             border: 1px solid var(--border-light);
             background: var(--bg-secondary);
             color: var(--text-secondary);
-            font-size: 0.78rem; font-weight: 500;
+            font-size: 0.73rem; font-weight: 500;
             cursor: pointer; font-family: inherit;
             transition: all var(--duration-fast);
             white-space: nowrap;
@@ -447,33 +459,42 @@
             .card__action-btn--delete:hover { background: #3d2020; border-color: #5a2828; color: #ff8a80; }
         }
 
-        .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-tertiary); }
-        .empty-state__icon { font-size: 3.5rem; display: block; margin-bottom: 14px; opacity: 0.7; }
-        .empty-state__text { font-size: 0.95rem; color: var(--text-secondary); }
+        /* ============================================
+           空状态
+           ============================================ */
+        .empty-state { grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: var(--text-tertiary); }
+        .empty-state__icon { font-size: 3rem; display: block; margin-bottom: 10px; opacity: 0.6; }
+        .empty-state__text { font-size: 0.88rem; color: var(--text-secondary); }
 
+        /* ============================================
+           FAB 添加按钮
+           ============================================ */
         .fab {
-            position: fixed; bottom: 30px; right: 30px;
-            width: 56px; height: 56px;
+            position: fixed; bottom: 24px; right: 24px;
+            width: 50px; height: 50px;
             border-radius: var(--radius-full);
             background: var(--accent);
             border: none; color: #fff;
-            font-size: 1.6rem; font-weight: 400;
-            cursor: pointer; box-shadow: var(--shadow-lg);
+            font-size: 1.4rem; font-weight: 400;
+            cursor: pointer; box-shadow: var(--shadow-md);
             z-index: 20;
             display: flex; align-items: center; justify-content: center;
             transition: all var(--duration-normal) var(--ease-spring);
             -webkit-tap-highlight-color: transparent;
         }
-        .fab:hover { transform: scale(1.07); box-shadow: var(--shadow-xl); }
+        .fab:hover { transform: scale(1.06); box-shadow: var(--shadow-lg); }
         .fab:active { transform: scale(0.94); }
-        .fab:focus-visible { outline: 4px solid var(--accent-soft); outline-offset: 4px; }
+        .fab:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 3px; }
 
+        /* ============================================
+           弹窗 / 模态框
+           ============================================ */
         .modal-overlay {
             position: fixed; inset: 0;
             background: rgba(0, 0, 0, 0.35);
             z-index: 100;
             display: flex; align-items: center; justify-content: center;
-            padding: 20px;
+            padding: 16px;
             animation: overlayIn var(--duration-fast) ease-out;
         }
         @media (prefers-color-scheme: dark) { .modal-overlay { background: rgba(0, 0, 0, 0.6); } }
@@ -483,47 +504,47 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
-            padding: 26px 24px 22px;
-            width: 100%; max-width: 480px; max-height: 84vh;
+            padding: 22px 20px 18px;
+            width: 100%; max-width: 440px; max-height: 82vh;
             overflow-y: auto;
             box-shadow: var(--shadow-xl);
             animation: modalIn var(--duration-slow) var(--ease-spring);
         }
         @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.9) translateY(28px); }
+            from { opacity: 0; transform: scale(0.92) translateY(24px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .modal__title {
-            font-size: 1.25rem; font-weight: 700;
-            margin-bottom: 18px; text-align: center;
+            font-size: 1.15rem; font-weight: 700;
+            margin-bottom: 16px; text-align: center;
             color: var(--text-primary);
         }
         .modal__close {
-            position: absolute; top: 12px; right: 16px;
+            position: absolute; top: 10px; right: 14px;
             background: var(--bg-tertiary); border: none;
             color: var(--text-secondary);
-            width: 32px; height: 32px; border-radius: var(--radius-full);
-            cursor: pointer; font-size: 1rem;
+            width: 28px; height: 28px; border-radius: var(--radius-full);
+            cursor: pointer; font-size: 0.9rem;
             display: flex; align-items: center; justify-content: center;
             transition: all var(--duration-fast); z-index: 5;
         }
         .modal__close:hover { background: var(--bg-input); color: var(--text-primary); }
         .modal__close:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
 
-        .form-group { margin-bottom: 14px; }
+        .form-group { margin-bottom: 12px; }
         .form-group__label {
-            display: block; font-size: 0.8rem; font-weight: 600;
-            color: var(--text-secondary); margin-bottom: 4px;
+            display: block; font-size: 0.76rem; font-weight: 600;
+            color: var(--text-secondary); margin-bottom: 3px;
         }
         .form-group__input,
         .form-group__select,
         .form-group__textarea {
-            width: 100%; padding: 11px 14px;
+            width: 100%; padding: 9px 12px;
             background: var(--bg-input);
             border: 1.5px solid transparent;
             border-radius: var(--radius-sm);
             color: var(--text-primary);
-            font-size: 0.95rem; font-family: inherit;
+            font-size: 0.9rem; font-family: inherit;
             outline: none; transition: all var(--duration-fast);
             -webkit-appearance: none;
         }
@@ -532,60 +553,60 @@
         .form-group__textarea:focus {
             border-color: var(--accent-blue);
             background: var(--bg-secondary);
-            box-shadow: 0 0 0 4px var(--accent-blue-light);
+            box-shadow: 0 0 0 3px var(--accent-blue-light);
         }
-        .form-group__textarea { resize: vertical; min-height: 65px; }
+        .form-group__textarea { resize: vertical; min-height: 55px; }
         .form-group__select {
             cursor: pointer;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%238e8e93'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 14px center;
-            padding-right: 36px;
+            background-position: right 12px center;
+            padding-right: 32px;
         }
         .form-group__select option { background: var(--bg-secondary); color: var(--text-primary); }
-        .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .form-row>.form-group { flex: 1; min-width: 130px; }
+        .form-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .form-row>.form-group { flex: 1; min-width: 120px; }
 
-        .emoji-picker { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 2px; }
+        .emoji-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
         .emoji-picker__item {
-            width: 38px; height: 38px; border-radius: var(--radius-full);
+            width: 34px; height: 34px; border-radius: var(--radius-full);
             border: 2px solid transparent;
             background: var(--bg-input);
-            cursor: pointer; font-size: 1.2rem;
+            cursor: pointer; font-size: 1.1rem;
             display: flex; align-items: center; justify-content: center;
             transition: all var(--duration-fast);
             -webkit-tap-highlight-color: transparent; user-select: none;
         }
-        .emoji-picker__item:hover { background: var(--bg-tertiary); transform: scale(1.08); }
+        .emoji-picker__item:hover { background: var(--bg-tertiary); transform: scale(1.06); }
         .emoji-picker__item--selected {
             border-color: var(--accent);
             background: var(--accent-light);
             box-shadow: 0 0 0 3px var(--accent-soft);
-            transform: scale(1.06);
+            transform: scale(1.04);
         }
         .emoji-picker__item:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
 
         .btn-submit {
-            width: 100%; padding: 13px;
+            width: 100%; padding: 11px;
             background: var(--accent);
             border: none; border-radius: var(--radius-md);
-            color: #fff; font-size: 1rem; font-weight: 600;
+            color: #fff; font-size: 0.95rem; font-weight: 600;
             cursor: pointer; font-family: inherit;
-            box-shadow: var(--shadow-sm);
-            margin-top: 4px;
+            box-shadow: var(--shadow-xs);
+            margin-top: 2px;
             transition: all var(--duration-normal) var(--ease-ios);
             -webkit-tap-highlight-color: transparent;
         }
-        .btn-submit:hover { opacity: 0.9; box-shadow: var(--shadow-md); transform: translateY(-1px); }
+        .btn-submit:hover { opacity: 0.9; box-shadow: var(--shadow-sm); transform: translateY(-1px); }
         .btn-submit:active { transform: scale(0.97); }
 
-        .data-actions { display: flex; gap: 8px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+        .data-actions { display: flex; gap: 6px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
         .data-actions__btn {
-            padding: 9px 17px; border-radius: 20px;
+            padding: 7px 14px; border-radius: 16px;
             border: 1px solid var(--border-light);
             background: var(--bg-secondary);
             color: var(--text-secondary);
-            font-size: 0.78rem; font-weight: 500;
+            font-size: 0.73rem; font-weight: 500;
             cursor: pointer; font-family: inherit;
             transition: all var(--duration-fast);
             white-space: nowrap;
@@ -594,44 +615,50 @@
         .data-actions__btn:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
 
         .toast {
-            position: fixed; bottom: 40px; left: 50%;
+            position: fixed; bottom: 36px; left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: var(--text-primary);
             color: var(--bg-primary);
-            padding: 12px 22px; border-radius: 24px;
-            font-size: 0.88rem; font-weight: 500;
+            padding: 10px 20px; border-radius: 20px;
+            font-size: 0.82rem; font-weight: 500;
             z-index: 200; pointer-events: none;
             transition: transform var(--duration-normal) var(--ease-spring);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-md);
             white-space: nowrap;
         }
         .toast--visible { transform: translateX(-50%) translateY(0); }
 
+        /* ============================================
+           响应式
+           ============================================ */
         @media (max-width: 768px) {
-            .app-container { padding: 14px 10px 100px; }
-            .cards-grid { grid-template-columns: 1fr; gap: 12px; }
-            .app-header__title { font-size: 1.5rem; }
-            .app-header__icon { font-size: 2.2rem; }
-            .toolbar { padding: 10px 12px; gap: 7px; border-radius: var(--radius-md); }
-            .toolbar__sort-btn { padding: 7px 10px; font-size: 0.76rem; }
-            .card { padding: 16px 16px 14px; border-radius: var(--radius-lg); }
-            .card__timer-display { font-size: 0.88rem; }
-            .card__avatar { width: 42px; height: 42px; font-size: 1.3rem; }
-            .card__nickname { font-size: 1rem; }
-            .fab { bottom: 18px; right: 18px; width: 50px; height: 50px; font-size: 1.4rem; }
-            .modal { padding: 20px 14px 16px; border-radius: var(--radius-lg); max-width: 94vw; }
+            .app-container { padding: 12px 8px 90px; }
+            .cards-grid { grid-template-columns: 1fr; gap: 10px; }
+            .app-header__title { font-size: 1.4rem; }
+            .app-header__icon { font-size: 2rem; }
+            .toolbar { padding: 6px 8px; gap: 4px; border-radius: var(--radius-md); }
+            .toolbar__search-wrap { max-width: 160px; }
+            .toolbar__sort-btn { padding: 5px 8px; font-size: 0.7rem; }
+            .toolbar__count { font-size: 0.68rem; padding: 4px 8px; }
+            .card { padding: 12px 14px 10px; border-radius: var(--radius-lg); }
+            .card__timer-display { font-size: 0.82rem; }
+            .card__avatar { width: 36px; height: 36px; font-size: 1.1rem; }
+            .card__nickname { font-size: 0.92rem; }
+            .fab { bottom: 16px; right: 16px; width: 44px; height: 44px; font-size: 1.2rem; }
+            .modal { padding: 18px 12px 14px; border-radius: var(--radius-lg); max-width: 94vw; }
             .form-row { flex-direction: column; gap: 0; }
-            .card__timer-toggle { width: 26px; height: 26px; font-size: 0.65rem; right: 7px; }
+            .card__timer-toggle { width: 22px; height: 22px; font-size: 0.6rem; right: 6px; }
         }
         @media (max-width: 400px) {
-            .cards-grid { gap: 10px; }
+            .cards-grid { gap: 8px; }
             .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar__search-wrap { max-width: 100%; flex: 1 1 auto; }
             .toolbar__sort-group { justify-content: center; }
-            .card { padding: 12px; }
-            .card__timer-display { font-size: 0.78rem; }
+            .card { padding: 10px; }
+            .card__timer-display { font-size: 0.75rem; }
         }
         @media (min-width: 1400px) {
-            .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+            .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -652,13 +679,12 @@
             <p class="app-header__subtitle">记录每一次心动的相遇</p>
         </header>
 
-        <!-- 工具栏：移除了 emoji 装饰，改用纯文字 -->
         <nav class="toolbar" id="toolbar" role="toolbar" aria-label="筛选与排序工具">
             <div class="toolbar__search-wrap">
                 <span class="toolbar__search-icon" aria-hidden="true">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                 </span>
-                <input type="search" class="toolbar__search" id="searchInput" placeholder="搜索昵称或备注..." aria-label="搜索网友记录" autocomplete="off">
+                <input type="search" class="toolbar__search" id="searchInput" placeholder="搜索..." aria-label="搜索网友记录" autocomplete="off">
             </div>
             <div class="toolbar__sort-group" id="sortGroup">
                 <button class="toolbar__sort-btn toolbar__sort-btn--active" data-sort="duration-desc" aria-pressed="true">认识最久</button>
@@ -712,7 +738,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-group__label" for="formGroup">自定义分组</label>
-                        <input type="text" class="form-group__input" id="formGroup" placeholder="如：亲友团、深夜档..." maxlength="20">
+                        <input type="text" class="form-group__input" id="formGroup" placeholder="如：亲友团..." maxlength="20">
                     </div>
                 </div>
                 <div class="form-row">
@@ -727,7 +753,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-group__label" for="formChannel">相识渠道</label>
-                    <input type="text" class="form-group__input" id="formChannel" placeholder="如：王者荣耀、豆瓣小组、Soul..." maxlength="60">
+                    <input type="text" class="form-group__input" id="formChannel" placeholder="如：王者荣耀、豆瓣..." maxlength="60">
                 </div>
                 <div class="form-group">
                     <label class="form-group__label" for="formNote">初印象 / 备注</label>
@@ -772,7 +798,7 @@
             const btnClearAll = $('#btnClearAll');
             const dataActions = $('#dataActions');
 
-            const STORAGE_KEY = 'acquaintance_records_ios18';
+            const STORAGE_KEY = 'acquaintance_records_v3';
             const EMOJI_OPTIONS = ['✨', '🌟', '💫', '🎮', '💌', '💕', '🌙', '📚', '☕', '🦊', '🐰', '🌸', '🎵', '🌻', '🦋', '🍀', '💎', '🔥', '🎯', '🧸'];
             const TAG_COLOR_MAP = {
                 '游戏搭子': { bg: 'var(--tag-game-bg)', color: 'var(--tag-game-color)' },
@@ -812,15 +838,14 @@
                 records.forEach(r => { if (!(r.id in timerModeMap)) timerModeMap[r.id] = 0; });
             }
 
-            function saveRecords() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch (e) { showToast('存储空间不足，请清理旧记录'); } }
+            function saveRecords() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch (e) { showToast('存储空间不足'); } }
 
             function generateId() { return 'rec_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8); }
 
             function createSampleRecord() {
                 const twoYearsAgo = new Date();
                 twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-                twoYearsAgo.setMonth(3);
-                twoYearsAgo.setDate(15);
+                twoYearsAgo.setMonth(3, 15);
                 twoYearsAgo.setHours(20, 30, 0, 0);
                 return {
                     id: generateId(),
@@ -907,7 +932,7 @@
                     );
                 }
                 filtered = [...filtered].sort(sortFn);
-                recordCount.textContent = `${filtered.length} / ${records.length} 条记录`;
+                recordCount.textContent = `${filtered.length} / ${records.length} 条`;
                 if (filtered.length === 0) {
                     cardsGrid.innerHTML = `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">📭</span><p class="empty-state__text">${records.length === 0 ? '还没有记录，点击下方按钮添加第一位网友吧~' : '没有匹配的记录，试试调整搜索条件'}</p></div>`;
                 } else {
@@ -938,7 +963,7 @@
                   </div>
                   <div class="card__timer">
                     <div class="card__timer-display">${timerHTML}</div>
-                    <div class="card__timer-mode">显示模式：${modeLabel}</div>
+                    <div class="card__timer-mode">${modeLabel}</div>
                     <button class="card__timer-toggle" data-action="toggle-timer" data-record-id="${record.id}" aria-label="切换时长显示模式">⇄</button>
                   </div>
                   ${notePreview ? `<div class="card__note-preview" title="${escapeHTML(notePreview)}">${escapeHTML(notePreview)}</div>` : ''}
@@ -962,7 +987,7 @@
                     const timerDisplay = card.querySelector('.card__timer-display');
                     const modeLabel = card.querySelector('.card__timer-mode');
                     if (timerDisplay) timerDisplay.innerHTML = formatDuration(diff, mode);
-                    if (modeLabel) modeLabel.textContent = '显示模式：' + getTimerModeLabel(mode);
+                    if (modeLabel) modeLabel.textContent = getTimerModeLabel(mode);
                     if (diff.isMilestone && !card.classList.contains('card--milestone')) card.classList.add('card--milestone');
                 });
             }
@@ -1089,7 +1114,7 @@
                         if (!Array.isArray(imported)) throw new Error('格式错误');
                         const valid = imported.filter(r => r.nickname && r.meetDate);
                         if (valid.length === 0) { showToast('文件中没有有效记录'); return; }
-                        if (!confirm(`发现 ${valid.length} 条记录。\n\n选择"确定"将合并导入（保留现有记录），\n选择"取消"将放弃导入。`)) return;
+                        if (!confirm(`发现 ${valid.length} 条记录。\n\n选择"确定"将合并导入，\n选择"取消"将放弃导入。`)) return;
                         const existingIds = new Set(records.map(r => r.id));
                         const newRecords = valid.filter(r => !existingIds.has(r.id));
                         records = [...records, ...newRecords];
@@ -1117,7 +1142,7 @@
                 if (toastTimer) clearTimeout(toastTimer);
                 toast.textContent = message;
                 toast.classList.add('toast--visible');
-                toastTimer = setTimeout(() => { toast.classList.remove('toast--visible'); toastTimer = null; }, 2200);
+                toastTimer = setTimeout(() => { toast.classList.remove('toast--visible'); toastTimer = null; }, 2000);
             }
 
             fabAdd.addEventListener('click', () => openModal(null));
