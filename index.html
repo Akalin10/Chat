@@ -15,11 +15,11 @@
       href="https://raw.githubusercontent.com/你的用户名/仓库名/main/icon.png"
     -->
     <link rel="apple-touch-icon" sizes="180x180"
-    href="data:image/svg+xml,
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'>
-    <rect width='180' height='180' rx='42' fill='%23ffffff'/>
-    <text x='90' y='118' font-size='105' text-anchor='middle' fill='%23000000' font-family='sans-serif'>💫</text>
-    </svg>"
+          href="data:image/svg+xml,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'>
+            <rect width='180' height='180' rx='42' fill='%23ffffff'/>
+            <text x='90' y='118' font-size='105' text-anchor='middle' fill='%23000000' font-family='sans-serif'>💫</text>
+          </svg>"
     >
 
     <title>相识时光 - 网友时长记录</title>
@@ -28,7 +28,6 @@
            iOS 18 风格 · CSS 变量（浅色 / 深色）
            ============================================ */
         :root {
-            /* 浅色模式（默认） */
             --bg-primary: #f2f1f6;
             --bg-secondary: #ffffff;
             --bg-tertiary: #f5f5f7;
@@ -86,7 +85,6 @@
             --duration-slow: 0.4s;
         }
 
-        /* 深色模式 */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-primary: #1c1c1e;
@@ -97,7 +95,6 @@
                 --text-primary: #f5f5f7;
                 --text-secondary: #aeaeb2;
                 --text-tertiary: #636366;
-                --text-on-accent: #ffffff;
 
                 --accent: #ff7b89;
                 --accent-light: #3d2025;
@@ -132,9 +129,6 @@
             }
         }
 
-        /* ============================================
-           全局重置
-           ============================================ */
         *,
         *::before,
         *::after {
@@ -142,6 +136,7 @@
             margin: 0;
             padding: 0;
         }
+
         html {
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
@@ -149,6 +144,7 @@
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
         }
+
         body {
             font-family: var(--font-display);
             background: var(--bg-primary);
@@ -160,16 +156,12 @@
                 color var(--duration-normal) var(--ease-ios);
         }
 
-        /* 主容器 */
         .app-container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 24px 20px 110px;
         }
 
-        /* ============================================
-           头部
-           ============================================ */
         .app-header {
             text-align: center;
             padding: 20px 0 10px;
@@ -182,13 +174,8 @@
             filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
         }
         @keyframes gentleBounce {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-7px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
         }
         .app-header__title {
             font-size: 2rem;
@@ -201,11 +188,10 @@
             font-size: 0.95rem;
             color: var(--text-tertiary);
             font-weight: 400;
-            letter-spacing: 0.01em;
         }
 
         /* ============================================
-           工具栏
+           工具栏 - 移动端不再 sticky，避免遮挡
            ============================================ */
         .toolbar {
             display: flex;
@@ -218,16 +204,22 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            position: sticky;
-            top: 14px;
-            z-index: 10;
             box-shadow: var(--shadow-sm);
             transition: all var(--duration-normal) var(--ease-ios);
         }
-        .toolbar:focus-within {
-            box-shadow: var(--shadow-md), 0 0 0 4px var(--accent-soft);
-            border-color: var(--accent);
+        /* 桌面端保持粘性 */
+        @media (min-width: 769px) {
+            .toolbar {
+                position: sticky;
+                top: 14px;
+                z-index: 10;
+            }
+            .toolbar:focus-within {
+                box-shadow: var(--shadow-md), 0 0 0 4px var(--accent-soft);
+                border-color: var(--accent);
+            }
         }
+
         .toolbar__search-wrap {
             flex: 1 1 200px;
             min-width: 160px;
@@ -256,17 +248,13 @@
             transition: all var(--duration-fast);
             -webkit-appearance: none;
         }
-        .toolbar__search::placeholder {
-            color: var(--text-tertiary);
-        }
+        .toolbar__search::placeholder { color: var(--text-tertiary); }
         .toolbar__search:focus {
             border-color: var(--accent-blue);
             background: var(--bg-secondary);
             box-shadow: 0 0 0 4px var(--accent-blue-light);
         }
-        .toolbar__search-wrap:focus-within .toolbar__search-icon {
-            color: var(--accent-blue);
-        }
+        .toolbar__search-wrap:focus-within .toolbar__search-icon { color: var(--accent-blue); }
 
         .toolbar__sort-group {
             display: flex;
@@ -291,19 +279,10 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-        .toolbar__sort-btn:hover {
-            color: var(--text-primary);
-            background: rgba(0, 0, 0, 0.04);
-        }
-        @media (prefers-color-scheme: dark) {
-            .toolbar__sort-btn:hover {
-                background: rgba(255, 255, 255, 0.06);
-            }
-        }
+        .toolbar__sort-btn:hover { color: var(--text-primary); }
         .toolbar__sort-btn:focus-visible {
             outline: 2px solid var(--accent-blue);
             outline-offset: -2px;
-            border-radius: 10px;
         }
         .toolbar__sort-btn--active {
             background: var(--bg-secondary);
@@ -318,22 +297,15 @@
             padding: 6px 12px;
             background: var(--bg-input);
             border-radius: 20px;
-            letter-spacing: 0.02em;
             font-weight: 500;
         }
 
-        /* ============================================
-           卡片网格
-           ============================================ */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
             gap: 18px;
         }
 
-        /* ============================================
-           卡片 · iOS 18 风格
-           ============================================ */
         .card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
@@ -345,7 +317,7 @@
             transition: all var(--duration-normal) var(--ease-ios);
             box-shadow: var(--shadow-xs);
             animation: cardAppear 0.45s var(--ease-spring) both;
-            will-change: transform, box-shadow;
+            will-change: transform;
             -webkit-tap-highlight-color: transparent;
         }
         .card:hover {
@@ -353,430 +325,206 @@
             box-shadow: var(--shadow-md);
             border-color: var(--border);
         }
-        .card:active {
-            transform: scale(0.985);
-            transition: transform 0.12s var(--ease-ios);
-        }
-        .card:focus-visible {
-            outline: 3px solid var(--accent-blue);
-            outline-offset: 2px;
-        }
+        .card:active { transform: scale(0.985); transition: transform 0.12s var(--ease-ios); }
+        .card:focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 2px; }
         @keyframes cardAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* 纪念日标记 */
         .card--milestone {
             border-color: var(--milestone-border) !important;
             background: var(--milestone-bg) !important;
             box-shadow: var(--shadow-sm), 0 0 0 1px var(--milestone-border) !important;
         }
         .card--milestone::after {
-            content: '🎉 纪念日';
+            content: '纪念日';
             position: absolute;
-            top: 12px;
-            right: 14px;
+            top: 12px; right: 14px;
             font-size: 0.7rem;
             background: var(--milestone-border);
             color: #fff;
             padding: 4px 10px;
             border-radius: 14px;
             font-weight: 600;
-            letter-spacing: 0.03em;
             pointer-events: none;
             z-index: 2;
-            animation: milestonePulse 2.5s ease-in-out infinite;
-        }
-        @keyframes milestonePulse {
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.06);
-                opacity: 0.85;
-            }
         }
 
-        /* 卡片头部 */
-        .card__header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
-        }
+        .card__header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; z-index: 1; }
         .card__avatar {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 1.5rem;
             flex-shrink: 0;
+            background: var(--bg-tertiary);
             box-shadow: var(--shadow-xs);
             transition: transform var(--duration-fast) var(--ease-spring);
-            background: var(--bg-tertiary);
         }
-        .card:hover .card__avatar {
-            transform: scale(1.05);
-        }
+        .card:hover .card__avatar { transform: scale(1.05); }
         .card__avatar-inner {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: var(--avatar-bg, var(--bg-tertiary));
         }
-        .card__info {
-            flex: 1;
-            min-width: 0;
-        }
+        .card__info { flex: 1; min-width: 0; }
         .card__nickname {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.1rem; font-weight: 600;
             color: var(--text-primary);
-            letter-spacing: -0.01em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .card__meta-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 2px;
-        }
+        .card__meta-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
         .card__tag {
-            font-size: 0.7rem;
-            padding: 3px 9px;
-            border-radius: 10px;
-            font-weight: 500;
-            letter-spacing: 0.02em;
+            font-size: 0.7rem; padding: 3px 9px;
+            border-radius: 10px; font-weight: 500;
             white-space: nowrap;
             background: var(--tag-bg, var(--tag-default-bg));
             color: var(--tag-color, var(--tag-default-color));
         }
         .card__channel {
-            font-size: 0.73rem;
-            color: var(--text-tertiary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 110px;
+            font-size: 0.73rem; color: var(--text-tertiary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px;
         }
 
-        /* 计时器区域 */
         .card__timer {
             background: var(--bg-tertiary);
             border-radius: var(--radius-md);
-            padding: 13px 16px;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
+            padding: 13px 16px; margin-bottom: 8px;
             text-align: center;
-            transition: background var(--duration-fast);
-        }
-        .card:hover .card__timer {
-            background: var(--bg-input);
+            position: relative; z-index: 1;
         }
         .card__timer-display {
             font-family: var(--font-mono);
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 1rem; font-weight: 600;
             color: var(--text-primary);
-            letter-spacing: 0.03em;
-            word-break: break-all;
         }
-        .card__timer-display .highlight {
-            color: var(--accent);
-        }
+        .card__timer-display .highlight { color: var(--accent); }
         .card__timer-mode {
-            font-size: 0.68rem;
-            color: var(--text-tertiary);
+            font-size: 0.68rem; color: var(--text-tertiary);
             margin-top: 2px;
-            letter-spacing: 0.03em;
         }
         .card__timer-toggle {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
             color: var(--text-secondary);
-            width: 30px;
-            height: 30px;
-            border-radius: var(--radius-full);
-            cursor: pointer;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 30px; height: 30px; border-radius: var(--radius-full);
+            cursor: pointer; font-size: 0.75rem;
+            display: flex; align-items: center; justify-content: center;
             transition: all var(--duration-fast);
             z-index: 2;
-            -webkit-tap-highlight-color: transparent;
             box-shadow: var(--shadow-xs);
         }
-        .card__timer-toggle:hover {
-            background: var(--bg-input);
-            color: var(--text-primary);
-            border-color: var(--border);
-        }
-        .card__timer-toggle:focus-visible {
-            outline: 2px solid var(--accent-blue);
-            outline-offset: 2px;
-        }
+        .card__timer-toggle:hover { background: var(--bg-input); color: var(--text-primary); }
+        .card__timer-toggle:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
 
-        /* 备注预览 */
         .card__note-preview {
-            font-size: 0.78rem;
-            color: var(--text-tertiary);
-            position: relative;
-            z-index: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding: 0 2px;
+            font-size: 0.78rem; color: var(--text-tertiary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            z-index: 1; padding: 0 2px;
         }
 
-        /* 卡片操作按钮 */
-        .card__actions {
-            display: flex;
-            gap: 8px;
-            position: relative;
-            z-index: 1;
-            margin-top: 10px;
-            justify-content: flex-end;
-        }
+        .card__actions { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; z-index: 1; }
         .card__action-btn {
-            padding: 7px 14px;
-            border-radius: 20px;
+            padding: 7px 14px; border-radius: 20px;
             border: 1px solid var(--border-light);
             background: var(--bg-secondary);
             color: var(--text-secondary);
-            font-size: 0.78rem;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: inherit;
+            font-size: 0.78rem; font-weight: 500;
+            cursor: pointer; font-family: inherit;
             transition: all var(--duration-fast);
-            -webkit-tap-highlight-color: transparent;
             white-space: nowrap;
         }
-        .card__action-btn:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border-color: var(--border);
-        }
-        .card__action-btn--edit:focus-visible {
-            outline: 2px solid var(--accent-blue);
-            outline-offset: 2px;
-        }
-        .card__action-btn--delete {
-            color: #d44;
-            border-color: #fdd;
-        }
+        .card__action-btn:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .card__action-btn--delete { color: #d44; border-color: #fdd; }
         @media (prefers-color-scheme: dark) {
-            .card__action-btn--delete {
-                color: #ff6961;
-                border-color: #4a2020;
-            }
+            .card__action-btn--delete { color: #ff6961; border-color: #4a2020; }
         }
-        .card__action-btn--delete:hover {
-            background: #fff0f0;
-            border-color: #fcc;
-            color: #c33;
-        }
+        .card__action-btn--delete:hover { background: #fff0f0; border-color: #fcc; color: #c33; }
         @media (prefers-color-scheme: dark) {
-            .card__action-btn--delete:hover {
-                background: #3d2020;
-                border-color: #5a2828;
-                color: #ff8a80;
-            }
+            .card__action-btn--delete:hover { background: #3d2020; border-color: #5a2828; color: #ff8a80; }
         }
 
-        /* ============================================
-           空状态
-           ============================================ */
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-tertiary);
-        }
-        .empty-state__icon {
-            font-size: 3.5rem;
-            display: block;
-            margin-bottom: 14px;
-            opacity: 0.7;
-        }
-        .empty-state__text {
-            font-size: 0.95rem;
-            letter-spacing: 0.02em;
-            color: var(--text-secondary);
-        }
+        .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-tertiary); }
+        .empty-state__icon { font-size: 3.5rem; display: block; margin-bottom: 14px; opacity: 0.7; }
+        .empty-state__text { font-size: 0.95rem; color: var(--text-secondary); }
 
-        /* ============================================
-           FAB 添加按钮
-           ============================================ */
         .fab {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 56px;
-            height: 56px;
+            position: fixed; bottom: 30px; right: 30px;
+            width: 56px; height: 56px;
             border-radius: var(--radius-full);
             background: var(--accent);
-            border: none;
-            color: #fff;
-            font-size: 1.6rem;
-            font-weight: 400;
-            cursor: pointer;
-            box-shadow: var(--shadow-lg);
+            border: none; color: #fff;
+            font-size: 1.6rem; font-weight: 400;
+            cursor: pointer; box-shadow: var(--shadow-lg);
             z-index: 20;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             transition: all var(--duration-normal) var(--ease-spring);
             -webkit-tap-highlight-color: transparent;
         }
-        .fab:hover {
-            transform: scale(1.07);
-            box-shadow: var(--shadow-xl);
-        }
-        .fab:active {
-            transform: scale(0.94);
-            transition: transform 0.1s;
-        }
-        .fab:focus-visible {
-            outline: 4px solid var(--accent-soft);
-            outline-offset: 4px;
-        }
+        .fab:hover { transform: scale(1.07); box-shadow: var(--shadow-xl); }
+        .fab:active { transform: scale(0.94); }
+        .fab:focus-visible { outline: 4px solid var(--accent-soft); outline-offset: 4px; }
 
-        /* ============================================
-           弹窗 / 模态框
-           ============================================ */
         .modal-overlay {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background: rgba(0, 0, 0, 0.35);
             z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             padding: 20px;
             animation: overlayIn var(--duration-fast) ease-out;
         }
-        @media (prefers-color-scheme: dark) {
-            .modal-overlay {
-                background: rgba(0, 0, 0, 0.6);
-            }
-        }
-        @keyframes overlayIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+        @media (prefers-color-scheme: dark) { .modal-overlay { background: rgba(0, 0, 0, 0.6); } }
+        @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+
         .modal {
             background: var(--bg-secondary);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-xl);
             padding: 26px 24px 22px;
-            width: 100%;
-            max-width: 480px;
-            max-height: 84vh;
+            width: 100%; max-width: 480px; max-height: 84vh;
             overflow-y: auto;
             box-shadow: var(--shadow-xl);
             animation: modalIn var(--duration-slow) var(--ease-spring);
-            position: relative;
         }
         @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(28px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            from { opacity: 0; transform: scale(0.9) translateY(28px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .modal__title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 18px;
-            text-align: center;
-            letter-spacing: -0.01em;
+            font-size: 1.25rem; font-weight: 700;
+            margin-bottom: 18px; text-align: center;
             color: var(--text-primary);
         }
         .modal__close {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            background: var(--bg-tertiary);
-            border: none;
+            position: absolute; top: 12px; right: 16px;
+            background: var(--bg-tertiary); border: none;
             color: var(--text-secondary);
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-full);
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--duration-fast);
-            z-index: 5;
-            -webkit-tap-highlight-color: transparent;
+            width: 32px; height: 32px; border-radius: var(--radius-full);
+            cursor: pointer; font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: all var(--duration-fast); z-index: 5;
         }
-        .modal__close:hover {
-            background: var(--bg-input);
-            color: var(--text-primary);
-        }
-        .modal__close:focus-visible {
-            outline: 2px solid var(--accent-blue);
-            outline-offset: 2px;
-        }
+        .modal__close:hover { background: var(--bg-input); color: var(--text-primary); }
+        .modal__close:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
 
-        /* 表单 */
-        .form-group {
-            margin-bottom: 14px;
-        }
+        .form-group { margin-bottom: 14px; }
         .form-group__label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-            letter-spacing: 0.02em;
+            display: block; font-size: 0.8rem; font-weight: 600;
+            color: var(--text-secondary); margin-bottom: 4px;
         }
         .form-group__input,
         .form-group__select,
         .form-group__textarea {
-            width: 100%;
-            padding: 11px 14px;
+            width: 100%; padding: 11px 14px;
             background: var(--bg-input);
             border: 1.5px solid transparent;
             border-radius: var(--radius-sm);
             color: var(--text-primary);
-            font-size: 0.95rem;
-            font-family: inherit;
-            outline: none;
-            transition: all var(--duration-fast);
+            font-size: 0.95rem; font-family: inherit;
+            outline: none; transition: all var(--duration-fast);
             -webkit-appearance: none;
         }
         .form-group__input:focus,
@@ -786,251 +534,108 @@
             background: var(--bg-secondary);
             box-shadow: 0 0 0 4px var(--accent-blue-light);
         }
-        .form-group__textarea {
-            resize: vertical;
-            min-height: 65px;
-        }
+        .form-group__textarea { resize: vertical; min-height: 65px; }
         .form-group__select {
             cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%238e8e93'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 14px center;
             padding-right: 36px;
         }
-        .form-group__select option {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-        .form-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .form-row>.form-group {
-            flex: 1;
-            min-width: 130px;
-        }
+        .form-group__select option { background: var(--bg-secondary); color: var(--text-primary); }
+        .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        .form-row>.form-group { flex: 1; min-width: 130px; }
 
-        /* emoji 选择器 */
-        .emoji-picker {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-            margin-top: 2px;
-        }
+        .emoji-picker { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 2px; }
         .emoji-picker__item {
-            width: 38px;
-            height: 38px;
-            border-radius: var(--radius-full);
+            width: 38px; height: 38px; border-radius: var(--radius-full);
             border: 2px solid transparent;
             background: var(--bg-input);
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            cursor: pointer; font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center;
             transition: all var(--duration-fast);
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
+            -webkit-tap-highlight-color: transparent; user-select: none;
         }
-        .emoji-picker__item:hover {
-            background: var(--bg-tertiary);
-            transform: scale(1.08);
-        }
+        .emoji-picker__item:hover { background: var(--bg-tertiary); transform: scale(1.08); }
         .emoji-picker__item--selected {
             border-color: var(--accent);
             background: var(--accent-light);
             box-shadow: 0 0 0 3px var(--accent-soft);
             transform: scale(1.06);
         }
-        .emoji-picker__item:focus-visible {
-            outline: 2px solid var(--accent-blue);
-            outline-offset: 2px;
-        }
+        .emoji-picker__item:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
 
-        /* 提交按钮 */
         .btn-submit {
-            width: 100%;
-            padding: 13px;
+            width: 100%; padding: 13px;
             background: var(--accent);
-            border: none;
-            border-radius: var(--radius-md);
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            letter-spacing: 0.02em;
-            transition: all var(--duration-normal) var(--ease-ios);
+            border: none; border-radius: var(--radius-md);
+            color: #fff; font-size: 1rem; font-weight: 600;
+            cursor: pointer; font-family: inherit;
             box-shadow: var(--shadow-sm);
             margin-top: 4px;
+            transition: all var(--duration-normal) var(--ease-ios);
             -webkit-tap-highlight-color: transparent;
         }
-        .btn-submit:hover {
-            opacity: 0.9;
-            box-shadow: var(--shadow-md);
-            transform: translateY(-1px);
-        }
-        .btn-submit:active {
-            transform: scale(0.97);
-            transition: transform 0.1s;
-        }
-        .btn-submit:focus-visible {
-            outline: 3px solid var(--accent-soft);
-            outline-offset: 3px;
-        }
+        .btn-submit:hover { opacity: 0.9; box-shadow: var(--shadow-md); transform: translateY(-1px); }
+        .btn-submit:active { transform: scale(0.97); }
 
-        /* 数据管理按钮 */
-        .data-actions {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 18px;
-            flex-wrap: wrap;
-        }
+        .data-actions { display: flex; gap: 8px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
         .data-actions__btn {
-            padding: 9px 17px;
-            border-radius: 20px;
+            padding: 9px 17px; border-radius: 20px;
             border: 1px solid var(--border-light);
             background: var(--bg-secondary);
             color: var(--text-secondary);
-            font-size: 0.78rem;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: inherit;
+            font-size: 0.78rem; font-weight: 500;
+            cursor: pointer; font-family: inherit;
             transition: all var(--duration-fast);
-            -webkit-tap-highlight-color: transparent;
             white-space: nowrap;
         }
-        .data-actions__btn:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border-color: var(--border);
-        }
-        .data-actions__btn:focus-visible {
-            outline: 2px solid var(--accent-blue);
-            outline-offset: 2px;
-        }
+        .data-actions__btn:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .data-actions__btn:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
 
-        /* Toast */
         .toast {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
+            position: fixed; bottom: 40px; left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: var(--text-primary);
             color: var(--bg-primary);
-            padding: 12px 22px;
-            border-radius: 24px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            z-index: 200;
-            pointer-events: none;
+            padding: 12px 22px; border-radius: 24px;
+            font-size: 0.88rem; font-weight: 500;
+            z-index: 200; pointer-events: none;
             transition: transform var(--duration-normal) var(--ease-spring);
             box-shadow: var(--shadow-lg);
-            letter-spacing: 0.02em;
             white-space: nowrap;
         }
-        .toast--visible {
-            transform: translateX(-50%) translateY(0);
-        }
+        .toast--visible { transform: translateX(-50%) translateY(0); }
 
-        /* ============================================
-           响应式
-           ============================================ */
         @media (max-width: 768px) {
-            .app-container {
-                padding: 14px 10px 100px;
-            }
-            .cards-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .app-header__title {
-                font-size: 1.5rem;
-            }
-            .app-header__icon {
-                font-size: 2.2rem;
-            }
-            .toolbar {
-                padding: 10px 12px;
-                gap: 7px;
-                border-radius: var(--radius-md);
-                top: 8px;
-            }
-            .toolbar__sort-btn {
-                padding: 7px 10px;
-                font-size: 0.76rem;
-            }
-            .card {
-                padding: 16px 16px 14px;
-                border-radius: var(--radius-lg);
-            }
-            .card__timer-display {
-                font-size: 0.88rem;
-            }
-            .card__avatar {
-                width: 42px;
-                height: 42px;
-                font-size: 1.3rem;
-            }
-            .card__nickname {
-                font-size: 1rem;
-            }
-            .fab {
-                bottom: 18px;
-                right: 18px;
-                width: 50px;
-                height: 50px;
-                font-size: 1.4rem;
-            }
-            .modal {
-                padding: 20px 14px 16px;
-                border-radius: var(--radius-lg);
-                max-width: 94vw;
-            }
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            .card__timer-toggle {
-                width: 26px;
-                height: 26px;
-                font-size: 0.65rem;
-                right: 7px;
-            }
+            .app-container { padding: 14px 10px 100px; }
+            .cards-grid { grid-template-columns: 1fr; gap: 12px; }
+            .app-header__title { font-size: 1.5rem; }
+            .app-header__icon { font-size: 2.2rem; }
+            .toolbar { padding: 10px 12px; gap: 7px; border-radius: var(--radius-md); }
+            .toolbar__sort-btn { padding: 7px 10px; font-size: 0.76rem; }
+            .card { padding: 16px 16px 14px; border-radius: var(--radius-lg); }
+            .card__timer-display { font-size: 0.88rem; }
+            .card__avatar { width: 42px; height: 42px; font-size: 1.3rem; }
+            .card__nickname { font-size: 1rem; }
+            .fab { bottom: 18px; right: 18px; width: 50px; height: 50px; font-size: 1.4rem; }
+            .modal { padding: 20px 14px 16px; border-radius: var(--radius-lg); max-width: 94vw; }
+            .form-row { flex-direction: column; gap: 0; }
+            .card__timer-toggle { width: 26px; height: 26px; font-size: 0.65rem; right: 7px; }
         }
         @media (max-width: 400px) {
-            .cards-grid {
-                gap: 10px;
-            }
-            .toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .toolbar__sort-group {
-                justify-content: center;
-            }
-            .card {
-                padding: 12px;
-            }
-            .card__timer-display {
-                font-size: 0.78rem;
-            }
+            .cards-grid { gap: 10px; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar__sort-group { justify-content: center; }
+            .card { padding: 12px; }
+            .card__timer-display { font-size: 0.78rem; }
         }
         @media (min-width: 1400px) {
-            .cards-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 22px;
-            }
+            .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
+            *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
@@ -1040,9 +645,6 @@
 </head>
 <body>
 
-    <!-- ============================================
-    主应用容器
-    ============================================ -->
     <div class="app-container" id="appContainer">
         <header class="app-header" role="banner">
             <span class="app-header__icon" aria-hidden="true">💫</span>
@@ -1050,16 +652,19 @@
             <p class="app-header__subtitle">记录每一次心动的相遇</p>
         </header>
 
+        <!-- 工具栏：移除了 emoji 装饰，改用纯文字 -->
         <nav class="toolbar" id="toolbar" role="toolbar" aria-label="筛选与排序工具">
             <div class="toolbar__search-wrap">
-                <span class="toolbar__search-icon" aria-hidden="true">🔍</span>
+                <span class="toolbar__search-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                </span>
                 <input type="search" class="toolbar__search" id="searchInput" placeholder="搜索昵称或备注..." aria-label="搜索网友记录" autocomplete="off">
             </div>
             <div class="toolbar__sort-group" id="sortGroup">
-                <button class="toolbar__sort-btn toolbar__sort-btn--active" data-sort="duration-desc" aria-pressed="true">⏱ 认识最久</button>
-                <button class="toolbar__sort-btn" data-sort="duration-asc" aria-pressed="false">🆕 最近认识</button>
-                <button class="toolbar__sort-btn" data-sort="name-asc" aria-pressed="false">🔤 昵称排序</button>
-                <button class="toolbar__sort-btn" data-sort="recent" aria-pressed="false">📋 最近添加</button>
+                <button class="toolbar__sort-btn toolbar__sort-btn--active" data-sort="duration-desc" aria-pressed="true">认识最久</button>
+                <button class="toolbar__sort-btn" data-sort="duration-asc" aria-pressed="false">最近认识</button>
+                <button class="toolbar__sort-btn" data-sort="name-asc" aria-pressed="false">昵称排序</button>
+                <button class="toolbar__sort-btn" data-sort="recent" aria-pressed="false">最近添加</button>
             </div>
             <span class="toolbar__count" id="recordCount" aria-live="polite">0 条记录</span>
         </nav>
@@ -1067,10 +672,10 @@
         <main class="cards-grid" id="cardsGrid" role="list" aria-label="网友记录列表"></main>
 
         <div class="data-actions" id="dataActions">
-            <button class="data-actions__btn" id="btnExport">📥 导出备份</button>
-            <button class="data-actions__btn" id="btnImport">📤 导入恢复</button>
+            <button class="data-actions__btn" id="btnExport">导出备份</button>
+            <button class="data-actions__btn" id="btnImport">导入恢复</button>
             <input type="file" id="importFileInput" accept=".json" style="display:none;" aria-hidden="true">
-            <button class="data-actions__btn" id="btnClearAll">🗑 清空全部</button>
+            <button class="data-actions__btn" id="btnClearAll">清空全部</button>
         </div>
     </div>
 
@@ -1128,7 +733,7 @@
                     <label class="form-group__label" for="formNote">初印象 / 备注</label>
                     <textarea class="form-group__textarea" id="formNote" placeholder="记录相识时的第一印象..." maxlength="200"></textarea>
                 </div>
-                <button type="submit" class="btn-submit" id="btnSubmit">💾 保存记录</button>
+                <button type="submit" class="btn-submit" id="btnSubmit">保存记录</button>
             </form>
         </div>
     </div>
@@ -1168,9 +773,7 @@
             const dataActions = $('#dataActions');
 
             const STORAGE_KEY = 'acquaintance_records_ios18';
-            const EMOJI_OPTIONS = ['✨', '🌟', '💫', '🎮', '💌', '💕', '🌙', '📚', '☕', '🦊', '🐰', '🌸', '🎵', '🌻', '🦋', '🍀',
-                '💎', '🔥', '🎯', '🧸'
-            ];
+            const EMOJI_OPTIONS = ['✨', '🌟', '💫', '🎮', '💌', '💕', '🌙', '📚', '☕', '🦊', '🐰', '🌸', '🎵', '🌻', '🦋', '🍀', '💎', '🔥', '🎯', '🧸'];
             const TAG_COLOR_MAP = {
                 '游戏搭子': { bg: 'var(--tag-game-bg)', color: 'var(--tag-game-color)' },
                 '笔友': { bg: 'var(--tag-penpal-bg)', color: 'var(--tag-penpal-color)' },
@@ -1209,11 +812,9 @@
                 records.forEach(r => { if (!(r.id in timerModeMap)) timerModeMap[r.id] = 0; });
             }
 
-            function saveRecords() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(
-            records)); } catch (e) { showToast('⚠️ 存储空间不足'); } }
+            function saveRecords() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch (e) { showToast('存储空间不足，请清理旧记录'); } }
 
-            function generateId() { return 'rec_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,
-            8); }
+            function generateId() { return 'rec_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8); }
 
             function createSampleRecord() {
                 const twoYearsAgo = new Date();
@@ -1239,8 +840,7 @@
                 const start = new Date(meetDateISO);
                 const now = new Date();
                 const msDiff = now - start;
-                if (msDiff < 0) return { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, totalDays: 0,
-                    totalHours: 0, isMilestone: false };
+                if (msDiff < 0) return { years:0, months:0, days:0, hours:0, minutes:0, seconds:0, totalDays:0, totalHours:0, isMilestone:false };
                 const totalDays = Math.floor(msDiff / (1000 * 60 * 60 * 24));
                 const totalHours = Math.floor(msDiff / (1000 * 60 * 60));
                 let years = now.getFullYear() - start.getFullYear();
@@ -1249,62 +849,41 @@
                 let hours = now.getHours() - start.getHours();
                 let minutes = now.getMinutes() - start.getMinutes();
                 let seconds = now.getSeconds() - start.getSeconds();
-                if (seconds < 0) { seconds += 60;
-                    minutes--; }
-                if (minutes < 0) { minutes += 60;
-                    hours--; }
-                if (hours < 0) { hours += 24;
-                    days--; }
-                if (days < 0) { const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-                    days += prevMonth.getDate();
-                    months--; }
-                if (months < 0) { months += 12;
-                    years--; }
+                if (seconds < 0) { seconds += 60; minutes--; }
+                if (minutes < 0) { minutes += 60; hours--; }
+                if (hours < 0) { hours += 24; days--; }
+                if (days < 0) { const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); months--; }
+                if (months < 0) { months += 12; years--; }
                 if (years < 0) years = 0;
-                const isMilestone = (totalDays > 0 && totalDays % 100 === 0) || (totalDays > 0 && totalDays % 365 === 0 &&
-                    years >= 1 && months === 0 && days === 0);
+                const isMilestone = (totalDays > 0 && totalDays % 100 === 0) || (totalDays > 0 && totalDays % 365 === 0 && years >= 1 && months === 0 && days === 0);
                 return { years, months, days, hours, minutes, seconds, totalDays, totalHours, isMilestone };
             }
 
             function formatDuration(diff, mode) {
                 switch (mode) {
-                    case 'totalDays':
-                        return `共 <span class="highlight">${diff.totalDays.toLocaleString()}</span> 天`;
-                    case 'totalHours':
-                        return `共 <span class="highlight">${diff.totalHours.toLocaleString()}</span> 小时`;
+                    case 'totalDays': return `共 <span class="highlight">${diff.totalDays.toLocaleString()}</span> 天`;
+                    case 'totalHours': return `共 <span class="highlight">${diff.totalHours.toLocaleString()}</span> 小时`;
                     default:
                         const parts = [];
                         if (diff.years > 0) parts.push(`<span class="highlight">${diff.years}</span>年`);
-                        if (diff.months > 0 || diff.years > 0) parts.push(
-                            `<span class="highlight">${diff.months}</span>月`);
-                        if (diff.days > 0 || parts.length > 0) parts.push(
-                        `<span class="highlight">${diff.days}</span>天`);
-                        parts.push(
-                            `<span class="highlight">${String(diff.hours).padStart(2,'0')}</span>时`);
-                        parts.push(
-                            `<span class="highlight">${String(diff.minutes).padStart(2,'0')}</span>分`);
-                        parts.push(
-                            `<span class="highlight">${String(diff.seconds).padStart(2,'0')}</span>秒`);
+                        if (diff.months > 0 || diff.years > 0) parts.push(`<span class="highlight">${diff.months}</span>月`);
+                        if (diff.days > 0 || parts.length > 0) parts.push(`<span class="highlight">${diff.days}</span>天`);
+                        parts.push(`<span class="highlight">${String(diff.hours).padStart(2,'0')}</span>时`);
+                        parts.push(`<span class="highlight">${String(diff.minutes).padStart(2,'0')}</span>分`);
+                        parts.push(`<span class="highlight">${String(diff.seconds).padStart(2,'0')}</span>秒`);
                         return parts.join(' ');
                 }
             }
 
-            function getTimerModeLabel(mode) { switch (mode) { case 'totalDays': return '总天数';
-                    case 'totalHours': return '总小时';
-                    default: return '详细'; } }
+            function getTimerModeLabel(mode) { switch (mode) { case 'totalDays': return '总天数'; case 'totalHours': return '总小时'; default: return '详细'; } }
 
             function getSortFn(sortKey) {
                 switch (sortKey) {
-                    case 'duration-desc':
-                        return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
-                    case 'duration-asc':
-                        return (a, b) => new Date(b.meetDate) - new Date(a.meetDate);
-                    case 'name-asc':
-                        return (a, b) => a.nickname.localeCompare(b.nickname, 'zh');
-                    case 'recent':
-                        return (a, b) => new Date(b.createdAt) - new Date(a.createdAt);
-                    default:
-                        return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
+                    case 'duration-desc': return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
+                    case 'duration-asc': return (a, b) => new Date(b.meetDate) - new Date(a.meetDate);
+                    case 'name-asc': return (a, b) => a.nickname.localeCompare(b.nickname, 'zh');
+                    case 'recent': return (a, b) => new Date(b.createdAt) - new Date(a.createdAt);
+                    default: return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
                 }
             }
 
@@ -1330,8 +909,7 @@
                 filtered = [...filtered].sort(sortFn);
                 recordCount.textContent = `${filtered.length} / ${records.length} 条记录`;
                 if (filtered.length === 0) {
-                    cardsGrid.innerHTML =
-                        `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">📭</span><p class="empty-state__text">${records.length === 0 ? '还没有记录，点击下方按钮添加第一位网友吧~' : '没有匹配的记录，试试调整搜索条件'}</p></div>`;
+                    cardsGrid.innerHTML = `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">📭</span><p class="empty-state__text">${records.length === 0 ? '还没有记录，点击下方按钮添加第一位网友吧~' : '没有匹配的记录，试试调整搜索条件'}</p></div>`;
                 } else {
                     cardsGrid.innerHTML = filtered.map(r => buildCardHTML(r)).join('');
                 }
@@ -1354,25 +932,24 @@
                       <div class="card__nickname" title="${escapeHTML(record.nickname)}">${escapeHTML(record.nickname)}</div>
                       <div class="card__meta-row">
                         <span class="card__tag" style="--tag-bg:${tagStyle.bg};--tag-color:${tagStyle.color};">${escapeHTML(record.relationTag)}</span>
-                        ${record.group ? `<span class="card__channel">📁 ${escapeHTML(record.group)}</span>` : ''}
+                        ${record.group ? `<span class="card__channel">${escapeHTML(record.group)}</span>` : ''}
                       </div>
                     </div>
                   </div>
                   <div class="card__timer">
                     <div class="card__timer-display">${timerHTML}</div>
                     <div class="card__timer-mode">显示模式：${modeLabel}</div>
-                    <button class="card__timer-toggle" data-action="toggle-timer" data-record-id="${record.id}" aria-label="切换时长显示模式">🔄</button>
+                    <button class="card__timer-toggle" data-action="toggle-timer" data-record-id="${record.id}" aria-label="切换时长显示模式">⇄</button>
                   </div>
-                  ${notePreview ? `<div class="card__note-preview" title="${escapeHTML(notePreview)}">💬 ${escapeHTML(notePreview)}</div>` : ''}
+                  ${notePreview ? `<div class="card__note-preview" title="${escapeHTML(notePreview)}">${escapeHTML(notePreview)}</div>` : ''}
                   <div class="card__actions">
-                    <button class="card__action-btn card__action-btn--edit" data-action="edit" data-record-id="${record.id}">✏️ 编辑</button>
-                    <button class="card__action-btn card__action-btn--delete" data-action="delete" data-record-id="${record.id}">🗑 删除</button>
+                    <button class="card__action-btn card__action-btn--edit" data-action="edit" data-record-id="${record.id}">编辑</button>
+                    <button class="card__action-btn card__action-btn--delete" data-action="delete" data-record-id="${record.id}">删除</button>
                   </div>
                 </article>`;
             }
 
-            function escapeHTML(str) { const div = document.createElement('div');
-                div.textContent = str; return div.innerHTML; }
+            function escapeHTML(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
 
             function updateAllTimers() {
                 const cards = cardsGrid.querySelectorAll('.card');
@@ -1386,15 +963,14 @@
                     const modeLabel = card.querySelector('.card__timer-mode');
                     if (timerDisplay) timerDisplay.innerHTML = formatDuration(diff, mode);
                     if (modeLabel) modeLabel.textContent = '显示模式：' + getTimerModeLabel(mode);
-                    if (diff.isMilestone && !card.classList.contains('card--milestone')) card.classList.add(
-                        'card--milestone');
+                    if (diff.isMilestone && !card.classList.contains('card--milestone')) card.classList.add('card--milestone');
                 });
             }
 
             function openModal(record = null) {
                 const isEditing = !!record;
                 modalTitle.textContent = isEditing ? '编辑记录' : '添加记录';
-                btnSubmit.textContent = isEditing ? '💾 保存修改' : '💾 保存记录';
+                btnSubmit.textContent = isEditing ? '保存修改' : '保存记录';
                 formRecordId.value = record ? record.id : '';
                 formNickname.value = record ? record.nickname : '';
                 formAvatar.value = record ? record.avatar : '✨';
@@ -1456,12 +1032,10 @@
             }
 
             function validateForm(data) {
-                if (!data.nickname) { showToast('⚠️ 请输入昵称');
-                    formNickname.focus(); return false; }
-                if (!formDate.value) { showToast('⚠️ 请选择认识日期');
-                    formDate.focus(); return false; }
-                if (isNaN(new Date(data.meetDate).getTime())) { showToast('⚠️ 日期格式不正确'); return false; }
-                if (new Date(data.meetDate) > new Date()) { showToast('⚠️ 认识日期不能是未来时间'); return false; }
+                if (!data.nickname) { showToast('请输入昵称'); formNickname.focus(); return false; }
+                if (!formDate.value) { showToast('请选择认识日期'); formDate.focus(); return false; }
+                if (isNaN(new Date(data.meetDate).getTime())) { showToast('日期格式不正确'); return false; }
+                if (new Date(data.meetDate) > new Date()) { showToast('认识日期不能是未来时间'); return false; }
                 return true;
             }
 
@@ -1470,13 +1044,12 @@
                     const idx = records.findIndex(r => r.id === recordId);
                     if (idx === -1) return false;
                     records[idx] = { ...records[idx], ...data, updatedAt: new Date().toISOString() };
-                    showToast('✅ 记录已更新');
+                    showToast('记录已更新');
                 } else {
-                    const newRecord = { id: generateId(), ...data, createdAt: new Date().toISOString(), updatedAt: new Date()
-                            .toISOString() };
+                    const newRecord = { id: generateId(), ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
                     records.push(newRecord);
                     timerModeMap[newRecord.id] = 0;
-                    showToast('🎉 记录已添加');
+                    showToast('记录已添加');
                 }
                 saveRecords();
                 renderCards();
@@ -1491,24 +1064,21 @@
                 delete timerModeMap[recordId];
                 saveRecords();
                 renderCards();
-                showToast('🗑 记录已删除');
+                showToast('记录已删除');
             }
 
             function exportData() {
-                if (records.length === 0) { showToast('📭 暂无记录可导出'); return; }
+                if (records.length === 0) { showToast('暂无记录可导出'); return; }
                 const dataStr = JSON.stringify(records, null, 2);
                 const blob = new Blob([dataStr], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
                 const now = new Date();
-                a.download =
-                    `相识时光_备份_${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}.json`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                a.download = `相识时光_备份_${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}.json`;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                showToast('📥 备份已下载');
+                showToast('备份已下载');
             }
 
             function importData(file) {
@@ -1518,47 +1088,42 @@
                         const imported = JSON.parse(e.target.result);
                         if (!Array.isArray(imported)) throw new Error('格式错误');
                         const valid = imported.filter(r => r.nickname && r.meetDate);
-                        if (valid.length === 0) { showToast('⚠️ 文件中没有有效记录'); return; }
-                        if (!confirm(
-                                `发现 ${valid.length} 条记录。\n\n选择"确定"将合并导入（保留现有记录），\n选择"取消"将放弃导入。`
-                                )) return;
+                        if (valid.length === 0) { showToast('文件中没有有效记录'); return; }
+                        if (!confirm(`发现 ${valid.length} 条记录。\n\n选择"确定"将合并导入（保留现有记录），\n选择"取消"将放弃导入。`)) return;
                         const existingIds = new Set(records.map(r => r.id));
                         const newRecords = valid.filter(r => !existingIds.has(r.id));
                         records = [...records, ...newRecords];
                         newRecords.forEach(r => { timerModeMap[r.id] = 0; });
                         saveRecords();
                         renderCards();
-                        showToast(`📤 成功导入 ${newRecords.length} 条记录`);
-                    } catch (err) { showToast('⚠️ 文件格式错误，请检查JSON文件'); }
+                        showToast(`成功导入 ${newRecords.length} 条记录`);
+                    } catch (err) { showToast('文件格式错误，请检查JSON文件'); }
                 };
                 reader.readAsText(file);
             }
 
             function clearAllData() {
-                if (records.length === 0) { showToast('📭 暂无记录可清空'); return; }
-                if (!confirm(`⚠️ 确定要清空全部 ${records.length} 条记录吗？\n此操作不可恢复！\n\n建议先导出备份。`)) return;
+                if (records.length === 0) { showToast('暂无记录可清空'); return; }
+                if (!confirm(`确定要清空全部 ${records.length} 条记录吗？\n此操作不可恢复！\n\n建议先导出备份。`)) return;
                 records = [];
                 timerModeMap = {};
                 saveRecords();
                 renderCards();
-                showToast('🗑 所有记录已清空');
+                showToast('所有记录已清空');
             }
 
             let toastTimer = null;
-
             function showToast(message) {
                 if (toastTimer) clearTimeout(toastTimer);
                 toast.textContent = message;
                 toast.classList.add('toast--visible');
-                toastTimer = setTimeout(() => { toast.classList.remove('toast--visible');
-                    toastTimer = null; }, 2200);
+                toastTimer = setTimeout(() => { toast.classList.remove('toast--visible'); toastTimer = null; }, 2200);
             }
 
             fabAdd.addEventListener('click', () => openModal(null));
             modalClose.addEventListener('click', closeModal);
             modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.style.display ===
-                    'flex') closeModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.style.display === 'flex') closeModal(); });
             recordForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const data = collectFormData();
@@ -1570,9 +1135,7 @@
             sortGroup.addEventListener('click', (e) => {
                 const btn = e.target.closest('.toolbar__sort-btn');
                 if (!btn) return;
-                sortGroup.querySelectorAll('.toolbar__sort-btn').forEach(b => { b.classList.remove(
-                        'toolbar__sort-btn--active');
-                    b.setAttribute('aria-pressed', 'false'); });
+                sortGroup.querySelectorAll('.toolbar__sort-btn').forEach(b => { b.classList.remove('toolbar__sort-btn--active'); b.setAttribute('aria-pressed', 'false'); });
                 btn.classList.add('toolbar__sort-btn--active');
                 btn.setAttribute('aria-pressed', 'true');
                 renderCards();
@@ -1602,9 +1165,7 @@
             });
             btnExport.addEventListener('click', exportData);
             btnImport.addEventListener('click', () => importFileInput.click());
-            importFileInput.addEventListener('change', (e) => { if (e.target.files[0]) importData(e.target.files[
-                    0]);
-                importFileInput.value = ''; });
+            importFileInput.addEventListener('change', (e) => { if (e.target.files[0]) importData(e.target.files[0]); importFileInput.value = ''; });
             btnClearAll.addEventListener('click', clearAllData);
 
             function init() {
@@ -1613,7 +1174,6 @@
                 renderCards();
                 setInterval(updateAllTimers, 1000);
                 updateAllTimers();
-                console.log('💫 相识时光 · iOS 18 风格已就绪');
             }
             init();
         })();
