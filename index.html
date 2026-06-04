@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="相识时光">
+    <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💫</text></svg>">
+    <title>相识时光</title>
+
+    <!-- PWA Manifest -->
+    <script>
+      // 动态 Manifest 支持深浅色模式
+      const manifest = {
+        name: '相识时光',
+        short_name: '相识',
+        description: '记录与网友相识的点滴时光',
+        start_url: location.href,
+        display: 'standalone',
+        background_color: '#f2f2f7',
+        theme_color: '#f2f2f7',
+        icons: [{
+          src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💫</text></svg>",
+          sizes: '100x100',
+          type: 'image/svg+xml'
+        }]
+      };
+      const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+      const manifestURL = URL.createObjectURL(blob);
+      document.head.insertAdjacentHTML('beforeend', `<link rel="manifest" href="${manifestURL}">`);
+    </script>
+
+    <style>
+        /* ============================================
+           iOS 设计令牌 & 变量
+           ============================================ */
+        :root {
+            --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Noto Sans SC', sans-serif;
+            --font-mono: 'SF Mono', 'Menlo', 'Courier New', monospace;
+
+            /* 浅色模式 */
+            --bg-primary: #f2f2f7;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e5e5ea;
+            --text-primary: #000000;
+            --text-secondary: #3c3c43;
+            --text-tertiary: #8e8e93;
+            --tint: #007aff;
+            --tint-hover: #0051d5;
+            --separator: #c6c6c8;
+            --glass-bg: rgba(255,255,255,0.72);
+            --glass-blur: 20px;
+            --shadow-card: 0 4px 16px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.04);
+            --shadow-elevated: 0 12px 32px rgba(0,0,0,0.1), 0 0 0 0.5px rgba(0,0,0,0.06);
+
+            /* 标签色 */
+            --tag-game: #34c759;
+            --tag-penpal: #ff9f0a;
+            --tag-love: #ff375f;
+            --tag-treehole: #af52de;
+            --tag-study: #30b0c7;
+            --tag-default: #8e8e93;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #000000;
+                --bg-secondary: #1c1c1e;
+                --bg-tertiary: #2c2c2e;
+                --text-primary: #ffffff;
+                --text-secondary: #ebebf5;
+                --text-tertiary: #98989d;
+                --tint: #0a84ff;
+                --tint-hover: #409cff;
+                --separator: #38383a;
+                --glass-bg: rgba(30,30,32,0.72);
+                --shadow-card: 0 4px 16px rgba(0,0,0,0.3), 0 0 0 0.5px rgba(255,255,255,0.08);
+                --shadow-elevated: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.1);
+            }
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background 0.3s, color 0.3s;
+            /* 安全区域适配 */
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        /* ============================================
+           导航栏 - iOS 风格
+           ============================================ */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: var(--glass-bg);
+            backdrop-filter: saturate(180%) blur(var(--glass-blur));
+            -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur));
+            border-bottom: 0.5px solid var(--separator);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s;
+        }
+        .nav__title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .nav__actions {
+            display: flex;
+            gap: 8px;
+        }
+        .nav__btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--tint);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .nav__btn:active {
+            background: var(--separator);
+            transform: scale(0.95);
+        }
+
+        /* ============================================
+           主内容区域
+           ============================================ */
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        /* 搜索栏 */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-bottom: 16px;
+            transition: background 0.3s;
+        }
+        .search-bar__icon {
+            font-size: 1.2rem;
+            margin-right: 8px;
+            color: var(--text-tertiary);
+        }
+        .search-bar__input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            color: var(--text-primary);
+            outline: none;
+            font-family: inherit;
+        }
+        .search-bar__input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        /* 排序分段控件 */
+        .segmented-control {
+            display: flex;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 2px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .segmented-control__item {
+            flex: 1;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-radius: 6px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .segmented-control__item--active {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 0 0 0.5px rgba(0,0,0,0.04);
+        }
+
+        /* 卡片网格 */
+        .cards-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        /* 单张卡片 - iOS 风格 */
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:active {
+            transform: scale(0.98);
+        }
+        .card__header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .card__avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 22px;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .card__info {
+            flex: 1;
+        }
+        .card__nickname {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+        .card__meta {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+        .card__tag {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--tag-bg, var(--bg-tertiary));
+            color: var(--tag-color, var(--text-secondary));
+        }
+        .card__timer {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card__timer-text {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+        .card__timer-mode {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            padding: 2px 8px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+        }
+        .card__note {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card__actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .card__btn {
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--bg-tertiary);
+            color: var(--tint);
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .card__btn:active {
+            background: var(--separator);
+        }
+        .card__btn--delete {
+            color: #ff3b30;
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-tertiary);
+        }
+
+        /* FAB 添加按钮 */
+        .fab {
+            position: fixed;
+            bottom: calc(24px + env(safe-area-inset-bottom));
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: var(--tint);
+            color: #fff;
+            border: none;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0,122,255,0.4);
+            cursor: pointer;
+            z-index: 50;
+            transition: transform 0.2s, box-shadow 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .fab:active {
+            transform: scale(0.92);
+            box-shadow: 0 4px 12px rgba(0,122,255,0.6);
+        }
+
+        /* 模态弹窗 */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 16px;
+        }
+        .modal-sheet {
+            background: var(--bg-secondary);
+            border-radius: 20px 20px 0 0;
+            padding: 20px 16px 34px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-elevated);
+            animation: slideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .modal-handle {
+            width: 36px;
+            height: 5px;
+            background: var(--separator);
+            border-radius: 3px;
+            margin: 0 auto 16px;
+        }
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            display: block;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--separator);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--tint);
+        }
+        .form-textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+        .emoji-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .emoji-item {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .emoji-item.selected {
+            border-color: var(--tint);
+            background: rgba(0,122,255,0.1);
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--tint);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-primary:active {
+            background: var(--tint-hover);
+        }
+
+        /* 数据操作 */
+        .data-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 16px 0;
+        }
+        .data-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            background: var(--bg-tertiary);
+            color: var(--tint);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-elevated);
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+
+        @media (max-width: 400px) {
+            .card__timer-text { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="nav" role="banner">
+    <h1 class="nav__title">相识时光</h1>
+    <div class="nav__actions">
+        <button class="nav__btn" id="themeToggle" aria-label="切换深浅色模式">🌓</button>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+        <span class="search-bar__icon">🔍</span>
+        <input type="search" class="search-bar__input" id="searchInput" placeholder="搜索" autocomplete="off" aria-label="搜索">
+    </div>
+
+    <!-- 排序分段控件 -->
+    <div class="segmented-control" id="sortControl" role="tablist">
+        <button class="segmented-control__item segmented-control__item--active" data-sort="duration-desc" role="tab" aria-selected="true">认识最久</button>
+        <button class="segmented-control__item" data-sort="duration-asc" role="tab" aria-selected="false">最近认识</button>
+        <button class="segmented-control__item" data-sort="name-asc" role="tab" aria-selected="false">昵称 A-Z</button>
+        <button class="segmented-control__item" data-sort="recent" role="tab" aria-selected="false">最近添加</button>
+    </div>
+
+    <!-- 卡片列表 -->
+    <div class="cards-grid" id="cardsGrid" role="list"></div>
+
+    <!-- 数据操作 -->
+    <div class="data-actions" id="dataActions" style="display:none;">
+        <button class="data-btn" id="btnExport">📤 导出备份</button>
+        <button class="data-btn" id="btnImport">📥 导入恢复</button>
+        <button class="data-btn" id="btnClearAll" style="color:#ff3b30;">🗑 全部清空</button>
+    </div>
+</div>
+
+<!-- 添加按钮 -->
+<button class="fab" id="fabAdd" aria-label="添加记录">+</button>
+
+<!-- 模态弹窗（底部卡片式） -->
+<div class="modal-overlay" id="modalOverlay" style="display:none;" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <h2 class="modal-title" id="modalTitle">添加记录</h2>
+        <form id="recordForm" novalidate>
+            <input type="hidden" id="formId">
+            <div class="form-group">
+                <label class="form-label" for="formNickname">昵称 *</label>
+                <input class="form-input" id="formNickname" placeholder="网友昵称" required maxlength="30">
+            </div>
+            <div class="form-group">
+                <label class="form-label">头像</label>
+                <div class="emoji-row" id="emojiPicker" role="radiogroup"></div>
+                <input type="hidden" id="formAvatar" value="✨">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="formRelation">关系标签</label>
+                <select class="form-select" id="formRelation">
+                    <option value="游戏搭子">🎮 游戏搭子</option>
+                    <option value="笔友">💌 笔友</option>
+                    <option value="网恋对象">💕 网恋对象</option>
+                    <option value="树洞知己">🌙 树洞知己</option>
+                    <option value="学习伙伴">📚 学习伙伴</option>
+                    <option value="其他">✨ 其他</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="formGroup">分组</label>
+                <input class="form-input" id="formGroup" placeholder="如：深夜档、亲友团">
+            </div>
+            <div class="form-group">
+                <label class="form-label">认识日期时间 *</label>
+                <div style="display:flex; gap:8px;">
+                    <input type="date" class="form-input" id="formDate" required style="flex:1;">
+                    <input type="time" class="form-input" id="formTime" step="1" value="00:00:00" style="flex:1;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="formChannel">相识渠道</label>
+                <input class="form-input" id="formChannel" placeholder="如：王者荣耀、Soul">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="formNote">初印象 / 备注</label>
+                <textarea class="form-textarea" id="formNote" placeholder="记录第一印象..." maxlength="200"></textarea>
+            </div>
+            <button type="submit" class="btn-primary">💾 保存</button>
+        </form>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- 隐藏的文件上传 -->
+<input type="file" id="importFile" accept=".json" style="display:none;">
+
+<script>
+    (function() {
+        // ================== DOM 工具 ==================
+        const $ = (s) => document.querySelector(s);
+        const $$ = (s) => document.querySelectorAll(s);
+
+        // ================== 数据存储 ==================
+        const STORAGE_KEY = 'acquaintance_records_ios';
+        let records = [];
+        let timerModeMap = {}; // recordId -> modeIndex
+
+        const EMOJI_LIST = ['✨','🌟','💫','🎮','💌','💕','🌙','📚','☕','🦊','🐰','🌸','🎵','🌻','🦋','🍀','💎','🔥','🎯','🧸'];
+
+        const TAG_COLORS = {
+            '游戏搭子': { bg: '#34c75933', color: '#34c759' },
+            '笔友': { bg: '#ff9f0a33', color: '#ff9f0a' },
+            '网恋对象': { bg: '#ff375f33', color: '#ff375f' },
+            '树洞知己': { bg: '#af52de33', color: '#af52de' },
+            '学习伙伴': { bg: '#30b0c733', color: '#30b0c7' },
+            '其他': { bg: '#8e8e9333', color: '#8e8e93' }
+        };
+
+        function loadData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                records = raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                records = [];
+            }
+            if (!records.length) {
+                records.push({
+                    id: 'sample_1',
+                    nickname: '星空下的旅人',
+                    avatar: '🌟',
+                    relationTag: '树洞知己',
+                    group: '深夜档',
+                    meetDate: new Date(Date.now() - 2 * 365 * 24 * 3600 * 1000).toISOString(),
+                    channel: '某树洞网站',
+                    firstImpression: '温柔的声音',
+                    createdAt: new Date().toISOString(),
+                });
+                saveData();
+            }
+            records.forEach(r => { if (!(r.id in timerModeMap)) timerModeMap[r.id] = 0; });
+        }
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+        }
+
+        // ================== 时间计算 ==================
+        function calcTimeDiff(iso) {
+            const start = new Date(iso), now = new Date();
+            let diff = now - start;
+            if (diff < 0) diff = 0;
+            const totalDays = Math.floor(diff / 86400000);
+            const totalHours = Math.floor(diff / 3600000);
+            let years = now.getFullYear() - start.getFullYear();
+            let months = now.getMonth() - start.getMonth();
+            let days = now.getDate() - start.getDate();
+            let hours = now.getHours() - start.getHours();
+            let mins = now.getMinutes() - start.getMinutes();
+            let secs = now.getSeconds() - start.getSeconds();
+            if (secs < 0) { secs += 60; mins--; }
+            if (mins < 0) { mins += 60; hours--; }
+            if (hours < 0) { hours += 24; days--; }
+            if (days < 0) { days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); months--; }
+            if (months < 0) { months += 12; years--; }
+            if (years < 0) years = 0;
+            return { years, months, days, hours, mins, secs, totalDays, totalHours };
+        }
+
+        const TIMER_MODES = ['detailed', 'totalDays', 'totalHours'];
+        function formatDuration(diff, mode) {
+            switch (mode) {
+                case 'totalDays': return `${diff.totalDays.toLocaleString()} 天`;
+                case 'totalHours': return `${diff.totalHours.toLocaleString()} 小时`;
+                default: return `${diff.years}年 ${diff.months}月 ${diff.days}天 ${String(diff.hours).padStart(2,'0')}:${String(diff.mins).padStart(2,'0')}:${String(diff.secs).padStart(2,'0')}`;
+            }
+        }
+
+        // ================== 渲染 ==================
+        function getActiveSort() {
+            const active = $('#sortControl .segmented-control__item--active');
+            return active ? active.dataset.sort : 'duration-desc';
+        }
+        function sortRecords(arr, key) {
+            switch (key) {
+                case 'duration-desc': return [...arr].sort((a,b) => new Date(a.meetDate) - new Date(b.meetDate));
+                case 'duration-asc': return [...arr].sort((a,b) => new Date(b.meetDate) - new Date(a.meetDate));
+                case 'name-asc': return [...arr].sort((a,b) => a.nickname.localeCompare(b.nickname, 'zh'));
+                case 'recent': return [...arr].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+                default: return arr;
+            }
+        }
+
+        function renderCards() {
+            const query = $('#searchInput').value.trim().toLowerCase();
+            let filtered = records.filter(r => {
+                if (!query) return true;
+                return (r.nickname || '').includes(query) ||
+                       (r.channel || '').includes(query) ||
+                       (r.firstImpression || '').includes(query) ||
+                       (r.relationTag || '').includes(query) ||
+                       (r.group || '').includes(query);
+            });
+            const sorted = sortRecords(filtered, getActiveSort());
+            const grid = $('#cardsGrid');
+            if (!sorted.length) {
+                grid.innerHTML = `<div class="empty-state"><p>✨ 还没有记录，点击 + 添加吧</p></div>`;
+                $('#dataActions').style.display = 'none';
+                return;
+            }
+            $('#dataActions').style.display = 'flex';
+            grid.innerHTML = sorted.map(r => {
+                const diff = calcTimeDiff(r.meetDate);
+                const mode = TIMER_MODES[timerModeMap[r.id] || 0];
+                const timerStr = formatDuration(diff, mode);
+                const tag = TAG_COLORS[r.relationTag] || TAG_COLORS['其他'];
+                return `
+                <div class="card" data-id="${r.id}" role="listitem">
+                    <div class="card__header">
+                        <div class="card__avatar">${r.avatar}</div>
+                        <div class="card__info">
+                            <div class="card__nickname">${escapeHTML(r.nickname)}</div>
+                            <div class="card__meta">
+                                <span class="card__tag" style="background:${tag.bg};color:${tag.color};">${r.relationTag}</span>
+                                ${r.group ? `<span class="card__tag">${escapeHTML(r.group)}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__timer">
+                        <span class="card__timer-text">${timerStr}</span>
+                        <span class="card__timer-mode" data-action="toggleTimer" data-id="${r.id}">切换</span>
+                    </div>
+                    ${r.firstImpression ? `<div class="card__note">💬 ${escapeHTML(r.firstImpression)}</div>` : ''}
+                    <div class="card__actions">
+                        <button class="card__btn" data-action="edit" data-id="${r.id}">编辑</button>
+                        <button class="card__btn card__btn--delete" data-action="delete" data-id="${r.id}">删除</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // 每秒更新计时器
+        function updateTimers() {
+            document.querySelectorAll('.card').forEach(card => {
+                const id = card.dataset.id;
+                const record = records.find(r => r.id === id);
+                if (!record) return;
+                const diff = calcTimeDiff(record.meetDate);
+                const mode = TIMER_MODES[timerModeMap[id] || 0];
+                const textEl = card.querySelector('.card__timer-text');
+                if (textEl) textEl.textContent = formatDuration(diff, mode);
+            });
+        }
+
+        // ================== 模态弹窗 ==================
+        function openModal(record = null) {
+            const isEdit = !!record;
+            $('#modalTitle').textContent = isEdit ? '编辑记录' : '添加记录';
+            $('#formId').value = record ? record.id : '';
+            $('#formNickname').value = record ? record.nickname : '';
+            $('#formAvatar').value = record ? record.avatar : '✨';
+            $('#formRelation').value = record ? record.relationTag : '游戏搭子';
+            $('#formGroup').value = record ? (record.group || '') : '';
+            $('#formChannel').value = record ? (record.channel || '') : '';
+            $('#formNote').value = record ? (record.firstImpression || '') : '';
+            if (record && record.meetDate) {
+                const d = new Date(record.meetDate);
+                $('#formDate').value = d.toISOString().slice(0,10);
+                $('#formTime').value = d.toTimeString().slice(0,8);
+            } else {
+                const now = new Date();
+                $('#formDate').value = now.toISOString().slice(0,10);
+                $('#formTime').value = now.toTimeString().slice(0,8);
+            }
+            renderEmojiPicker($('#formAvatar').value);
+            $('#modalOverlay').style.display = 'flex';
+            if (navigator.vibrate) navigator.vibrate(10);
+        }
+        function closeModal() {
+            $('#modalOverlay').style.display = 'none';
+            $('#recordForm').reset();
+        }
+        function renderEmojiPicker(selected) {
+            const picker = $('#emojiPicker');
+            picker.innerHTML = EMOJI_LIST.map(e => 
+                `<span class="emoji-item${e === selected ? ' selected' : ''}" data-emoji="${e}">${e}</span>`
+            ).join('');
+            picker.querySelectorAll('.emoji-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    $('#formAvatar').value = el.dataset.emoji;
+                    renderEmojiPicker(el.dataset.emoji);
+                });
+            });
+        }
+
+        // ================== 表单提交 ==================
+        $('#recordForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const id = $('#formId').value;
+            const data = {
+                nickname: $('#formNickname').value.trim(),
+                avatar: $('#formAvatar').value,
+                relationTag: $('#formRelation').value,
+                group: $('#formGroup').value.trim(),
+                meetDate: new Date($('#formDate').value + 'T' + ($('#formTime').value || '00:00:00')).toISOString(),
+                channel: $('#formChannel').value.trim(),
+                firstImpression: $('#formNote').value.trim(),
+            };
+            if (!data.nickname || !$('#formDate').value) {
+                showToast('请填写昵称和日期');
+                return;
+            }
+            if (id) {
+                const idx = records.findIndex(r => r.id === id);
+                if (idx !== -1) {
+                    records[idx] = { ...records[idx], ...data, updatedAt: new Date().toISOString() };
+                }
+            } else {
+                records.push({ id: 'r_' + Date.now(), ...data, createdAt: new Date().toISOString() });
+            }
+            saveData();
+            closeModal();
+            renderCards();
+            showToast(id ? '记录已更新' : '记录已添加');
+        });
+
+        // ================== 卡片交互 ==================
+        $('#cardsGrid').addEventListener('click', e => {
+            const btn = e.target.closest('[data-action]');
+            if (!btn) return;
+            const id = btn.dataset.id;
+            const action = btn.dataset.action;
+            if (action === 'edit') {
+                const record = records.find(r => r.id === id);
+                if (record) openModal(record);
+            } else if (action === 'delete') {
+                if (confirm('确定删除这条记录吗？')) {
+                    records = records.filter(r => r.id !== id);
+                    delete timerModeMap[id];
+                    saveData();
+                    renderCards();
+                    showToast('记录已删除');
+                }
+            } else if (action === 'toggleTimer') {
+                if (!(id in timerModeMap)) timerModeMap[id] = 0;
+                timerModeMap[id] = (timerModeMap[id] + 1) % 3;
+                updateTimers();
+                renderCards(); // 重新渲染以更新模式文字
+            }
+        });
+
+        // 搜索
+        $('#searchInput').addEventListener('input', renderCards);
+
+        // 排序切换
+        $('#sortControl').addEventListener('click', e => {
+            const item = e.target.closest('.segmented-control__item');
+            if (!item) return;
+            $$('#sortControl .segmented-control__item').forEach(i => {
+                i.classList.remove('segmented-control__item--active');
+                i.setAttribute('aria-selected', 'false');
+            });
+            item.classList.add('segmented-control__item--active');
+            item.setAttribute('aria-selected', 'true');
+            renderCards();
+        });
+
+        // 添加按钮
+        $('#fabAdd').addEventListener('click', () => openModal());
+
+        // 关闭弹窗
+        $('#modalOverlay').addEventListener('click', e => {
+            if (e.target === $('#modalOverlay')) closeModal();
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && $('#modalOverlay').style.display === 'flex') closeModal();
+        });
+
+        // 主题切换 (手动覆盖)
+        let userTheme = localStorage.getItem('user_theme') || 'auto';
+        function applyTheme() {
+            if (userTheme === 'dark') {
+                document.documentElement.style.setProperty('--bg-primary', '#000');
+                document.documentElement.style.setProperty('--bg-secondary', '#1c1c1e');
+                // 简单粗暴，实际可以切换 class
+            } else if (userTheme === 'light') {
+                document.documentElement.style.setProperty('--bg-primary', '#f2f2f7');
+                document.documentElement.style.setProperty('--bg-secondary', '#fff');
+            }
+        }
+        $('#themeToggle').addEventListener('click', () => {
+            if (userTheme === 'auto') userTheme = 'dark';
+            else if (userTheme === 'dark') userTheme = 'light';
+            else userTheme = 'auto';
+            localStorage.setItem('user_theme', userTheme);
+            applyTheme();
+        });
+
+        // 导出导入
+        $('#btnExport').addEventListener('click', () => {
+            const blob = new Blob([JSON.stringify(records, null, 2)], {type: 'application/json'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `相识时光_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            showToast('备份已下载');
+        });
+        $('#btnImport').addEventListener('click', () => $('#importFile').click());
+        $('#importFile').addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                try {
+                    const data = JSON.parse(ev.target.result);
+                    if (!Array.isArray(data)) throw new Error();
+                    records = [...records, ...data.filter(r => r.nickname && r.meetDate)];
+                    saveData();
+                    renderCards();
+                    showToast('导入成功');
+                } catch(ex) { showToast('文件格式错误'); }
+            };
+            reader.readAsText(file);
+            $('#importFile').value = '';
+        });
+        $('#btnClearAll').addEventListener('click', () => {
+            if (confirm('确定清空所有记录吗？此操作不可恢复。')) {
+                records = [];
+                timerModeMap = {};
+                saveData();
+                renderCards();
+                showToast('已清空');
+            }
+        });
+
+        // Toast
+        function showToast(msg) {
+            const t = $('#toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(t._timeout);
+            t._timeout = setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        // 初始化
+        loadData();        
+        renderCards();
+        setInterval(updateTimers, 1000);
+        applyTheme();
+
+        // 注册 Service Worker（PWA 离线缓存）
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'xiangshi-v1';
+                const urlsToCache = ['/'];
+                self.addEventListener('install', e => {
+                    e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
+                });
+                self.addEventListener('fetch', e => {
+                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+                });
+            `;
+            const swBlob = new Blob([swCode], {type: 'application/javascript'});
+            const swUrl = URL.createObjectURL(swBlob);
+            navigator.serviceWorker.register(swUrl)
+                .then(() => console.log('PWA Service Worker 已注册'))
+                .catch(err => console.log('SW 注册失败', err));
+        }
+    })();
+</script>
+</body>
+</html>
