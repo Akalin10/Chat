@@ -24,36 +24,28 @@
 
     <title>相识时光 - 网友时长记录</title>
     <style>
-        /* ============================================
-           iOS 18 风格 · CSS 变量（浅色 / 深色）
-           ============================================ */
         :root {
             --bg-primary: #f2f1f6;
             --bg-secondary: #ffffff;
             --bg-tertiary: #f5f5f7;
             --bg-input: #e8e8ed;
-
             --text-primary: #1c1c1e;
             --text-secondary: #636366;
             --text-tertiary: #aeaeb2;
-            --text-on-accent: #ffffff;
-
             --accent: #ff6b7f;
             --accent-light: #fff0f3;
-            --accent-soft: rgba(255, 107, 127, 0.10);
+            --accent-soft: rgba(255,107,127,0.10);
             --accent-blue: #007aff;
             --accent-blue-light: #e8f2ff;
             --accent-missing: #8e8e93;
             --accent-missing-bg: #f0f0f3;
-
             --border: #e5e5ea;
             --border-light: #f0f0f5;
-            --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.06);
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.09);
-            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
-
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.09);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-xl: 0 16px 48px rgba(0,0,0,0.16);
             --tag-game-bg: #e8f5fb;
             --tag-game-color: #3a8fb7;
             --tag-penpal-bg: #fef8ec;
@@ -66,54 +58,39 @@
             --tag-study-color: #4a9e5c;
             --tag-default-bg: #f5f5f7;
             --tag-default-color: #8e8e93;
-
             --milestone-bg: #fff9eb;
             --milestone-border: #f5c842;
-            --milestone-text: #b8860b;
-
             --radius-sm: 10px;
             --radius-md: 14px;
             --radius-lg: 20px;
             --radius-xl: 24px;
             --radius-full: 50%;
-
-            --font-display: -apple-system, 'SF Pro Display', 'PingFang SC', 'Noto Sans SC', 'Helvetica Neue', system-ui, sans-serif;
-            --font-mono: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
-
-            --ease-ios: cubic-bezier(0.25, 0.1, 0.25, 1);
-            --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+            --font-display: -apple-system,'SF Pro Display','PingFang SC','Noto Sans SC','Helvetica Neue',system-ui,sans-serif;
+            --font-mono: 'SF Mono','Menlo','Monaco','Consolas',monospace;
+            --ease-ios: cubic-bezier(0.25,0.1,0.25,1);
+            --ease-spring: cubic-bezier(0.34,1.3,0.64,1);
             --duration-fast: 0.18s;
             --duration-normal: 0.28s;
             --duration-slow: 0.4s;
         }
-
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-primary: #1c1c1e;
                 --bg-secondary: #2c2c2e;
                 --bg-tertiary: #3a3a3c;
                 --bg-input: #3a3a3c;
-
                 --text-primary: #f5f5f7;
                 --text-secondary: #aeaeb2;
                 --text-tertiary: #636366;
-
                 --accent: #ff7b89;
                 --accent-light: #3d2025;
-                --accent-soft: rgba(255, 123, 137, 0.12);
+                --accent-soft: rgba(255,123,137,0.12);
                 --accent-blue: #0a84ff;
                 --accent-blue-light: #1a2d40;
                 --accent-missing: #636366;
                 --accent-missing-bg: #2c2c2e;
-
                 --border: #48484a;
                 --border-light: #3a3a3c;
-                --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.25);
-                --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.30);
-                --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
-                --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.40);
-                --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.50);
-
                 --tag-game-bg: #1e2f38;
                 --tag-game-color: #6dc5e8;
                 --tag-penpal-bg: #2f2818;
@@ -126,714 +103,211 @@
                 --tag-study-color: #6ecb7a;
                 --tag-default-bg: #3a3a3c;
                 --tag-default-color: #aeaeb2;
-
                 --milestone-bg: #2f2818;
                 --milestone-border: #b8860b;
-                --milestone-text: #f5c842;
             }
         }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        body {
-            font-family: var(--font-display);
-            background: var(--bg-primary);
-            min-height: 100vh;
-            color: var(--text-primary);
-            line-height: 1.5;
-            overflow-x: hidden;
-            transition: background var(--duration-normal) var(--ease-ios),
-                color var(--duration-normal) var(--ease-ios);
-        }
-
-        .app-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px 16px 100px;
-        }
-
-        /* ============================================
-           头部
-           ============================================ */
-        .app-header {
-            text-align: center;
-            padding: 16px 0 8px;
-        }
-        .app-header__icon {
-            font-size: 2.4rem;
-            display: block;
-            margin-bottom: 4px;
-            animation: gentleBounce 3.5s ease-in-out infinite;
-            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
-        }
-        @keyframes gentleBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-        .app-header__title {
-            font-size: 1.7rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--text-primary);
-            margin-bottom: 2px;
-        }
-        .app-header__subtitle {
-            font-size: 0.85rem;
-            color: var(--text-tertiary);
-            font-weight: 400;
-        }
-
-        /* ============================================
-           工具栏 - 紧凑版，移动端不粘性
-           ============================================ */
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 14px;
-            padding: 8px 12px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-xs);
-            transition: all var(--duration-normal) var(--ease-ios);
-        }
-        @media (min-width: 769px) {
-            .toolbar {
-                position: sticky;
-                top: 12px;
-                z-index: 10;
-            }
-            .toolbar:focus-within {
-                box-shadow: var(--shadow-sm), 0 0 0 3px var(--accent-soft);
-                border-color: var(--accent);
-            }
-        }
-
-        .toolbar__search-wrap {
-            flex: 0 1 180px;
-            min-width: 120px;
-            max-width: 200px;
-            position: relative;
-        }
-        .toolbar__search-icon {
-            position: absolute;
-            left: 9px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 14px;
-            height: 14px;
-            color: var(--text-tertiary);
-            pointer-events: none;
-            transition: color var(--duration-fast);
-            display: flex;
-            align-items: center;
-        }
-        .toolbar__search {
-            width: 100%;
-            padding: 7px 10px 7px 28px;
-            background: var(--bg-input);
-            border: 1.5px solid transparent;
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 0.82rem;
-            font-family: inherit;
-            outline: none;
-            transition: all var(--duration-fast);
-            -webkit-appearance: none;
-        }
-        .toolbar__search::placeholder { color: var(--text-tertiary); font-size: 0.8rem; }
-        .toolbar__search:focus {
-            border-color: var(--accent-blue);
-            background: var(--bg-secondary);
-            box-shadow: 0 0 0 3px var(--accent-blue-light);
-        }
-        .toolbar__search-wrap:focus-within .toolbar__search-icon { color: var(--accent-blue); }
-
-        .toolbar__sort-group {
-            display: flex;
-            gap: 3px;
-            flex-wrap: wrap;
-            background: var(--bg-input);
-            border-radius: 8px;
-            padding: 3px;
-        }
-        .toolbar__sort-btn {
-            padding: 6px 10px;
-            border-radius: 7px;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: inherit;
-            white-space: nowrap;
-            transition: all var(--duration-fast) var(--ease-ios);
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .toolbar__sort-btn:hover { color: var(--text-primary); }
-        .toolbar__sort-btn:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: -2px; }
-        .toolbar__sort-btn--active {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-weight: 600;
-            box-shadow: var(--shadow-xs);
-        }
-        .toolbar__count {
-            font-size: 0.72rem;
-            color: var(--text-tertiary);
-            white-space: nowrap;
-            padding: 5px 10px;
-            background: var(--bg-input);
-            border-radius: 16px;
-            font-weight: 500;
-        }
-
-        /* ============================================
-           失踪人员视图切换按钮
-           ============================================ */
-        .view-toggle {
-            display: flex;
-            gap: 4px;
-            background: var(--bg-input);
-            border-radius: 8px;
-            padding: 3px;
-        }
-        .view-toggle__btn {
-            padding: 6px 12px;
-            border-radius: 7px;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: inherit;
-            white-space: nowrap;
-            transition: all var(--duration-fast) var(--ease-ios);
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .view-toggle__btn:hover { color: var(--text-primary); }
-        .view-toggle__btn--active {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-weight: 600;
-            box-shadow: var(--shadow-xs);
-        }
-        .view-toggle__badge {
-            font-size: 0.65rem;
-            background: var(--accent-missing);
-            color: #fff;
-            padding: 1px 6px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-        .view-toggle__btn--active .view-toggle__badge {
-            background: var(--accent);
-        }
-
-        /* ============================================
-           卡片网格
-           ============================================ */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-            gap: 14px;
-        }
-
-        /* ============================================
-           卡片 · iOS 18 风格
-           ============================================ */
-        .card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-xl);
-            padding: 16px 18px 14px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all var(--duration-normal) var(--ease-ios);
-            box-shadow: var(--shadow-xs);
-            animation: cardAppear 0.4s var(--ease-spring) both;
-            will-change: transform;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-            border-color: var(--border);
-        }
-        .card:active { transform: scale(0.985); transition: transform 0.1s var(--ease-ios); }
-        .card:focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 2px; }
-        @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(16px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* 失踪状态卡片 */
-        .card--missing {
-            opacity: 0.55;
-            filter: grayscale(0.4);
-            border-color: var(--border-light) !important;
-        }
-        .card--missing:hover {
-            opacity: 0.75;
-            filter: grayscale(0.2);
-        }
-        .card--missing .card__nickname {
-            text-decoration: line-through;
-            text-decoration-color: var(--text-tertiary);
-        }
-        .card--missing::before {
-            content: '已失踪';
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            font-size: 0.65rem;
-            background: var(--accent-missing-bg);
-            color: var(--accent-missing);
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-            pointer-events: none;
-            z-index: 2;
-            letter-spacing: 0.03em;
-        }
-
-        .card--milestone {
-            border-color: var(--milestone-border) !important;
-            background: var(--milestone-bg) !important;
-            box-shadow: var(--shadow-xs), 0 0 0 1px var(--milestone-border) !important;
-        }
-        .card--milestone::after {
-            content: '纪念日';
-            position: absolute;
-            top: 10px; right: 12px;
-            font-size: 0.65rem;
-            background: var(--milestone-border);
-            color: #fff;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-weight: 600;
-            pointer-events: none;
-            z-index: 2;
-        }
-        /* 如果同时是纪念日和失踪，优先显示失踪 */
-        .card--missing.card--milestone::after {
-            content: none;
-        }
-
-        .card__header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; z-index: 1; }
-        .card__avatar {
-            width: 40px; height: 40px;
-            border-radius: var(--radius-full);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem;
-            flex-shrink: 0;
-            background: var(--bg-tertiary);
-            box-shadow: var(--shadow-xs);
-            transition: transform var(--duration-fast) var(--ease-spring);
-        }
-        .card:hover .card__avatar { transform: scale(1.04); }
-        .card__avatar-inner {
-            width: 100%; height: 100%;
-            border-radius: var(--radius-full);
-            display: flex; align-items: center; justify-content: center;
-            background: var(--avatar-bg, var(--bg-tertiary));
-        }
-        .card__info { flex: 1; min-width: 0; }
-        .card__nickname {
-            font-size: 1rem; font-weight: 600;
-            color: var(--text-primary);
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            transition: text-decoration var(--duration-fast);
-        }
-        .card__meta-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
-        .card__tag {
-            font-size: 0.68rem; padding: 2px 8px;
-            border-radius: 8px; font-weight: 500;
-            white-space: nowrap;
-            background: var(--tag-bg, var(--tag-default-bg));
-            color: var(--tag-color, var(--tag-default-color));
-        }
-        .card__channel {
-            font-size: 0.7rem; color: var(--text-tertiary);
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;
-        }
-
-        .card__timer {
-            background: var(--bg-tertiary);
-            border-radius: var(--radius-md);
-            padding: 10px 14px; margin-bottom: 6px;
-            text-align: center;
-            position: relative; z-index: 1;
-        }
-        .card__timer-display {
-            font-family: var(--font-mono);
-            font-size: 0.9rem; font-weight: 600;
-            color: var(--text-primary);
-        }
-        .card__timer-display .highlight { color: var(--accent); }
-        .card--missing .card__timer-display .highlight { color: var(--accent-missing); }
-        .card__timer-mode {
-            font-size: 0.65rem; color: var(--text-tertiary);
-            margin-top: 1px;
-        }
-        .card__timer-toggle {
-            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-light);
-            color: var(--text-secondary);
-            width: 26px; height: 26px; border-radius: var(--radius-full);
-            cursor: pointer; font-size: 0.7rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: all var(--duration-fast);
-            z-index: 2;
-            box-shadow: var(--shadow-xs);
-        }
-        .card__timer-toggle:hover { background: var(--bg-input); color: var(--text-primary); }
-        .card__timer-toggle:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
-
-        .card__note-preview {
-            font-size: 0.73rem; color: var(--text-tertiary);
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            z-index: 1; padding: 0 2px;
-        }
-
-        .card__actions { display: flex; gap: 6px; margin-top: 8px; justify-content: flex-end; z-index: 1; flex-wrap: wrap; }
-        .card__action-btn {
-            padding: 5px 10px; border-radius: 14px;
-            border: 1px solid var(--border-light);
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            font-size: 0.7rem; font-weight: 500;
-            cursor: pointer; font-family: inherit;
-            transition: all var(--duration-fast);
-            white-space: nowrap;
-        }
-        .card__action-btn:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-        .card__action-btn--delete { color: #d44; border-color: #fdd; }
-        .card__action-btn--missing {
-            color: var(--accent-missing);
-            border-color: var(--border-light);
-        }
-        .card__action-btn--missing:hover {
-            background: var(--accent-missing-bg);
-            color: #666;
-            border-color: #ccc;
-        }
-        .card--missing .card__action-btn--missing {
-            color: var(--accent);
-            border-color: var(--accent-soft);
-            background: var(--accent-light);
-        }
-        .card--missing .card__action-btn--missing:hover {
-            background: var(--accent-light);
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-        @media (prefers-color-scheme: dark) {
-            .card__action-btn--delete { color: #ff6961; border-color: #4a2020; }
-            .card__action-btn--missing { color: #888; border-color: #444; }
-            .card__action-btn--missing:hover { background: #333; color: #aaa; }
-            .card--missing .card__action-btn--missing { color: #ff7b89; border-color: #4a2830; background: #3d2025; }
-        }
-        .card__action-btn--delete:hover { background: #fff0f0; border-color: #fcc; color: #c33; }
-        @media (prefers-color-scheme: dark) {
-            .card__action-btn--delete:hover { background: #3d2020; border-color: #5a2828; color: #ff8a80; }
-        }
-
-        /* ============================================
-           空状态
-           ============================================ */
-        .empty-state { grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: var(--text-tertiary); }
-        .empty-state__icon { font-size: 3rem; display: block; margin-bottom: 10px; opacity: 0.6; }
-        .empty-state__text { font-size: 0.88rem; color: var(--text-secondary); }
-
-        /* ============================================
-           FAB 添加按钮
-           ============================================ */
-        .fab {
-            position: fixed; bottom: 24px; right: 24px;
-            width: 50px; height: 50px;
-            border-radius: var(--radius-full);
-            background: var(--accent);
-            border: none; color: #fff;
-            font-size: 1.4rem; font-weight: 400;
-            cursor: pointer; box-shadow: var(--shadow-md);
-            z-index: 20;
-            display: flex; align-items: center; justify-content: center;
-            transition: all var(--duration-normal) var(--ease-spring);
-            -webkit-tap-highlight-color: transparent;
-        }
-        .fab:hover { transform: scale(1.06); box-shadow: var(--shadow-lg); }
-        .fab:active { transform: scale(0.94); }
-        .fab:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 3px; }
-
-        /* ============================================
-           弹窗 / 模态框
-           ============================================ */
-        .modal-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0, 0, 0, 0.35);
-            z-index: 100;
-            display: flex; align-items: center; justify-content: center;
-            padding: 16px;
-            animation: overlayIn var(--duration-fast) ease-out;
-        }
-        @media (prefers-color-scheme: dark) { .modal-overlay { background: rgba(0, 0, 0, 0.6); } }
-        @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .modal {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-xl);
-            padding: 22px 20px 18px;
-            width: 100%; max-width: 440px; max-height: 82vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-            animation: modalIn var(--duration-slow) var(--ease-spring);
-        }
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.92) translateY(24px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .modal__title {
-            font-size: 1.15rem; font-weight: 700;
-            margin-bottom: 16px; text-align: center;
-            color: var(--text-primary);
-        }
-        .modal__close {
-            position: absolute; top: 10px; right: 14px;
-            background: var(--bg-tertiary); border: none;
-            color: var(--text-secondary);
-            width: 28px; height: 28px; border-radius: var(--radius-full);
-            cursor: pointer; font-size: 0.9rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: all var(--duration-fast); z-index: 5;
-        }
-        .modal__close:hover { background: var(--bg-input); color: var(--text-primary); }
-        .modal__close:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
-
-        .form-group { margin-bottom: 12px; }
-        .form-group__label {
-            display: block; font-size: 0.76rem; font-weight: 600;
-            color: var(--text-secondary); margin-bottom: 3px;
-        }
-        .form-group__input,
-        .form-group__select,
-        .form-group__textarea {
-            width: 100%; padding: 9px 12px;
-            background: var(--bg-input);
-            border: 1.5px solid transparent;
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 0.9rem; font-family: inherit;
-            outline: none; transition: all var(--duration-fast);
-            -webkit-appearance: none;
-        }
-        .form-group__input:focus,
-        .form-group__select:focus,
-        .form-group__textarea:focus {
-            border-color: var(--accent-blue);
-            background: var(--bg-secondary);
-            box-shadow: 0 0 0 3px var(--accent-blue-light);
-        }
-        .form-group__textarea { resize: vertical; min-height: 55px; }
-        .form-group__select {
-            cursor: pointer;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%238e8e93'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 32px;
-        }
-        .form-group__select option { background: var(--bg-secondary); color: var(--text-primary); }
-        .form-row { display: flex; gap: 8px; flex-wrap: wrap; }
-        .form-row>.form-group { flex: 1; min-width: 120px; }
-
-        /* 开关样式 */
-        .toggle-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0;
-        }
-        .toggle-group__label {
-            font-size: 0.82rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-        .toggle-switch {
-            position: relative;
-            width: 48px;
-            height: 28px;
-            flex-shrink: 0;
-        }
-        .toggle-switch__input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-            position: absolute;
-        }
-        .toggle-switch__slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-input);
-            border-radius: 28px;
-            transition: all var(--duration-fast) var(--ease-ios);
-            border: 1.5px solid var(--border-light);
-        }
-        .toggle-switch__slider::before {
-            content: '';
-            position: absolute;
-            height: 22px;
-            width: 22px;
-            left: 2px;
-            bottom: 2px;
-            background: #fff;
-            border-radius: 50%;
-            transition: all var(--duration-fast) var(--ease-ios);
-            box-shadow: var(--shadow-xs);
-        }
-        .toggle-switch__input:checked + .toggle-switch__slider {
-            background: var(--accent-missing);
-            border-color: var(--accent-missing);
-        }
-        .toggle-switch__input:checked + .toggle-switch__slider::before {
-            transform: translateX(20px);
-        }
-        .toggle-switch__input:focus-visible + .toggle-switch__slider {
-            outline: 2px solid var(--accent-blue);
-            outline-offset: 2px;
-        }
-
-        .emoji-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
-        .emoji-picker__item {
-            width: 34px; height: 34px; border-radius: var(--radius-full);
-            border: 2px solid transparent;
-            background: var(--bg-input);
-            cursor: pointer; font-size: 1.1rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: all var(--duration-fast);
-            -webkit-tap-highlight-color: transparent; user-select: none;
-        }
-        .emoji-picker__item:hover { background: var(--bg-tertiary); transform: scale(1.06); }
-        .emoji-picker__item--selected {
-            border-color: var(--accent);
-            background: var(--accent-light);
-            box-shadow: 0 0 0 3px var(--accent-soft);
-            transform: scale(1.04);
-        }
-        .emoji-picker__item:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
-
-        .btn-submit {
-            width: 100%; padding: 11px;
-            background: var(--accent);
-            border: none; border-radius: var(--radius-md);
-            color: #fff; font-size: 0.95rem; font-weight: 600;
-            cursor: pointer; font-family: inherit;
-            box-shadow: var(--shadow-xs);
-            margin-top: 2px;
-            transition: all var(--duration-normal) var(--ease-ios);
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn-submit:hover { opacity: 0.9; box-shadow: var(--shadow-sm); transform: translateY(-1px); }
-        .btn-submit:active { transform: scale(0.97); }
-
-        .data-actions { display: flex; gap: 6px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
-        .data-actions__btn {
-            padding: 7px 14px; border-radius: 16px;
-            border: 1px solid var(--border-light);
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            font-size: 0.73rem; font-weight: 500;
-            cursor: pointer; font-family: inherit;
-            transition: all var(--duration-fast);
-            white-space: nowrap;
-        }
-        .data-actions__btn:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-        .data-actions__btn:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
-
-        .toast {
-            position: fixed; bottom: 36px; left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--text-primary);
-            color: var(--bg-primary);
-            padding: 10px 20px; border-radius: 20px;
-            font-size: 0.82rem; font-weight: 500;
-            z-index: 200; pointer-events: none;
-            transition: transform var(--duration-normal) var(--ease-spring);
-            box-shadow: var(--shadow-md);
-            white-space: nowrap;
-        }
-        .toast--visible { transform: translateX(-50%) translateY(0); }
-
-        /* ============================================
-           响应式
-           ============================================ */
-        @media (max-width: 768px) {
-            .app-container { padding: 12px 8px 90px; }
-            .cards-grid { grid-template-columns: 1fr; gap: 10px; }
-            .app-header__title { font-size: 1.4rem; }
-            .app-header__icon { font-size: 2rem; }
-            .toolbar { padding: 6px 8px; gap: 4px; border-radius: var(--radius-md); }
-            .toolbar__search-wrap { max-width: 140px; }
-            .toolbar__sort-btn { padding: 5px 8px; font-size: 0.7rem; }
-            .toolbar__count { font-size: 0.68rem; padding: 4px 8px; }
-            .view-toggle__btn { padding: 5px 8px; font-size: 0.7rem; }
-            .card { padding: 12px 14px 10px; border-radius: var(--radius-lg); }
-            .card__timer-display { font-size: 0.82rem; }
-            .card__avatar { width: 36px; height: 36px; font-size: 1.1rem; }
-            .card__nickname { font-size: 0.92rem; }
-            .fab { bottom: 16px; right: 16px; width: 44px; height: 44px; font-size: 1.2rem; }
-            .modal { padding: 18px 12px 14px; border-radius: var(--radius-lg); max-width: 94vw; }
-            .form-row { flex-direction: column; gap: 0; }
-            .card__timer-toggle { width: 22px; height: 22px; font-size: 0.6rem; right: 6px; }
-            .card__action-btn { padding: 4px 8px; font-size: 0.68rem; }
-        }
-        @media (max-width: 400px) {
-            .cards-grid { gap: 8px; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .toolbar__search-wrap { max-width: 100%; flex: 1 1 auto; }
-            .toolbar__sort-group { justify-content: center; }
-            .view-toggle { justify-content: center; }
-            .card { padding: 10px; }
-            .card__timer-display { font-size: 0.75rem; }
-        }
-        @media (min-width: 1400px) {
-            .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{
+            font-family:var(--font-display);
+            background:var(--bg-primary);
+            min-height:100vh;
+            color:var(--text-primary);
+            line-height:1.5;
+            overflow-x:hidden;
+            transition:background var(--duration-normal) var(--ease-ios),color var(--duration-normal) var(--ease-ios);
+        }
+        .app-container{max-width:1100px;margin:0 auto;padding:20px 16px 100px}
+        .app-header{text-align:center;padding:16px 0 8px}
+        .app-header__icon{font-size:2.4rem;display:block;margin-bottom:4px;animation:gentleBounce 3.5s ease-in-out infinite;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08))}
+        @keyframes gentleBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+        .app-header__title{font-size:1.7rem;font-weight:700;letter-spacing:-0.02em;color:var(--text-primary);margin-bottom:2px}
+        .app-header__subtitle{font-size:0.85rem;color:var(--text-tertiary);font-weight:400}
+        .toolbar{
+            display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;
+            margin-bottom:14px;padding:8px 12px;
+            background:var(--bg-secondary);border:1px solid var(--border-light);
+            border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);
+            transition:all var(--duration-normal) var(--ease-ios);
+        }
+        @media(min-width:769px){
+            .toolbar{position:sticky;top:12px;z-index:10}
+            .toolbar:focus-within{box-shadow:var(--shadow-sm),0 0 0 3px var(--accent-soft);border-color:var(--accent)}
+        }
+        .toolbar__search-wrap{flex:0 1 180px;min-width:120px;max-width:200px;position:relative}
+        .toolbar__search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-tertiary);pointer-events:none;display:flex;align-items:center}
+        .toolbar__search{
+            width:100%;padding:7px 10px 7px 28px;
+            background:var(--bg-input);border:1.5px solid transparent;
+            border-radius:var(--radius-sm);color:var(--text-primary);
+            font-size:0.82rem;font-family:inherit;outline:none;
+            transition:all var(--duration-fast);-webkit-appearance:none;
+        }
+        .toolbar__search::placeholder{color:var(--text-tertiary);font-size:0.8rem}
+        .toolbar__search:focus{border-color:var(--accent-blue);background:var(--bg-secondary);box-shadow:0 0 0 3px var(--accent-blue-light)}
+        .toolbar__search-wrap:focus-within .toolbar__search-icon{color:var(--accent-blue)}
+        .toolbar__sort-group{display:flex;gap:3px;flex-wrap:wrap;background:var(--bg-input);border-radius:8px;padding:3px}
+        .toolbar__sort-btn{
+            padding:6px 10px;border-radius:7px;border:none;background:transparent;
+            color:var(--text-secondary);font-size:0.75rem;font-weight:500;
+            cursor:pointer;font-family:inherit;white-space:nowrap;
+            transition:all var(--duration-fast) var(--ease-ios);
+            user-select:none;-webkit-tap-highlight-color:transparent;
+        }
+        .toolbar__sort-btn:hover{color:var(--text-primary)}
+        .toolbar__sort-btn:focus-visible{outline:2px solid var(--accent-blue);outline-offset:-2px}
+        .toolbar__sort-btn--active{background:var(--bg-secondary);color:var(--text-primary);font-weight:600;box-shadow:var(--shadow-xs)}
+        .toolbar__count{font-size:0.72rem;color:var(--text-tertiary);white-space:nowrap;padding:5px 10px;background:var(--bg-input);border-radius:16px;font-weight:500}
+        .view-toggle{display:flex;gap:4px;background:var(--bg-input);border-radius:8px;padding:3px}
+        .view-toggle__btn{
+            padding:6px 12px;border-radius:7px;border:none;background:transparent;
+            color:var(--text-secondary);font-size:0.75rem;font-weight:500;
+            cursor:pointer;font-family:inherit;white-space:nowrap;
+            transition:all var(--duration-fast) var(--ease-ios);
+            user-select:none;-webkit-tap-highlight-color:transparent;
+            display:flex;align-items:center;gap:4px;
+        }
+        .view-toggle__btn:hover{color:var(--text-primary)}
+        .view-toggle__btn--active{background:var(--bg-secondary);color:var(--text-primary);font-weight:600;box-shadow:var(--shadow-xs)}
+        .view-toggle__badge{font-size:0.65rem;background:var(--accent-missing);color:#fff;padding:1px 6px;border-radius:10px;font-weight:600}
+        .view-toggle__btn--active .view-toggle__badge{background:var(--accent)}
+        .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+        .card{
+            background:var(--bg-secondary);border:1px solid var(--border-light);
+            border-radius:var(--radius-xl);padding:16px 18px 14px;
+            cursor:pointer;position:relative;overflow:hidden;
+            transition:all var(--duration-normal) var(--ease-ios);
+            box-shadow:var(--shadow-xs);
+            animation:cardAppear 0.4s var(--ease-spring) both;
+            will-change:transform;-webkit-tap-highlight-color:transparent;
+        }
+        .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--border)}
+        .card:active{transform:scale(0.985);transition:transform 0.1s var(--ease-ios)}
+        .card:focus-visible{outline:3px solid var(--accent-blue);outline-offset:2px}
+        @keyframes cardAppear{from{opacity:0;transform:translateY(16px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .card--missing{opacity:0.55;filter:grayscale(0.4);border-color:var(--border-light)!important}
+        .card--missing:hover{opacity:0.75;filter:grayscale(0.2)}
+        .card--missing .card__nickname{text-decoration:line-through;text-decoration-color:var(--text-tertiary)}
+        .card--missing::before{
+            content:'已失踪';position:absolute;top:10px;right:12px;
+            font-size:0.65rem;background:var(--accent-missing-bg);
+            color:var(--accent-missing);padding:3px 8px;border-radius:10px;
+            font-weight:600;pointer-events:none;z-index:2;letter-spacing:0.03em;
+        }
+        .card--milestone{border-color:var(--milestone-border)!important;background:var(--milestone-bg)!important;box-shadow:var(--shadow-xs),0 0 0 1px var(--milestone-border)!important}
+        .card--milestone::after{
+            content:'纪念日';position:absolute;top:10px;right:12px;
+            font-size:0.65rem;background:var(--milestone-border);color:#fff;
+            padding:3px 8px;border-radius:12px;font-weight:600;pointer-events:none;z-index:2;
+        }
+        .card--missing.card--milestone::after{content:none}
+        .card__header{display:flex;align-items:center;gap:10px;margin-bottom:10px;z-index:1}
+        .card__avatar{width:40px;height:40px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:var(--bg-tertiary);box-shadow:var(--shadow-xs);transition:transform var(--duration-fast) var(--ease-spring)}
+        .card:hover .card__avatar{transform:scale(1.04)}
+        .card__avatar-inner{width:100%;height:100%;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;background:var(--avatar-bg,var(--bg-tertiary))}
+        .card__info{flex:1;min-width:0}
+        .card__nickname{font-size:1rem;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .card__meta-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:2px}
+        .card__tag{font-size:0.68rem;padding:2px 8px;border-radius:8px;font-weight:500;white-space:nowrap;background:var(--tag-bg,var(--tag-default-bg));color:var(--tag-color,var(--tag-default-color))}
+        .card__channel{font-size:0.7rem;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px}
+        .card__timer{background:var(--bg-tertiary);border-radius:var(--radius-md);padding:10px 14px;margin-bottom:6px;text-align:center;position:relative;z-index:1}
+        .card__timer-display{font-family:var(--font-mono);font-size:0.9rem;font-weight:600;color:var(--text-primary)}
+        .card__timer-display .highlight{color:var(--accent)}
+        .card--missing .card__timer-display .highlight{color:var(--accent-missing)}
+        .card__timer-mode{font-size:0.65rem;color:var(--text-tertiary);margin-top:1px}
+        .card__timer-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--bg-secondary);border:1px solid var(--border-light);color:var(--text-secondary);width:26px;height:26px;border-radius:var(--radius-full);cursor:pointer;font-size:0.7rem;display:flex;align-items:center;justify-content:center;transition:all var(--duration-fast);z-index:2;box-shadow:var(--shadow-xs)}
+        .card__timer-toggle:hover{background:var(--bg-input);color:var(--text-primary)}
+        .card__note-preview{font-size:0.73rem;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:1;padding:0 2px}
+        .card__actions{display:flex;gap:6px;margin-top:8px;justify-content:flex-end;z-index:1;flex-wrap:wrap}
+        .card__action-btn{padding:5px 10px;border-radius:14px;border:1px solid var(--border-light);background:var(--bg-secondary);color:var(--text-secondary);font-size:0.7rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all var(--duration-fast);white-space:nowrap}
+        .card__action-btn:hover{background:var(--bg-tertiary);color:var(--text-primary)}
+        .card__action-btn--delete{color:#d44;border-color:#fdd}
+        .card__action-btn--missing{color:var(--accent-missing);border-color:var(--border-light)}
+        .card__action-btn--missing:hover{background:var(--accent-missing-bg);color:#666;border-color:#ccc}
+        .card--missing .card__action-btn--missing{color:var(--accent);border-color:var(--accent-soft);background:var(--accent-light)}
+        @media(prefers-color-scheme:dark){
+            .card__action-btn--delete{color:#ff6961;border-color:#4a2020}
+            .card__action-btn--missing{color:#888;border-color:#444}
+            .card__action-btn--missing:hover{background:#333;color:#aaa}
+            .card--missing .card__action-btn--missing{color:#ff7b89;border-color:#4a2830;background:#3d2025}
+        }
+        .card__action-btn--delete:hover{background:#fff0f0;border-color:#fcc;color:#c33}
+        @media(prefers-color-scheme:dark){.card__action-btn--delete:hover{background:#3d2020;border-color:#5a2828;color:#ff8a80}}
+        .empty-state{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--text-tertiary)}
+        .empty-state__icon{font-size:3rem;display:block;margin-bottom:10px;opacity:0.6}
+        .empty-state__text{font-size:0.88rem;color:var(--text-secondary)}
+        .fab{position:fixed;bottom:24px;right:24px;width:50px;height:50px;border-radius:var(--radius-full);background:var(--accent);border:none;color:#fff;font-size:1.4rem;cursor:pointer;box-shadow:var(--shadow-md);z-index:20;display:flex;align-items:center;justify-content:center;transition:all var(--duration-normal) var(--ease-spring);-webkit-tap-highlight-color:transparent}
+        .fab:hover{transform:scale(1.06);box-shadow:var(--shadow-lg)}
+        .fab:active{transform:scale(0.94)}
+        .fab:focus-visible{outline:3px solid var(--accent-soft);outline-offset:3px}
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;animation:overlayIn var(--duration-fast) ease-out}
+        @media(prefers-color-scheme:dark){.modal-overlay{background:rgba(0,0,0,0.6)}}
+        @keyframes overlayIn{from{opacity:0}to{opacity:1}}
+        .modal{background:var(--bg-secondary);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:22px 20px 18px;width:100%;max-width:440px;max-height:82vh;overflow-y:auto;box-shadow:var(--shadow-xl);animation:modalIn var(--duration-slow) var(--ease-spring);position:relative}
+        @keyframes modalIn{from{opacity:0;transform:scale(0.92) translateY(24px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .modal__title{font-size:1.15rem;font-weight:700;margin-bottom:16px;text-align:center;color:var(--text-primary)}
+        .modal__close{position:absolute;top:10px;right:14px;background:var(--bg-tertiary);border:none;color:var(--text-secondary);width:28px;height:28px;border-radius:var(--radius-full);cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all var(--duration-fast);z-index:5}
+        .modal__close:hover{background:var(--bg-input);color:var(--text-primary)}
+        .form-group{margin-bottom:12px}
+        .form-group__label{display:block;font-size:0.76rem;font-weight:600;color:var(--text-secondary);margin-bottom:3px}
+        .form-group__input,.form-group__select,.form-group__textarea{width:100%;padding:9px 12px;background:var(--bg-input);border:1.5px solid transparent;border-radius:var(--radius-sm);color:var(--text-primary);font-size:0.9rem;font-family:inherit;outline:none;transition:all var(--duration-fast);-webkit-appearance:none}
+        .form-group__input:focus,.form-group__select:focus,.form-group__textarea:focus{border-color:var(--accent-blue);background:var(--bg-secondary);box-shadow:0 0 0 3px var(--accent-blue-light)}
+        .form-group__textarea{resize:vertical;min-height:55px}
+        .form-group__select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%238e8e93'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+        .form-row{display:flex;gap:8px;flex-wrap:wrap}
+        .form-row>.form-group{flex:1;min-width:120px}
+        .toggle-group{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+        .toggle-group__label{font-size:0.82rem;font-weight:500;color:var(--text-primary)}
+        .toggle-switch{position:relative;width:48px;height:28px;flex-shrink:0}
+        .toggle-switch__input{opacity:0;width:0;height:0;position:absolute}
+        .toggle-switch__slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--bg-input);border-radius:28px;transition:all var(--duration-fast) var(--ease-ios);border:1.5px solid var(--border-light)}
+        .toggle-switch__slider::before{content:'';position:absolute;height:22px;width:22px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:all var(--duration-fast) var(--ease-ios);box-shadow:var(--shadow-xs)}
+        .toggle-switch__input:checked+.toggle-switch__slider{background:var(--accent-missing);border-color:var(--accent-missing)}
+        .toggle-switch__input:checked+.toggle-switch__slider::before{transform:translateX(20px)}
+        .emoji-picker{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .emoji-picker__item{width:34px;height:34px;border-radius:var(--radius-full);border:2px solid transparent;background:var(--bg-input);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all var(--duration-fast);-webkit-tap-highlight-color:transparent;user-select:none}
+        .emoji-picker__item:hover{background:var(--bg-tertiary);transform:scale(1.06)}
+        .emoji-picker__item--selected{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 3px var(--accent-soft);transform:scale(1.04)}
+        .btn-submit{width:100%;padding:11px;background:var(--accent);border:none;border-radius:var(--radius-md);color:#fff;font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:var(--shadow-xs);margin-top:2px;transition:all var(--duration-normal) var(--ease-ios);-webkit-tap-highlight-color:transparent}
+        .btn-submit:hover{opacity:0.9;box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+        .btn-submit:active{transform:scale(0.97)}
+        .data-actions{display:flex;gap:6px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+        .data-actions__btn{padding:7px 14px;border-radius:16px;border:1px solid var(--border-light);background:var(--bg-secondary);color:var(--text-secondary);font-size:0.73rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all var(--duration-fast);white-space:nowrap}
+        .data-actions__btn:hover{background:var(--bg-tertiary);color:var(--text-primary)}
+        .toast{position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text-primary);color:var(--bg-primary);padding:10px 20px;border-radius:20px;font-size:0.82rem;font-weight:500;z-index:200;pointer-events:none;transition:transform var(--duration-normal) var(--ease-spring);box-shadow:var(--shadow-md);white-space:nowrap}
+        .toast--visible{transform:translateX(-50%) translateY(0)}
+        @media(max-width:768px){
+            .app-container{padding:12px 8px 90px}
+            .cards-grid{grid-template-columns:1fr;gap:10px}
+            .app-header__title{font-size:1.4rem}
+            .app-header__icon{font-size:2rem}
+            .toolbar{padding:6px 8px;gap:4px;border-radius:var(--radius-md)}
+            .toolbar__search-wrap{max-width:140px}
+            .toolbar__sort-btn{padding:5px 8px;font-size:0.7rem}
+            .toolbar__count{font-size:0.68rem;padding:4px 8px}
+            .view-toggle__btn{padding:5px 8px;font-size:0.7rem}
+            .card{padding:12px 14px 10px;border-radius:var(--radius-lg)}
+            .card__timer-display{font-size:0.82rem}
+            .card__avatar{width:36px;height:36px;font-size:1.1rem}
+            .card__nickname{font-size:0.92rem}
+            .fab{bottom:16px;right:16px;width:44px;height:44px;font-size:1.2rem}
+            .modal{padding:18px 12px 14px;border-radius:var(--radius-lg);max-width:94vw}
+            .form-row{flex-direction:column;gap:0}
+            .card__timer-toggle{width:22px;height:22px;font-size:0.6rem;right:6px}
+            .card__action-btn{padding:4px 8px;font-size:0.68rem}
+        }
+        @media(max-width:400px){
+            .cards-grid{gap:8px}
+            .toolbar{flex-direction:column;align-items:stretch}
+            .toolbar__search-wrap{max-width:100%;flex:1 1 auto}
+            .toolbar__sort-group{justify-content:center}
+            .view-toggle{justify-content:center}
+            .card{padding:10px}
+            .card__timer-display{font-size:0.75rem}
+        }
+        @media(min-width:1400px){.cards-grid{grid-template-columns:repeat(3,1fr);gap:18px}}
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}}
     </style>
 </head>
 <body>
@@ -859,9 +333,7 @@
                 <button class="toolbar__sort-btn" data-sort="recent" aria-pressed="false">最近添加</button>
             </div>
             <div class="view-toggle" id="viewToggle">
-                <button class="view-toggle__btn view-toggle__btn--active" data-view="all" aria-pressed="true">
-                    全部
-                </button>
+                <button class="view-toggle__btn view-toggle__btn--active" data-view="all" aria-pressed="true">全部</button>
                 <button class="view-toggle__btn" data-view="missing" aria-pressed="false">
                     失踪 <span class="view-toggle__badge" id="missingBadge">0</span>
                 </button>
@@ -933,8 +405,6 @@
                     <label class="form-group__label" for="formNote">初印象 / 备注</label>
                     <textarea class="form-group__textarea" id="formNote" placeholder="记录相识时的第一印象..." maxlength="200"></textarea>
                 </div>
-
-                <!-- 已失踪开关 -->
                 <div class="toggle-group">
                     <span class="toggle-group__label">标记为"已失踪"</span>
                     <label class="toggle-switch" for="formMissing">
@@ -942,7 +412,6 @@
                         <span class="toggle-switch__slider"></span>
                     </label>
                 </div>
-
                 <button type="submit" class="btn-submit" id="btnSubmit">保存记录</button>
             </form>
         </div>
@@ -954,7 +423,7 @@
         (function() {
             'use strict';
 
-            const $ = (sel) => document.querySelector(sel);
+            const $ = s => document.querySelector(s);
             const cardsGrid = $('#cardsGrid');
             const searchInput = $('#searchInput');
             const sortGroup = $('#sortGroup');
@@ -985,22 +454,22 @@
             const btnClearAll = $('#btnClearAll');
             const dataActions = $('#dataActions');
 
-            const STORAGE_KEY = 'acquaintance_records_v4';
-            const EMOJI_OPTIONS = ['✨', '🌟', '💫', '🎮', '💌', '💕', '🌙', '📚', '☕', '🦊', '🐰', '🌸', '🎵', '🌻', '🦋', '🍀', '💎', '🔥', '🎯', '🧸'];
+            const STORAGE_KEY = 'acquaintance_records_v5';
+            const EMOJI_OPTIONS = ['✨','🌟','💫','🎮','💌','💕','🌙','📚','☕','🦊','🐰','🌸','🎵','🌻','🦋','🍀','💎','🔥','🎯','🧸'];
             const TAG_COLOR_MAP = {
-                '游戏搭子': { bg: 'var(--tag-game-bg)', color: 'var(--tag-game-color)' },
-                '笔友': { bg: 'var(--tag-penpal-bg)', color: 'var(--tag-penpal-color)' },
-                '网恋对象': { bg: 'var(--tag-love-bg)', color: 'var(--tag-love-color)' },
-                '树洞知己': { bg: 'var(--tag-treehole-bg)', color: 'var(--tag-treehole-color)' },
-                '学习伙伴': { bg: 'var(--tag-study-bg)', color: 'var(--tag-study-color)' },
-                '追星同好': { bg: 'var(--tag-default-bg)', color: 'var(--tag-default-color)' },
-                '闲聊好友': { bg: 'var(--tag-default-bg)', color: 'var(--tag-default-color)' },
-                '其他': { bg: 'var(--tag-default-bg)', color: 'var(--tag-default-color)' },
+                '游戏搭子':{bg:'var(--tag-game-bg)',color:'var(--tag-game-color)'},
+                '笔友':{bg:'var(--tag-penpal-bg)',color:'var(--tag-penpal-color)'},
+                '网恋对象':{bg:'var(--tag-love-bg)',color:'var(--tag-love-color)'},
+                '树洞知己':{bg:'var(--tag-treehole-bg)',color:'var(--tag-treehole-color)'},
+                '学习伙伴':{bg:'var(--tag-study-bg)',color:'var(--tag-study-color)'},
+                '追星同好':{bg:'var(--tag-default-bg)',color:'var(--tag-default-color)'},
+                '闲聊好友':{bg:'var(--tag-default-bg)',color:'var(--tag-default-color)'},
+                '其他':{bg:'var(--tag-default-bg)',color:'var(--tag-default-color)'},
             };
-            const TIMER_MODES = ['detailed', 'totalDays', 'totalHours'];
+            const TIMER_MODES = ['detailed','totalDays','totalHours'];
             let timerModeMap = {};
             let records = [];
-            let currentView = 'all'; // 'all' | 'missing'
+            let currentView = 'all';
 
             function loadRecords() {
                 try {
@@ -1019,282 +488,264 @@
                         createdAt: r.createdAt || new Date().toISOString(),
                         updatedAt: r.updatedAt || new Date().toISOString(),
                     }));
-                } catch (e) { records = []; }
-                if (records.length === 0) {
+                } catch(e) { records = []; }
+                if(records.length === 0) {
                     records.push(createSampleRecord());
                     saveRecords();
                 }
-                records.forEach(r => { if (!(r.id in timerModeMap)) timerModeMap[r.id] = 0; });
+                records.forEach(r => { if(!(r.id in timerModeMap)) timerModeMap[r.id] = 0; });
             }
 
-            function saveRecords() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch (e) { showToast('存储空间不足'); } }
-
-            function generateId() { return 'rec_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8); }
+            function saveRecords() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch(e) { showToast('存储空间不足'); } }
+            function generateId() { return 'rec_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8); }
 
             function createSampleRecord() {
-                const twoYearsAgo = new Date();
-                twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-                twoYearsAgo.setMonth(3, 15);
-                twoYearsAgo.setHours(20, 30, 0, 0);
+                const d = new Date();
+                d.setFullYear(d.getFullYear() - 2, 3, 15);
+                d.setHours(20,30,0,0);
                 return {
                     id: generateId(),
                     nickname: '星空下的旅人',
                     avatar: '🌟',
                     relationTag: '树洞知己',
                     group: '深夜档',
-                    meetDate: twoYearsAgo.toISOString(),
+                    meetDate: d.toISOString(),
                     channel: '某匿名树洞网站',
                     firstImpression: '很温柔的声音，像是认识了很久的老朋友。',
                     isMissing: false,
-                    createdAt: twoYearsAgo.toISOString(),
-                    updatedAt: twoYearsAgo.toISOString(),
+                    createdAt: d.toISOString(),
+                    updatedAt: d.toISOString(),
                 };
             }
 
-            function calcTimeDiff(meetDateISO) {
-                const start = new Date(meetDateISO);
-                const now = new Date();
-                const msDiff = now - start;
-                if (msDiff < 0) return { years:0, months:0, days:0, hours:0, minutes:0, seconds:0, totalDays:0, totalHours:0, isMilestone:false };
-                const totalDays = Math.floor(msDiff / (1000 * 60 * 60 * 24));
-                const totalHours = Math.floor(msDiff / (1000 * 60 * 60));
-                let years = now.getFullYear() - start.getFullYear();
-                let months = now.getMonth() - start.getMonth();
-                let days = now.getDate() - start.getDate();
-                let hours = now.getHours() - start.getHours();
-                let minutes = now.getMinutes() - start.getMinutes();
-                let seconds = now.getSeconds() - start.getSeconds();
-                if (seconds < 0) { seconds += 60; minutes--; }
-                if (minutes < 0) { minutes += 60; hours--; }
-                if (hours < 0) { hours += 24; days--; }
-                if (days < 0) { const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); months--; }
-                if (months < 0) { months += 12; years--; }
-                if (years < 0) years = 0;
-                const isMilestone = (totalDays > 0 && totalDays % 100 === 0) || (totalDays > 0 && totalDays % 365 === 0 && years >= 1 && months === 0 && days === 0);
-                return { years, months, days, hours, minutes, seconds, totalDays, totalHours, isMilestone };
+            function calcTimeDiff(iso) {
+                const s = new Date(iso), n = new Date();
+                const ms = n - s;
+                if(ms < 0) return { years:0,months:0,days:0,hours:0,minutes:0,seconds:0,totalDays:0,totalHours:0,isMilestone:false };
+                const td = Math.floor(ms/86400000);
+                const th = Math.floor(ms/3600000);
+                let y = n.getFullYear() - s.getFullYear();
+                let mo = n.getMonth() - s.getMonth();
+                let d = n.getDate() - s.getDate();
+                let h = n.getHours() - s.getHours();
+                let mi = n.getMinutes() - s.getMinutes();
+                let sec = n.getSeconds() - s.getSeconds();
+                if(sec<0){sec+=60;mi--}
+                if(mi<0){mi+=60;h--}
+                if(h<0){h+=24;d--}
+                if(d<0){const pm=new Date(n.getFullYear(),n.getMonth(),0);d+=pm.getDate();mo--}
+                if(mo<0){mo+=12;y--}
+                if(y<0)y=0;
+                const im = (td>0&&td%100===0)||(td>0&&td%365===0&&y>=1&&mo===0&&d===0);
+                return { years:y,months:mo,days:d,hours:h,minutes:mi,seconds:sec,totalDays:td,totalHours:th,isMilestone:im };
             }
 
             function formatDuration(diff, mode) {
-                switch (mode) {
+                switch(mode) {
                     case 'totalDays': return `共 <span class="highlight">${diff.totalDays.toLocaleString()}</span> 天`;
                     case 'totalHours': return `共 <span class="highlight">${diff.totalHours.toLocaleString()}</span> 小时`;
                     default:
-                        const parts = [];
-                        if (diff.years > 0) parts.push(`<span class="highlight">${diff.years}</span>年`);
-                        if (diff.months > 0 || diff.years > 0) parts.push(`<span class="highlight">${diff.months}</span>月`);
-                        if (diff.days > 0 || parts.length > 0) parts.push(`<span class="highlight">${diff.days}</span>天`);
-                        parts.push(`<span class="highlight">${String(diff.hours).padStart(2,'0')}</span>时`);
-                        parts.push(`<span class="highlight">${String(diff.minutes).padStart(2,'0')}</span>分`);
-                        parts.push(`<span class="highlight">${String(diff.seconds).padStart(2,'0')}</span>秒`);
-                        return parts.join(' ');
+                        const p = [];
+                        if(diff.years>0) p.push(`<span class="highlight">${diff.years}</span>年`);
+                        if(diff.months>0||diff.years>0) p.push(`<span class="highlight">${diff.months}</span>月`);
+                        if(diff.days>0||p.length>0) p.push(`<span class="highlight">${diff.days}</span>天`);
+                        p.push(`<span class="highlight">${String(diff.hours).padStart(2,'0')}</span>时`);
+                        p.push(`<span class="highlight">${String(diff.minutes).padStart(2,'0')}</span>分`);
+                        p.push(`<span class="highlight">${String(diff.seconds).padStart(2,'0')}</span>秒`);
+                        return p.join(' ');
                 }
             }
 
-            function getTimerModeLabel(mode) { switch (mode) { case 'totalDays': return '总天数'; case 'totalHours': return '总小时'; default: return '详细'; } }
-
-            function getSortFn(sortKey) {
-                switch (sortKey) {
-                    case 'duration-desc': return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
-                    case 'duration-asc': return (a, b) => new Date(b.meetDate) - new Date(a.meetDate);
-                    case 'name-asc': return (a, b) => a.nickname.localeCompare(b.nickname, 'zh');
-                    case 'recent': return (a, b) => new Date(b.createdAt) - new Date(a.createdAt);
-                    default: return (a, b) => new Date(a.meetDate) - new Date(b.meetDate);
+            function getTimerModeLabel(m) { switch(m){case 'totalDays':return '总天数';case 'totalHours':return '总小时';default:return '详细';} }
+            function getSortFn(k) {
+                switch(k) {
+                    case 'duration-desc': return (a,b) => new Date(a.meetDate) - new Date(b.meetDate);
+                    case 'duration-asc': return (a,b) => new Date(b.meetDate) - new Date(a.meetDate);
+                    case 'name-asc': return (a,b) => a.nickname.localeCompare(b.nickname,'zh');
+                    case 'recent': return (a,b) => new Date(b.createdAt) - new Date(a.createdAt);
+                    default: return (a,b) => new Date(a.meetDate) - new Date(b.meetDate);
                 }
             }
-
             function getActiveSortKey() {
-                const activeBtn = sortGroup.querySelector('.toolbar__sort-btn--active');
-                return activeBtn ? activeBtn.dataset.sort : 'duration-desc';
+                const a = sortGroup.querySelector('.toolbar__sort-btn--active');
+                return a ? a.dataset.sort : 'duration-desc';
             }
-
-            function getMissingCount() {
-                return records.filter(r => r.isMissing).length;
-            }
+            function getMissingCount() { return records.filter(r => r.isMissing).length; }
 
             function renderCards() {
-                const searchQuery = searchInput.value.trim().toLowerCase();
-                const sortKey = getActiveSortKey();
-                const sortFn = getSortFn(sortKey);
+                const q = searchInput.value.trim().toLowerCase();
+                const sk = getActiveSortKey();
+                const sf = getSortFn(sk);
                 let filtered = records;
 
-                // 根据视图过滤
-                if (currentView === 'missing') {
+                // 【核心逻辑】全部视图隐藏失踪，失踪视图只显示失踪
+                if(currentView === 'missing') {
                     filtered = filtered.filter(r => r.isMissing);
+                } else {
+                    filtered = filtered.filter(r => !r.isMissing);
                 }
 
-                // 搜索过滤
-                if (searchQuery) {
+                if(q) {
                     filtered = filtered.filter(r =>
-                        r.nickname.toLowerCase().includes(searchQuery) ||
-                        (r.firstImpression && r.firstImpression.toLowerCase().includes(searchQuery)) ||
-                        (r.channel && r.channel.toLowerCase().includes(searchQuery)) ||
-                        (r.group && r.group.toLowerCase().includes(searchQuery)) ||
-                        r.relationTag.toLowerCase().includes(searchQuery)
+                        r.nickname.toLowerCase().includes(q) ||
+                        (r.firstImpression||'').toLowerCase().includes(q) ||
+                        (r.channel||'').toLowerCase().includes(q) ||
+                        (r.group||'').toLowerCase().includes(q) ||
+                        r.relationTag.toLowerCase().includes(q)
                     );
                 }
 
-                filtered = [...filtered].sort(sortFn);
-
-                // 更新失踪徽章
+                filtered = [...filtered].sort(sf);
                 missingBadge.textContent = getMissingCount();
 
-                // 更新计数
-                if (currentView === 'missing') {
+                if(currentView === 'missing') {
                     recordCount.textContent = `失踪 ${filtered.length} 人`;
                 } else {
-                    const activeCount = records.filter(r => !r.isMissing).length;
-                    recordCount.textContent = `${filtered.length} / ${records.length} 条`;
+                    recordCount.textContent = `${filtered.length} 条记录`;
                 }
 
-                if (filtered.length === 0) {
-                    cardsGrid.innerHTML = `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">${currentView === 'missing' ? '🕊️' : '📭'}</span><p class="empty-state__text">${currentView === 'missing' ? '没有失踪人员，大家都还在~' : (records.length === 0 ? '还没有记录，点击下方按钮添加第一位网友吧~' : '没有匹配的记录，试试调整搜索条件')}</p></div>`;
+                if(filtered.length === 0) {
+                    const icon = currentView === 'missing' ? '🕊️' : '📭';
+                    const msg = currentView === 'missing'
+                        ? '没有失踪人员，大家都还在~'
+                        : (records.filter(r => !r.isMissing).length === 0
+                            ? '还没有记录，点击下方按钮添加第一位网友吧~'
+                            : '没有匹配的记录，试试调整搜索条件');
+                    cardsGrid.innerHTML = `<div class="empty-state"><span class="empty-state__icon" aria-hidden="true">${icon}</span><p class="empty-state__text">${msg}</p></div>`;
                 } else {
                     cardsGrid.innerHTML = filtered.map(r => buildCardHTML(r)).join('');
                 }
                 dataActions.style.display = records.length > 0 ? 'flex' : 'none';
             }
 
-            function buildCardHTML(record) {
-                const diff = calcTimeDiff(record.meetDate);
-                const mode = TIMER_MODES[timerModeMap[record.id] || 0];
-                const timerHTML = formatDuration(diff, mode);
-                const modeLabel = getTimerModeLabel(mode);
-                const tagStyle = TAG_COLOR_MAP[record.relationTag] || TAG_COLOR_MAP['其他'];
-                const missingClass = record.isMissing ? ' card--missing' : '';
-                const milestoneClass = !record.isMissing && diff.isMilestone ? ' card--milestone' : '';
-                const notePreview = record.firstImpression || record.channel || '';
+            function buildCardHTML(r) {
+                const diff = calcTimeDiff(r.meetDate);
+                const mode = TIMER_MODES[timerModeMap[r.id]||0];
+                const th = formatDuration(diff, mode);
+                const ml = getTimerModeLabel(mode);
+                const ts = TAG_COLOR_MAP[r.relationTag] || TAG_COLOR_MAP['其他'];
+                const mc = r.isMissing ? ' card--missing' : '';
+                const mic = !r.isMissing && diff.isMilestone ? ' card--milestone' : '';
+                const np = r.firstImpression || r.channel || '';
                 return `
-                <article class="card${missingClass}${milestoneClass}" role="listitem" data-record-id="${record.id}" tabindex="0" aria-label="${escapeHTML(record.nickname)}，${record.relationTag}${record.isMissing ? '，已失踪' : ''}">
+                <article class="card${mc}${mic}" role="listitem" data-record-id="${r.id}" tabindex="0">
                   <div class="card__header">
-                    <div class="card__avatar" aria-hidden="true"><div class="card__avatar-inner" style="--avatar-bg:${tagStyle.bg};">${escapeHTML(record.avatar)}</div></div>
+                    <div class="card__avatar" aria-hidden="true"><div class="card__avatar-inner" style="--avatar-bg:${ts.bg};">${esc(r.avatar)}</div></div>
                     <div class="card__info">
-                      <div class="card__nickname" title="${escapeHTML(record.nickname)}">${escapeHTML(record.nickname)}</div>
+                      <div class="card__nickname" title="${esc(r.nickname)}">${esc(r.nickname)}</div>
                       <div class="card__meta-row">
-                        <span class="card__tag" style="--tag-bg:${tagStyle.bg};--tag-color:${tagStyle.color};">${escapeHTML(record.relationTag)}</span>
-                        ${record.group ? `<span class="card__channel">${escapeHTML(record.group)}</span>` : ''}
+                        <span class="card__tag" style="--tag-bg:${ts.bg};--tag-color:${ts.color};">${esc(r.relationTag)}</span>
+                        ${r.group ? `<span class="card__channel">${esc(r.group)}</span>` : ''}
                       </div>
                     </div>
                   </div>
                   <div class="card__timer">
-                    <div class="card__timer-display">${timerHTML}</div>
-                    <div class="card__timer-mode">${modeLabel}</div>
-                    <button class="card__timer-toggle" data-action="toggle-timer" data-record-id="${record.id}" aria-label="切换时长显示模式">⇄</button>
+                    <div class="card__timer-display">${th}</div>
+                    <div class="card__timer-mode">${ml}</div>
+                    <button class="card__timer-toggle" data-action="toggle-timer" data-record-id="${r.id}" aria-label="切换时长显示模式">⇄</button>
                   </div>
-                  ${notePreview ? `<div class="card__note-preview" title="${escapeHTML(notePreview)}">${escapeHTML(notePreview)}</div>` : ''}
+                  ${np ? `<div class="card__note-preview" title="${esc(np)}">${esc(np)}</div>` : ''}
                   <div class="card__actions">
-                    <button class="card__action-btn card__action-btn--missing" data-action="toggle-missing" data-record-id="${record.id}">
-                      ${record.isMissing ? '找回' : '失踪'}
-                    </button>
-                    <button class="card__action-btn card__action-btn--edit" data-action="edit" data-record-id="${record.id}">编辑</button>
-                    <button class="card__action-btn card__action-btn--delete" data-action="delete" data-record-id="${record.id}">删除</button>
+                    <button class="card__action-btn card__action-btn--missing" data-action="toggle-missing" data-record-id="${r.id}">${r.isMissing?'找回':'失踪'}</button>
+                    <button class="card__action-btn card__action-btn--edit" data-action="edit" data-record-id="${r.id}">编辑</button>
+                    <button class="card__action-btn card__action-btn--delete" data-action="delete" data-record-id="${r.id}">删除</button>
                   </div>
                 </article>`;
             }
 
-            function escapeHTML(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
+            function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
             function updateAllTimers() {
-                const cards = cardsGrid.querySelectorAll('.card');
-                cards.forEach(card => {
-                    const recordId = card.dataset.recordId;
-                    const record = records.find(r => r.id === recordId);
-                    if (!record) return;
-                    const diff = calcTimeDiff(record.meetDate);
-                    const mode = TIMER_MODES[timerModeMap[recordId] || 0];
-                    const timerDisplay = card.querySelector('.card__timer-display');
-                    const modeLabel = card.querySelector('.card__timer-mode');
-                    if (timerDisplay) timerDisplay.innerHTML = formatDuration(diff, mode);
-                    if (modeLabel) modeLabel.textContent = getTimerModeLabel(mode);
-                    if (!record.isMissing && diff.isMilestone && !card.classList.contains('card--milestone')) {
-                        card.classList.add('card--milestone');
-                    }
+                cardsGrid.querySelectorAll('.card').forEach(card => {
+                    const rid = card.dataset.recordId;
+                    const r = records.find(x => x.id === rid);
+                    if(!r) return;
+                    const diff = calcTimeDiff(r.meetDate);
+                    const mode = TIMER_MODES[timerModeMap[rid]||0];
+                    const td = card.querySelector('.card__timer-display');
+                    const ml = card.querySelector('.card__timer-mode');
+                    if(td) td.innerHTML = formatDuration(diff, mode);
+                    if(ml) ml.textContent = getTimerModeLabel(mode);
                 });
             }
 
             function openModal(record = null) {
-                const isEditing = !!record;
-                modalTitle.textContent = isEditing ? '编辑记录' : '添加记录';
-                btnSubmit.textContent = isEditing ? '保存修改' : '保存记录';
+                const ed = !!record;
+                modalTitle.textContent = ed ? '编辑记录' : '添加记录';
+                btnSubmit.textContent = ed ? '保存修改' : '保存记录';
                 formRecordId.value = record ? record.id : '';
                 formNickname.value = record ? record.nickname : '';
                 formAvatar.value = record ? record.avatar : '✨';
                 formRelation.value = record ? record.relationTag : '游戏搭子';
-                formGroup.value = record ? (record.group || '') : '';
-                formChannel.value = record ? (record.channel || '') : '';
-                formNote.value = record ? (record.firstImpression || '') : '';
+                formGroup.value = record ? (record.group||'') : '';
+                formChannel.value = record ? (record.channel||'') : '';
+                formNote.value = record ? (record.firstImpression||'') : '';
                 formMissing.checked = record ? record.isMissing : false;
-                if (record && record.meetDate) {
+                if(record && record.meetDate) {
                     const d = new Date(record.meetDate);
-                    formDate.value = d.toISOString().slice(0, 10);
-                    formTime.value = d.toTimeString().slice(0, 8);
+                    formDate.value = d.toISOString().slice(0,10);
+                    formTime.value = d.toTimeString().slice(0,8);
                 } else {
-                    const now = new Date();
-                    formDate.value = now.toISOString().slice(0, 10);
-                    formTime.value = now.toTimeString().slice(0, 8);
+                    const n = new Date();
+                    formDate.value = n.toISOString().slice(0,10);
+                    formTime.value = n.toTimeString().slice(0,8);
                 }
                 renderEmojiPicker(record ? record.avatar : '✨');
                 modalOverlay.style.display = 'flex';
                 setTimeout(() => formNickname.focus(), 150);
-                document.getElementById('appContainer').setAttribute('aria-hidden', 'true');
-                document.getElementById('fabAdd').setAttribute('aria-hidden', 'true');
+                $('#appContainer').setAttribute('aria-hidden','true');
+                $('#fabAdd').setAttribute('aria-hidden','true');
             }
 
             function closeModal() {
                 modalOverlay.style.display = 'none';
                 recordForm.reset();
                 formRecordId.value = '';
-                document.getElementById('appContainer').removeAttribute('aria-hidden');
-                document.getElementById('fabAdd').removeAttribute('aria-hidden');
+                $('#appContainer').removeAttribute('aria-hidden');
+                $('#fabAdd').removeAttribute('aria-hidden');
                 fabAdd.focus();
             }
 
-            function renderEmojiPicker(selectedEmoji) {
-                emojiPicker.innerHTML = EMOJI_OPTIONS.map(emoji => {
-                    const isSelected = emoji === selectedEmoji;
-                    return `<button type="button" class="emoji-picker__item${isSelected ? ' emoji-picker__item--selected' : ''}" data-emoji="${emoji}" role="radio" aria-checked="${isSelected}" aria-label="选择头像 ${emoji}">${emoji}</button>`;
+            function renderEmojiPicker(sel) {
+                emojiPicker.innerHTML = EMOJI_OPTIONS.map(e => {
+                    const is = e === sel;
+                    return `<button type="button" class="emoji-picker__item${is?' emoji-picker__item--selected':''}" data-emoji="${e}" role="radio" aria-checked="${is}">${e}</button>`;
                 }).join('');
-                emojiPicker.querySelectorAll('.emoji-picker__item').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        formAvatar.value = btn.dataset.emoji;
-                        renderEmojiPicker(btn.dataset.emoji);
-                    });
+                emojiPicker.querySelectorAll('.emoji-picker__item').forEach(b => {
+                    b.addEventListener('click', () => { formAvatar.value = b.dataset.emoji; renderEmojiPicker(b.dataset.emoji); });
                 });
             }
 
             function collectFormData() {
-                const dateVal = formDate.value;
-                const timeVal = formTime.value || '00:00:00';
-                const meetDateISO = new Date(`${dateVal}T${timeVal}`).toISOString();
                 return {
                     nickname: formNickname.value.trim(),
                     avatar: formAvatar.value,
                     relationTag: formRelation.value,
                     group: formGroup.value.trim(),
-                    meetDate: meetDateISO,
+                    meetDate: new Date(`${formDate.value}T${formTime.value||'00:00:00'}`).toISOString(),
                     channel: formChannel.value.trim(),
                     firstImpression: formNote.value.trim(),
                     isMissing: formMissing.checked,
                 };
             }
 
-            function validateForm(data) {
-                if (!data.nickname) { showToast('请输入昵称'); formNickname.focus(); return false; }
-                if (!formDate.value) { showToast('请选择认识日期'); formDate.focus(); return false; }
-                if (isNaN(new Date(data.meetDate).getTime())) { showToast('日期格式不正确'); return false; }
-                if (new Date(data.meetDate) > new Date()) { showToast('认识日期不能是未来时间'); return false; }
+            function validateForm(d) {
+                if(!d.nickname){showToast('请输入昵称');formNickname.focus();return false}
+                if(!formDate.value){showToast('请选择认识日期');formDate.focus();return false}
+                if(isNaN(new Date(d.meetDate).getTime())){showToast('日期格式不正确');return false}
+                if(new Date(d.meetDate) > new Date()){showToast('认识日期不能是未来时间');return false}
                 return true;
             }
 
-            function saveRecord(data, recordId = null) {
-                if (recordId) {
-                    const idx = records.findIndex(r => r.id === recordId);
-                    if (idx === -1) return false;
-                    records[idx] = { ...records[idx], ...data, updatedAt: new Date().toISOString() };
+            function saveRecord(data, rid = null) {
+                if(rid) {
+                    const i = records.findIndex(r => r.id === rid);
+                    if(i===-1) return false;
+                    records[i] = {...records[i], ...data, updatedAt: new Date().toISOString()};
                     showToast(data.isMissing ? '已标记为失踪' : '记录已更新');
                 } else {
-                    const newRecord = { id: generateId(), ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-                    records.push(newRecord);
-                    timerModeMap[newRecord.id] = 0;
+                    records.push({id:generateId(),...data,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+                    timerModeMap[records[records.length-1].id] = 0;
                     showToast(data.isMissing ? '已添加至失踪人员' : '记录已添加');
                 }
                 saveRecords();
@@ -1302,65 +753,62 @@
                 return true;
             }
 
-            function toggleMissing(recordId) {
-                const idx = records.findIndex(r => r.id === recordId);
-                if (idx === -1) return;
-                records[idx].isMissing = !records[idx].isMissing;
-                records[idx].updatedAt = new Date().toISOString();
+            function toggleMissing(rid) {
+                const i = records.findIndex(r => r.id === rid);
+                if(i===-1) return;
+                records[i].isMissing = !records[i].isMissing;
+                records[i].updatedAt = new Date().toISOString();
                 saveRecords();
                 renderCards();
-                showToast(records[idx].isMissing ? '已标记为失踪' : '已从失踪人员中找回');
+                showToast(records[i].isMissing ? '已标记为失踪' : '已从失踪人员中找回');
             }
 
-            function deleteRecord(recordId) {
-                const record = records.find(r => r.id === recordId);
-                if (!record) return;
-                if (!confirm(`确定要删除「${record.nickname}」的记录吗？\n此操作不可恢复。`)) return;
-                records = records.filter(r => r.id !== recordId);
-                delete timerModeMap[recordId];
+            function deleteRecord(rid) {
+                const r = records.find(x => x.id === rid);
+                if(!r) return;
+                if(!confirm(`确定要删除「${r.nickname}」的记录吗？\n此操作不可恢复。`)) return;
+                records = records.filter(x => x.id !== rid);
+                delete timerModeMap[rid];
                 saveRecords();
                 renderCards();
                 showToast('记录已删除');
             }
 
             function exportData() {
-                if (records.length === 0) { showToast('暂无记录可导出'); return; }
-                const dataStr = JSON.stringify(records, null, 2);
-                const blob = new Blob([dataStr], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
+                if(!records.length){showToast('暂无记录可导出');return}
+                const b = new Blob([JSON.stringify(records,null,2)],{type:'application/json'});
                 const a = document.createElement('a');
-                a.href = url;
-                const now = new Date();
-                a.download = `相识时光_备份_${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}.json`;
-                document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                a.href = URL.createObjectURL(b);
+                const n = new Date();
+                a.download = `相识时光_备份_${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}.json`;
+                document.body.appendChild(a);a.click();document.body.removeChild(a);
                 showToast('备份已下载');
             }
 
             function importData(file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
+                const r = new FileReader();
+                r.onload = e => {
                     try {
-                        const imported = JSON.parse(e.target.result);
-                        if (!Array.isArray(imported)) throw new Error('格式错误');
-                        const valid = imported.filter(r => r.nickname && r.meetDate);
-                        if (valid.length === 0) { showToast('文件中没有有效记录'); return; }
-                        if (!confirm(`发现 ${valid.length} 条记录。\n\n选择"确定"将合并导入，\n选择"取消"将放弃导入。`)) return;
-                        const existingIds = new Set(records.map(r => r.id));
-                        const newRecords = valid.filter(r => !existingIds.has(r.id));
-                        records = [...records, ...newRecords];
-                        newRecords.forEach(r => { timerModeMap[r.id] = 0; });
+                        const imp = JSON.parse(e.target.result);
+                        if(!Array.isArray(imp)) throw new Error();
+                        const v = imp.filter(x => x.nickname && x.meetDate);
+                        if(!v.length){showToast('文件中没有有效记录');return}
+                        if(!confirm(`发现 ${v.length} 条记录。\n\n确定合并导入？`)) return;
+                        const exist = new Set(records.map(x => x.id));
+                        const nw = v.filter(x => !exist.has(x.id));
+                        records = [...records, ...nw];
+                        nw.forEach(x => { timerModeMap[x.id] = 0; });
                         saveRecords();
                         renderCards();
-                        showToast(`成功导入 ${newRecords.length} 条记录`);
-                    } catch (err) { showToast('文件格式错误，请检查JSON文件'); }
+                        showToast(`成功导入 ${nw.length} 条记录`);
+                    } catch(_) { showToast('文件格式错误'); }
                 };
-                reader.readAsText(file);
+                r.readAsText(file);
             }
 
             function clearAllData() {
-                if (records.length === 0) { showToast('暂无记录可清空'); return; }
-                if (!confirm(`确定要清空全部 ${records.length} 条记录吗？\n此操作不可恢复！\n\n建议先导出备份。`)) return;
+                if(!records.length){showToast('暂无记录可清空');return}
+                if(!confirm(`确定清空全部 ${records.length} 条记录？\n不可恢复！\n建议先导出备份。`)) return;
                 records = [];
                 timerModeMap = {};
                 saveRecords();
@@ -1368,80 +816,61 @@
                 showToast('所有记录已清空');
             }
 
-            let toastTimer = null;
-            function showToast(message) {
-                if (toastTimer) clearTimeout(toastTimer);
-                toast.textContent = message;
+            let tt = null;
+            function showToast(msg) {
+                if(tt) clearTimeout(tt);
+                toast.textContent = msg;
                 toast.classList.add('toast--visible');
-                toastTimer = setTimeout(() => { toast.classList.remove('toast--visible'); toastTimer = null; }, 2000);
+                tt = setTimeout(() => { toast.classList.remove('toast--visible'); tt = null; }, 2000);
             }
 
-            // ==================== 事件绑定 ====================
+            // 事件绑定
             fabAdd.addEventListener('click', () => openModal(null));
             modalClose.addEventListener('click', closeModal);
-            modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.style.display === 'flex') closeModal(); });
-
-            recordForm.addEventListener('submit', (e) => {
+            modalOverlay.addEventListener('click', e => { if(e.target===modalOverlay) closeModal(); });
+            document.addEventListener('keydown', e => { if(e.key==='Escape'&&modalOverlay.style.display==='flex') closeModal(); });
+            recordForm.addEventListener('submit', e => {
                 e.preventDefault();
-                const data = collectFormData();
-                if (!validateForm(data)) return;
-                const recordId = formRecordId.value || null;
-                if (saveRecord(data, recordId)) closeModal();
+                const d = collectFormData();
+                if(!validateForm(d)) return;
+                if(saveRecord(d, formRecordId.value||null)) closeModal();
             });
-
             searchInput.addEventListener('input', renderCards);
-
-            sortGroup.addEventListener('click', (e) => {
-                const btn = e.target.closest('.toolbar__sort-btn');
-                if (!btn) return;
-                sortGroup.querySelectorAll('.toolbar__sort-btn').forEach(b => { b.classList.remove('toolbar__sort-btn--active'); b.setAttribute('aria-pressed', 'false'); });
-                btn.classList.add('toolbar__sort-btn--active');
-                btn.setAttribute('aria-pressed', 'true');
+            sortGroup.addEventListener('click', e => {
+                const b = e.target.closest('.toolbar__sort-btn');
+                if(!b) return;
+                sortGroup.querySelectorAll('.toolbar__sort-btn').forEach(x => { x.classList.remove('toolbar__sort-btn--active'); x.setAttribute('aria-pressed','false'); });
+                b.classList.add('toolbar__sort-btn--active');
+                b.setAttribute('aria-pressed','true');
                 renderCards();
             });
-
-            // 视图切换
-            viewToggle.addEventListener('click', (e) => {
-                const btn = e.target.closest('.view-toggle__btn');
-                if (!btn) return;
-                currentView = btn.dataset.view;
-                viewToggle.querySelectorAll('.view-toggle__btn').forEach(b => { b.classList.remove('view-toggle__btn--active'); b.setAttribute('aria-pressed', 'false'); });
-                btn.classList.add('view-toggle__btn--active');
-                btn.setAttribute('aria-pressed', 'true');
+            viewToggle.addEventListener('click', e => {
+                const b = e.target.closest('.view-toggle__btn');
+                if(!b) return;
+                currentView = b.dataset.view;
+                viewToggle.querySelectorAll('.view-toggle__btn').forEach(x => { x.classList.remove('view-toggle__btn--active'); x.setAttribute('aria-pressed','false'); });
+                b.classList.add('view-toggle__btn--active');
+                b.setAttribute('aria-pressed','true');
                 renderCards();
             });
-
-            cardsGrid.addEventListener('click', (e) => {
-                const btn = e.target.closest('button');
-                if (!btn) return;
-                const action = btn.dataset.action;
-                const recordId = btn.dataset.recordId;
-                if (action === 'edit') {
-                    const record = records.find(r => r.id === recordId);
-                    if (record) openModal(record);
-                } else if (action === 'delete') {
-                    deleteRecord(recordId);
-                } else if (action === 'toggle-timer') {
-                    if (!(recordId in timerModeMap)) timerModeMap[recordId] = 0;
-                    timerModeMap[recordId] = (timerModeMap[recordId] + 1) % TIMER_MODES.length;
-                    updateAllTimers();
-                } else if (action === 'toggle-missing') {
-                    toggleMissing(recordId);
+            cardsGrid.addEventListener('click', e => {
+                const b = e.target.closest('button');
+                if(!b) return;
+                const a = b.dataset.action, rid = b.dataset.recordId;
+                if(a==='edit'){ const r = records.find(x=>x.id===rid); if(r) openModal(r); }
+                else if(a==='delete') deleteRecord(rid);
+                else if(a==='toggle-timer'){ if(!(rid in timerModeMap)) timerModeMap[rid]=0; timerModeMap[rid]=(timerModeMap[rid]+1)%TIMER_MODES.length; updateAllTimers(); }
+                else if(a==='toggle-missing') toggleMissing(rid);
+            });
+            cardsGrid.addEventListener('keydown', e => {
+                if(e.key==='Enter'&&e.target.classList.contains('card')){
+                    const r = records.find(x=>x.id===e.target.dataset.recordId);
+                    if(r) openModal(r);
                 }
             });
-
-            cardsGrid.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && e.target.classList.contains('card')) {
-                    const recordId = e.target.dataset.recordId;
-                    const record = records.find(r => r.id === recordId);
-                    if (record) openModal(record);
-                }
-            });
-
             btnExport.addEventListener('click', exportData);
             btnImport.addEventListener('click', () => importFileInput.click());
-            importFileInput.addEventListener('change', (e) => { if (e.target.files[0]) importData(e.target.files[0]); importFileInput.value = ''; });
+            importFileInput.addEventListener('change', e => { if(e.target.files[0]) importData(e.target.files[0]); importFileInput.value=''; });
             btnClearAll.addEventListener('click', clearAllData);
 
             function init() {
